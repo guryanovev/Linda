@@ -12,7 +12,7 @@ script:
   - mozroots --import --sync
   - xbuild ci_build.xml
   - mkdir ${HOME}/build_artifacts
-  - "nunit-console /xml:${HOME}/build_artifacts/test-results.xml ./Src/Linda.Core.AcceptanceTests/bin/Debug/Linda.Core.AcceptanceTests.dll"
+  - "nunit-console /xml=test-results.xml ./Src/Linda.Core.AcceptanceTests/bin/Debug/Linda.Core.AcceptanceTests.dll"
   - cp test-results.xml ${HOME}/build_artifacts/test-results.xml
   - "git config --global user.email 'guryanovev@gmail.com'"
   - "git config --global user.name 'Travis'"
