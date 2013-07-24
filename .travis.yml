@@ -2,7 +2,7 @@ language: c
 env:
   global:
     secure: "WKzS0Ld+7VcRcOiaLYmcqH7Vo0lYLRiEtpOFS+xTfd2wgnJTjn9qv5sAVncQ\nF4lZXHN2PphfPtGRJbDwJj9+O/klUgN5aKcuqmSGOIXAvygQ7UrONef6llhL\nz5rOalU7JxIs4L/x841ju3735W58VovMCBeW+m6i/e67NEkjmVw="
-	
+
 install:
   - sudo apt-get install mono-devel mono-gmcs nunit-console
 
