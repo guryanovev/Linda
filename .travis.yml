@@ -11,8 +11,8 @@ script:
   - export EnableNuGetPackageRestore="true"
   - mozroots --import --sync
   - xbuild ci_build.xml
-  - "nunit-console /xml:test-results.xml ./Src/Linda.Core.AcceptanceTests/bin/Debug/Linda.Core.AcceptanceTests.dll"
   - mkdir ${HOME}/build_artifacts
+  - "nunit-console /xml:./build_artifacts/test-results.xml ./Src/Linda.Core.AcceptanceTests/bin/Debug/Linda.Core.AcceptanceTests.dll"
   - cp test-results.xml ${HOME}/build_artifacts/test-results.xml
   - "git config --global user.email 'guryanovev@gmail.com'"
   - "git config --global user.name 'Travis'"
