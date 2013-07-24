@@ -3,5 +3,6 @@ install:
   - sudo apt-get install mono-devel mono-gmcs nunit-console
 
 script:
+  - cp Src/.nuget/mono_support/Microsoft.Build.dll Src/.nuget/Microsoft.Build.dll
   - xbuild ci_build.xml
   - nunit-console ./Src/Linda.Core.AcceptanceTests/bin/Debug/Linda.Core.AcceptanceTests.dll
