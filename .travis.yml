@@ -7,5 +7,5 @@ script:
   - export EnableNuGetPackageRestore="true"
   - mozroots --import --sync
   - xbuild ci_build.xml
-  - ls
+  - find Src/packages -type f -maxdepth 10
   - nunit-console ./Src/Linda.Core.AcceptanceTests/bin/Debug/Linda.Core.AcceptanceTests.dll
