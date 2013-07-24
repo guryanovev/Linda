@@ -1,0 +1,8 @@
+language: c
+
+install:
+  - sudo apt-get install mono-devel mono-gmcs nunit-console
+
+script:
+  - xbuild ci_build.xml
+  - nunit-console ./Src/Linda.Core.AcceptanceTests/bin/Debug/Linda.Core.AcceptanceTests.dll
