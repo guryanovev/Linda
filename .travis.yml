@@ -5,5 +5,6 @@ install:
 script:
   - cp Src/.nuget/mono_support/Microsoft.Build.dll Src/.nuget/Microsoft.Build.dll
   - export EnableNuGetPackageRestore="true"
+  - mozroots --import --sync
   - xbuild ci_build.xml
   - nunit-console ./Src/Linda.Core.AcceptanceTests/bin/Debug/Linda.Core.AcceptanceTests.dll
