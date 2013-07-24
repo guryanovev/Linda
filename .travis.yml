@@ -1,4 +1,8 @@
 language: c
+env:
+  global:
+    secure: "WKzS0Ld+7VcRcOiaLYmcqH7Vo0lYLRiEtpOFS+xTfd2wgnJTjn9qv5sAVncQ\nF4lZXHN2PphfPtGRJbDwJj9+O/klUgN5aKcuqmSGOIXAvygQ7UrONef6llhL\nz5rOalU7JxIs4L/x841ju3735W58VovMCBeW+m6i/e67NEkjmVw="
+	
 install:
   - sudo apt-get install mono-devel mono-gmcs nunit-console
 
@@ -7,5 +11,16 @@ script:
   - export EnableNuGetPackageRestore="true"
   - mozroots --import --sync
   - xbuild ci_build.xml
-  - find Src/packages -type f -maxdepth 10
-  - nunit-console ./Src/Linda.Core.AcceptanceTests/bin/Debug/Linda.Core.AcceptanceTests.dll
+  - "nunit-console /xml:test-results.xml ./Src/Linda.Core.AcceptanceTests/bin/Debug/Linda.Core.AcceptanceTests.dll"
+  - mkdir ${HOME}/build_artifacts
+  - cp test-results.xml ${HOME}/build_artifacts/test-results.xml
+  - "git config --global user.email 'guryanovev@gmail.com'"
+  - "git config --global user.name 'Travis'"
+  - "git remote add upstream https://${GH_TOKEN}@github.com/guryanovev/Linda.git"
+  - "git checkout --orphan gh-pages"
+  - "rm -r *"
+  - "git rm -rf ."
+  - "cp -R ${HOME}/build_artifacts/* ."
+  - "git add -f ."
+  - git commit -q -m "Travis build $TRAVIS_BUILD_NUMBER pushed to gh-pages"
+  - "git push -fq upstream gh-pages"
