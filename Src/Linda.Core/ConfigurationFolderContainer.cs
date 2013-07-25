@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Yaml_Parser
+namespace Linda.Core
 {
     using System.Text;
 
