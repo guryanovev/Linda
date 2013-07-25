@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="ConfigurationFolderContainer.cs" />
     <Compile Include="DefaultConfigurationManager.cs" />
+    <Compile Include="IConfigSourceProvider.cs" />
     <Compile Include="IConfigurationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
