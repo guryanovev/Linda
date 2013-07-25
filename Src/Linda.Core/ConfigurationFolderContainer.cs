@@ -20,16 +20,16 @@ namespace Linda.Core
         public readonly string Path;
     }
 
-    class ConfigurationFolderContainer : IEnumerable<ConfigurationFolder>
+    class ConfigurationFolderContainer : IEnumerable<ConfigurationFolder>, IConfigSourceProvider
     {
         public readonly List<ConfigurationFolder> ConfigFolders;
 
         public ConfigurationFolderContainer(string path)
         {
-            this.ConfigFolders = this.LoadYamlFiles(path);
+            this.ConfigFolders = this.GetCs(path);
         }
 
-        private List<ConfigurationFolder> LoadYamlFiles(string path)
+        /*private List<ConfigurationFolder> LoadYamlFiles(string path)
         {
             var newConfFolders = new List<ConfigurationFolder>(); 
 
@@ -50,7 +50,7 @@ namespace Linda.Core
             }
 
             return newConfFolders;
-        }
+        }*/
 
         private static string GetFileContent(string path)
         {
@@ -87,6 +87,29 @@ namespace Linda.Core
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public List<ConfigurationFolder> GetCs(string path)
+        {
+            var newConfFolders = new List<ConfigurationFolder>();
+
+            var dir = new DirectoryInfo(path);
+
+            var level = -1;
+
+            while (dir != null)
+            {
+                level++;
+
+                if (Directory.Exists(dir.FullName + "/config/"))
+                {
+                    newConfFolders.Add(new ConfigurationFolder(this.GetFolderConfigContent(dir.FullName + "/config/"), dir.FullName));
+                }
+
+                dir = dir.Parent;
+            }
+
+            return newConfFolders;
         }
     }
 }

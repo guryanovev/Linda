@@ -7,6 +7,6 @@
 
     public interface IConfigSourceProvider
     {
-        List<ConfigGroup> GetCs(string path);
+        List<ConfigurationFolder> GetCs(string path);
     }
 }
