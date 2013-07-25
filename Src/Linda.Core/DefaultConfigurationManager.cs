@@ -8,7 +8,7 @@
 
     public class DefaultConfigurationManager : IConfigurationManager
     {
-        private readonly IConfigSourceProvider configSourceProvider;
+        private readonly IConfigSourceProvider _configSourceProvider;
 
         private readonly string _configurationRoot;
 
@@ -20,15 +20,16 @@
         /// <param name="configurationRoot">
         /// full path to config root directory
         /// </param>
+        /// <param name="configSourceProvider"></param>
         public DefaultConfigurationManager(string configurationRoot, IConfigSourceProvider configSourceProvider)
         {
-            this.configSourceProvider = configSourceProvider;
+            this._configSourceProvider = configSourceProvider;
             _configurationRoot = configurationRoot;
         }
 
         public TConfiguration GetConfiguration<TConfiguration>()
         {
-            this._confCont = configSourceProvider.GetCs(_configurationRoot);
+            this._confCont = this._configSourceProvider.GetCs(_configurationRoot);
 
             var content = YamlFilesProvider.GetAllConfigContent(this._confCont);
 

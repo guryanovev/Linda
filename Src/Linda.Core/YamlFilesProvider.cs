@@ -1,5 +1,4 @@
-﻿
-namespace Linda.Core
+﻿namespace Linda.Core
 {
     using System.Collections.Generic;
     using System.IO;
