@@ -5,6 +5,7 @@ env:
 
 install:
   - sudo apt-get install mono-devel mono-gmcs nunit-console
+  - sudo apt-get install xsltproc
 
 script:
   - cp Src/.nuget/mono_support/Microsoft.Build.dll Src/.nuget/Microsoft.Build.dll
