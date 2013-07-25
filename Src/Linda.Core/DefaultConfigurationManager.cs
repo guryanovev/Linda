@@ -1,7 +1,5 @@
 ﻿namespace Linda.Core
 {
-    using Yaml_Parser;
-
     public class DefaultConfigurationManager : IConfigurationManager
     {
         private readonly string _configurationRoot;
