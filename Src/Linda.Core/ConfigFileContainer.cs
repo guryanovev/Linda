@@ -8,7 +8,7 @@
 
     public class ConfigFileContainer : IConfigSourceProvider
     {
-        public List<ConfigGroup> GetCs(string path)
+        public List<ConfigGroup> GetConfigGroups(string path)
         {
             var newConfFolders = new List<ConfigGroup>();
 
