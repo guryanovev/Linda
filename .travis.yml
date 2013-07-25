@@ -16,7 +16,7 @@ script:
   - nunit-console ./Src/Linda.Core.AcceptanceTests/bin/Debug/Linda.Core.AcceptanceTests.dll -xml test-results.xml
   - cp test-results.xml ${HOME}/build_artifacts/test-results.xml
   - xsltproc -version
-  - xsltproc .Tools/Xslt/NUnit-NoFrame.xsl ${HOME}/build_artifacts/test-results.xml > ${HOME}/build_artifacts/index.html
+  - xsltproc file://.Tools/Xslt/NUnit-NoFrame.xsl ${HOME}/build_artifacts/test-results.xml > ${HOME}/build_artifacts/index.html
   - "git config --global user.email 'guryanovev@gmail.com'"
   - "git config --global user.name 'Travis'"
   - "git remote add upstream https://${GH_TOKEN}@github.com/guryanovev/Linda.git"
