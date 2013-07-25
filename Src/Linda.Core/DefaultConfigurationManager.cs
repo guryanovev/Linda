@@ -19,8 +19,6 @@
 
         public TConfiguration GetConfiguration<TConfiguration>()
         {
-            // todo insert implementation here
-            throw new System.NotImplementedException();
         }
 
         private ConfigurationFolderContainer LoadConfigurationFiles()
