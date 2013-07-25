@@ -53,7 +53,6 @@
     <Compile Include="ConfigFolderContainer.cs" />
     <Compile Include="ConfigGroup.cs" />
     <Compile Include="ConfigSource.cs" />
-    <Compile Include="ConfigurationFolderContainer.cs" />
     <Compile Include="DefaultConfigurationManager.cs" />
     <Compile Include="IConfigSourceProvider.cs" />
     <Compile Include="IConfigurationManager.cs" />

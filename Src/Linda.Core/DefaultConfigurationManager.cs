@@ -12,7 +12,7 @@
 
         private readonly string _configurationRoot;
 
-        private List<ConfigGroup> confCont;
+        private List<ConfigGroup> _confCont;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultConfigurationManager"/> class. 
@@ -28,9 +28,9 @@
 
         public TConfiguration GetConfiguration<TConfiguration>()
         {
-            confCont = configSourceProvider.GetCs(_configurationRoot);
+            this._confCont = configSourceProvider.GetCs(_configurationRoot);
 
-            var content = YamlFilesProvider.GetAllConfigContent(confCont);
+            var content = YamlFilesProvider.GetAllConfigContent(this._confCont);
 
             return new Deserializer().Deserialize<TConfiguration>(new StringReader(content)); 
         }
