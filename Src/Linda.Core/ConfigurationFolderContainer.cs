@@ -22,7 +22,7 @@ namespace Linda.Core
 
     class ConfigurationFolderContainer : IEnumerable<ConfigurationFolder>, IConfigSourceProvider
     {
-        public readonly List<ConfigurationFolder> ConfigFolders;
+        public readonly List<ConfigGroup> ConfigFolders;
 
         public ConfigurationFolderContainer(string path)
         {
@@ -89,7 +89,7 @@ namespace Linda.Core
             return GetEnumerator();
         }
 
-        public List<ConfigurationFolder> GetCs(string path)
+        public List<ConfigGroup> GetCs(string path)
         {
             var newConfFolders = new List<ConfigurationFolder>();
 

@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigFolderContainer.cs" />
     <Compile Include="ConfigGroup.cs" />
     <Compile Include="ConfigSource.cs" />
     <Compile Include="ConfigurationFolderContainer.cs" />
@@ -57,7 +58,6 @@
     <Compile Include="IConfigSourceProvider.cs" />
     <Compile Include="IConfigurationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="YamlFilesProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
