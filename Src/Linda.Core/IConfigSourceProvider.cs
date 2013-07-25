@@ -4,6 +4,6 @@
 
     public interface IConfigSourceProvider
     {
-        IEnumerable<ConfigGroup> GetConfigGroups(string path);    }
-
+        IEnumerable<ConfigGroup> GetConfigGroups(string path);
+    }
 }
