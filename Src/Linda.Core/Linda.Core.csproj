@@ -50,6 +50,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigGroup.cs" />
+    <Compile Include="ConfigSource.cs" />
     <Compile Include="ConfigurationFolderContainer.cs" />
     <Compile Include="DefaultConfigurationManager.cs" />
     <Compile Include="IConfigSourceProvider.cs" />
