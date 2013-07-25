@@ -5,4 +5,5 @@
     public interface IConfigSourceProvider
     {
         IEnumerable<ConfigGroup> GetConfigGroups(string path);    }
+
 }
