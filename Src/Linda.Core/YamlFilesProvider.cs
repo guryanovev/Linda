@@ -4,13 +4,14 @@
     using System.IO;
     using System.Text;
 
+    // TODO изменить поадекватнее=)
     public static class YamlFilesProvider
     {
-        public static string GetConfigSourceContent(ConfigSource cs)
+        public static string GetConfigSourceContent(ConfigSource configSource)
         {
-            if (File.Exists(cs.Path))
+            if (File.Exists(configSource.Path))
             {
-                using (var sr = new StreamReader(cs.Path))
+                using (var sr = new StreamReader(configSource.Path))
                 {
                     return sr.ReadToEnd();
                 }
@@ -21,17 +22,17 @@
 
         public static string GetConfigGroupContent(ConfigGroup configGroup)
         {
-            var folderContent = new StringBuilder();
+            var configGroupContent = new StringBuilder();
 
             foreach (var configSource in configGroup)
             {
-                folderContent.AppendLine(GetConfigSourceContent(configSource));
+                configGroupContent.AppendLine(GetConfigSourceContent(configSource));
             }
 
-            return folderContent.ToString();
+            return configGroupContent.ToString();
         }
 
-        public static string GetAllConfigContent(List<ConfigGroup> configGroups)
+        public static string GetAllConfigContent(IEnumerable<ConfigGroup> configGroups)
         {
             var content = new StringBuilder();
 

@@ -5,21 +5,21 @@
 
     public class ConfigGroup : IEnumerable<ConfigSource>
     {
-        private readonly List<ConfigSource> _confSource;
+        private readonly IList<ConfigSource> _configSource;
 
         public ConfigGroup()
         {
-            this._confSource = new List<ConfigSource>();
+            this._configSource = new List<ConfigSource>();
         }
 
         public void AddConfigSource(ConfigSource cs)
         {
-            this._confSource.Add(cs);
+            this._configSource.Add(cs);
         }
 
         public IEnumerator<ConfigSource> GetEnumerator()
         {
-            return this._confSource.GetEnumerator();
+            return this._configSource.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

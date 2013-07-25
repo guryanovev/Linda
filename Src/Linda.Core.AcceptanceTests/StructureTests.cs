@@ -8,8 +8,8 @@
         [Test]
         public void Tests_MultipleFiles_ShouldMergeValues()
         {
-            CreateFile("config/config1.yaml", "Bar: barValue");
-            CreateFile("config/config2.yaml", "Foo: fooValue");
+            CreateFile("config/config1.yml", "Bar: barValue");
+            CreateFile("config/config2.yml", "Foo: fooValue");
 
             var config = LoadConfig<SimpleConfig>();
 

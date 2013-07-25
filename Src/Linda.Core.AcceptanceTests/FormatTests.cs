@@ -9,7 +9,7 @@
         public void Test_SimpleConfig_ShouldLoadConfiguration()
         {
             CreateFile(
-                "config/config1.yaml",
+                "config/config1.yml",
 @"Foo: fooValue
 Bar: barValue");
 
@@ -24,7 +24,7 @@ Bar: barValue");
         public void Test_GrapthConfig_ShouldLoadConfiguration()
         {
             CreateFile(
-                "config/config1.yaml",
+                "config/config1.yml",
 @"ChildConfig:
     Foo: fooValue
     Bar: barValue");

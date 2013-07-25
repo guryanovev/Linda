@@ -2,11 +2,19 @@
 {
     public class ConfigSource
     {
-        public readonly string Path;
+        private readonly string _path;
 
         public ConfigSource(string path)
         {
-            this.Path = path;
+            this._path = path;
+        }
+
+        public string Path
+        {
+            get
+            {
+                return _path;
+            }
         }
     }
 }

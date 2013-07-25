@@ -5,34 +5,34 @@
 
     public class ConfigFolderContainer : IConfigSourceProvider
     {
-        public List<ConfigGroup> GetConfigGroups(string path)
+        public IEnumerable<ConfigGroup> GetConfigGroups(string path)
         {
-            var newConfFolders = new List<ConfigGroup>();
+            var newConfigFolders = new List<ConfigGroup>();
 
             var dir = new DirectoryInfo(path);
 
             while (dir != null)
             {
-                var cg = new ConfigGroup();
+                var newConfigGroup = new ConfigGroup();
 
-                if (Directory.Exists(dir.FullName + "/config/"))
+                if (Directory.Exists(Path.Combine(dir.FullName, "config")))
                 {
-                    var yamlFiles = Directory.GetFiles(dir.FullName + "/config/", "*.yaml");
+                    var yamlFiles = Directory.GetFiles(Path.Combine(dir.FullName, "config"), "*.yml");
 
                     foreach (var yamlFile in yamlFiles)
                     {
-                        cg.AddConfigSource(new ConfigSource(yamlFile)); 
+                        newConfigGroup.AddConfigSource(new ConfigSource(yamlFile)); 
                     }
 
-                    newConfFolders.Add(cg);
+                    newConfigFolders.Add(newConfigGroup);
                 }  
 
                 dir = dir.Parent;
             }
 
-            newConfFolders.Reverse();
+            newConfigFolders.Reverse();
 
-            return newConfFolders;
+            return newConfigFolders;
         }
     }
 }

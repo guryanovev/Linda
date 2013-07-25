@@ -8,8 +8,8 @@
         [Test]
         public void Test_SameValueOnMultipleValues_ShouldUseBottomLevelValue()
         {
-            CreateFile("config/config.yaml", "Foo: topLevelValue");
-            CreateFile("app/config/config.yaml", "Foo: appLevelValue");
+            CreateFile("config/config.yml", "Foo: topLevelValue");
+            CreateFile("app/config/config.yml", "Foo: appLevelValue");
 
             var config = LoadConfig<SimpleConfig>("app");
 
@@ -20,8 +20,8 @@
         [Test]
         public void Test_DifferentValuesOnDifferentLevels_ShouldMergeValues()
         {
-            CreateFile("config/config.yaml", "Foo: fooValue");
-            CreateFile("app/config/config.yaml", "Bar: barValue");
+            CreateFile("config/config.yml", "Foo: fooValue");
+            CreateFile("app/config/config.yml", "Bar: barValue");
 
             var config = LoadConfig<SimpleConfig>("app");
 
