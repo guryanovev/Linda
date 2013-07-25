@@ -6,7 +6,7 @@
 
         public ConfigSource(string path)
         {
-            this._path = path;
+            _path = path;
         }
 
         public string Path

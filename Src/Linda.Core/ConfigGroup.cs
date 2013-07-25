@@ -9,22 +9,22 @@
 
         public ConfigGroup()
         {
-            this._configSource = new List<ConfigSource>();
+            _configSource = new List<ConfigSource>();
         }
 
         public void AddConfigSource(ConfigSource cs)
         {
-            this._configSource.Add(cs);
+            _configSource.Add(cs);
         }
 
         public IEnumerator<ConfigSource> GetEnumerator()
         {
-            return this._configSource.GetEnumerator();
+            return _configSource.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
     }
 }

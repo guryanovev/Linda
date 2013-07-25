@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.IO;
-
     using YamlDotNet.RepresentationModel.Serialization;
 
     public class DefaultConfigManager : IConfigManager
@@ -11,7 +10,7 @@
 
         private readonly string _configRoot;
 
-        private readonly IEnumerable<ConfigGroup> _configGroups;
+        private IEnumerable<ConfigGroup> _configGroups;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultConfigManager"/> class. 
@@ -24,12 +23,16 @@
         {
             _configSourceProvider = configSourceProvider;
             _configRoot = configRoot;
-            _configGroups = this._configSourceProvider.GetConfigGroups(this._configRoot);
         }
 
         public TConfig GetConfig<TConfig>()
         {
-            var content = YamlFilesProvider.GetAllConfigContent(this._configGroups);
+            if (_configGroups == null)
+            {
+                _configGroups = _configSourceProvider.GetConfigGroups(_configRoot);
+            }
+
+            var content = YamlFilesProvider.GetAllConfigContent(_configGroups);
 
             return new Deserializer().Deserialize<TConfig>(new StringReader(content)); 
         }
