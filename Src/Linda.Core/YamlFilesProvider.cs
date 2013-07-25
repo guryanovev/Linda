@@ -34,14 +34,14 @@ namespace Linda.Core
 
         public static string GetAllConfigContent(List<ConfigGroup> configGroups)
         {
-            var folderContent = new StringBuilder();
+            var content = new StringBuilder();
 
             foreach (var configGroup in configGroups)
             {
-                folderContent.AppendLine(GetConfigGroupContent(configGroup));
+                content.AppendLine(GetConfigGroupContent(configGroup));
             }
 
-            return folderContent.ToString();
+            return content.ToString();
         }
     }
 }
