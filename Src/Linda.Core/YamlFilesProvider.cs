@@ -1,16 +1,17 @@
 ﻿
 namespace Linda.Core
 {
+    using System.Collections.Generic;
     using System.IO;
     using System.Text;
 
     public static class YamlFilesProvider
     {
-        public static string GetFileContent(string path)
+        public static string GetConfigSourceContent(ConfigSource cs)
         {
-            if (File.Exists(path))
+            if (File.Exists(cs.Path))
             {
-                using (var sr = new StreamReader(path))
+                using (var sr = new StreamReader(cs.Path))
                 {
                     return sr.ReadToEnd();
                 }
@@ -19,15 +20,25 @@ namespace Linda.Core
             throw new FileNotFoundException();
         }
 
-        public static string GetFolderConfigContent(string path)
+        public static string GetConfigGroupContent(ConfigGroup configGroup)
         {
-            var files = Directory.GetFiles(path, "*.yaml");
-
             var folderContent = new StringBuilder();
 
-            foreach (var file in files)
+            foreach (var configSource in configGroup)
             {
-                folderContent.AppendLine(GetFileContent(file));
+                folderContent.AppendLine(GetConfigSourceContent(configSource));
+            }
+
+            return folderContent.ToString();
+        }
+
+        public static string GetAllConfigContent(List<ConfigGroup> configGroups)
+        {
+            var folderContent = new StringBuilder();
+
+            foreach (var configGroup in configGroups)
+            {
+                folderContent.AppendLine(GetConfigGroupContent(configGroup));
             }
 
             return folderContent.ToString();

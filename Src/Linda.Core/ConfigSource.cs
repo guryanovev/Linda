@@ -2,11 +2,11 @@
 {
     public class ConfigSource
     {
-        private readonly string _path;
+        public readonly string Path;
 
         public ConfigSource(string path)
         {
-            _path = path;
+            this.Path = path;
         }
     }
 }
