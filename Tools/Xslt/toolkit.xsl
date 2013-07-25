@@ -11,7 +11,7 @@
 <xsl:param name="sys.os.version" />
 <xsl:param name="sys.clr.version" />
 
-<msxsl:script language="C#" implements-prefix="nunit2report">
+  <!--msxsl:script language="C#" implements-prefix="nunit2report">
 	
 	public string TestCaseName(string path) {
 	
@@ -20,7 +20,7 @@
 	return(a[a.Length-1]);
 	}
 
-</msxsl:script>
+</msxsl:script-->
 
 <!--
     TO DO
@@ -255,17 +255,17 @@
 				<xsl:when test="$result = 'Failure' or $result = 'Error'">&#160;<a title="Show/Hide message error">
 					<xsl:attribute name="href">javascript:Toggle('<xsl:value-of select="$newid"/>')</xsl:attribute>
 					<xsl:attribute name="class">error</xsl:attribute>
-					<xsl:value-of select="nunit2report:TestCaseName(./@name)"/>
+					<xsl:value-of select="./@name"/>
 					</a>
 				</xsl:when>
 				<xsl:when test="$result = 'Ignored'">&#160;<a title="Show/Hide message error">
 					<xsl:attribute name="href">javascript:Toggle('<xsl:value-of select="$newid"/>')</xsl:attribute>
 					<xsl:attribute name="class">ignored</xsl:attribute>
-					<xsl:value-of select="nunit2report:TestCaseName(./@name)"/>
+					<xsl:value-of select="./@name"/>
 					</a>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:attribute name="class">method</xsl:attribute>&#160;<xsl:value-of select="nunit2report:TestCaseName(./@name)"/>
+					<xsl:attribute name="class">method</xsl:attribute>&#160;<xsl:value-of select="./@name"/>
 				</xsl:otherwise>
 			</xsl:choose>
 		</td>
