@@ -1,5 +1,10 @@
 ﻿namespace Linda.Core
 {
+    using System.IO;
+    using System.Text;
+
+    using YamlDotNet.RepresentationModel.Serialization;
+
     public class DefaultConfigurationManager : IConfigurationManager
     {
         private readonly string _configurationRoot;
@@ -19,6 +24,16 @@
 
         public TConfiguration GetConfiguration<TConfiguration>()
         {
+            confCont.ConfigFolders.Sort((cf1, cf2) => cf1.Path.Length - cf2.Path.Length);
+
+            var bigStr = new StringBuilder();
+
+            foreach (var file in confCont)
+            {
+                bigStr.AppendLine(file.Content);
+            }
+
+            return new Deserializer().Deserialize<TConfiguration>(new StringReader(bigStr.ToString()));
         }
 
         private ConfigurationFolderContainer LoadConfigurationFiles()

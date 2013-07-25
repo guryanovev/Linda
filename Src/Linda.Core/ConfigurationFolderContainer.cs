@@ -41,7 +41,10 @@ namespace Linda.Core
             {
                 level++;
 
-                newConfFolders.Add(new ConfigurationFolder(this.GetFolderConfigContent(dir.FullName), dir.FullName));
+                if (Directory.Exists(dir.FullName + "/config/"))
+                {
+                    newConfFolders.Add(new ConfigurationFolder(this.GetFolderConfigContent(dir.FullName + "/config/"), dir.FullName));
+                }
 
                 dir = dir.Parent;
             }
@@ -64,13 +67,13 @@ namespace Linda.Core
 
         private string GetFolderConfigContent(string path)
         {
-            var files = Directory.GetFiles(path + "/*.yaml");
+            var files = Directory.GetFiles(path, "*.yaml");
 
             var folderContent = new StringBuilder();
 
             foreach (var file in files)
             {
-                folderContent.Append(GetFileContent(file));
+                folderContent.AppendLine(GetFileContent(file));
             }
 
             return folderContent.ToString();
