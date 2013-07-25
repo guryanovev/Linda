@@ -8,9 +8,11 @@
 
     public class DefaultConfigurationManager : IConfigurationManager
     {
+        private readonly IConfigSourceProvider configSourceProvider;
+
         private readonly string _configurationRoot;
 
-        private readonly List<ConfigGroup> confCont;
+        private List<ConfigGroup> confCont;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultConfigurationManager"/> class. 
@@ -18,32 +20,19 @@
         /// <param name="configurationRoot">
         /// full path to config root directory
         /// </param>
-        public DefaultConfigurationManager(string configurationRoot, IConfigSourceProvider csp)
+        public DefaultConfigurationManager(string configurationRoot, IConfigSourceProvider configSourceProvider)
         {
+            this.configSourceProvider = configSourceProvider;
             _configurationRoot = configurationRoot;
-           // confCont = this.LoadConfigurationFiles();
-            confCont = csp.GetCs(configurationRoot);
         }
 
         public TConfiguration GetConfiguration<TConfiguration>()
         {
-            confCont.ConfigFolders.Sort((cf1, cf2) => cf1.Path.Length - cf2.Path.Length);
+            confCont = configSourceProvider.GetCs(_configurationRoot);
 
-            var bigStr = new StringBuilder();
+            var content = YamlFilesProvider.GetAllConfigContent(confCont);
 
-            foreach (var file in confCont)
-            {
-                bigStr.AppendLine(file.Content);
-            }
-
-            return new Deserializer().Deserialize<TConfiguration>(new StringReader(bigStr.ToString()));
-
-            
-        }
-
-        private ConfigurationFolderContainer LoadConfigurationFiles()
-        {
-            return new ConfigurationFolderContainer(_configurationRoot);
+            return new Deserializer().Deserialize<TConfiguration>(new StringReader(content)); 
         }
     }
 }
