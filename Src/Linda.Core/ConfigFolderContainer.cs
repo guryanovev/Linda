@@ -20,18 +20,20 @@
 
                 if (Directory.Exists(dir.FullName + "/config/"))
                 {
-                    var yamlFiles = dir.GetFiles("*.yaml");
+                    var yamlFiles = Directory.GetFiles(dir.FullName + "/config/", "*.yaml");
 
                     foreach (var yamlFile in yamlFiles)
                     {
-                        cg.AddConfigSource(new ConfigSource(yamlFile.FullName));
+                        cg.AddConfigSource(new ConfigSource(yamlFile)); 
                     }
-                }
 
-                newConfFolders.Add(cg);
+                    newConfFolders.Add(cg);
+                }  
 
                 dir = dir.Parent;
             }
+
+            newConfFolders.Reverse();
 
             return newConfFolders;
         }
