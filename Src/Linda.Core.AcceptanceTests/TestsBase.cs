@@ -26,7 +26,7 @@
         /// <typeparam name="TConfig">type of configuration</typeparam>
         /// <param name="relativePath">relative path to configuration root directory</param>
         /// <returns>configuration object</returns>
-        protected TConfig LoadConfig<TConfig>(string relativePath = null)
+        protected TConfig LoadConfig<TConfig>(string relativePath = null) where TConfig : new()
         {
             var manager = new DefaultConfigManager(GetFullPath(relativePath), new ConfigFolderContainer());
             return manager.GetConfig<TConfig>();

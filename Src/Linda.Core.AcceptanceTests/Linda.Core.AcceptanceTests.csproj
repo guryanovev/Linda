@@ -53,10 +53,13 @@
     <Compile Include="FormatTests.cs" />
     <Compile Include="HierarchyTests.cs" />
     <Compile Include="StructureTests.cs" />
+    <Compile Include="Support\AllTypeConfig.cs" />
     <Compile Include="Support\ParentConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\SimpleConfig.cs" />
+    <Compile Include="Support\StructConfig.cs" />
     <Compile Include="TestsBase.cs" />
+    <Compile Include="AllTypeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

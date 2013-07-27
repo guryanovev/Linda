@@ -57,6 +57,7 @@ namespace Linda.Core
             return (TConfig)resultConfig;
         }
 
+        // TODO Перенести это в отдельный класс
         public void Converter(object source, ref object result)
         {
             if (!(source is Dictionary<object, object>))
