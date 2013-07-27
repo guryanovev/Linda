@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DictToObjectConverter.cs" />
     <Compile Include="YamlConfigSourceProvider.cs" />
     <Compile Include="ConfigGroup.cs" />
     <Compile Include="ConfigSource.cs" />
