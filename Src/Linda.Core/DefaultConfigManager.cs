@@ -40,8 +40,6 @@ namespace Linda.Core
                 _configGroups = _configSourceProvider.GetConfigGroups(_configRoot, new YamlFilesProvider());
             }
 
-            //var content = YamlFilesProvider.GetAllConfigContent(_configGroups);
-
             var resultConfig = new TConfig();
 
             var converter = new DictToObjectConverter();
