@@ -2,6 +2,6 @@
 {
     public interface IConfigManager
     {
-        TConfig GetConfig<TConfig>();
+        TConfig GetConfig<TConfig>() where TConfig : new();
     }
 }
