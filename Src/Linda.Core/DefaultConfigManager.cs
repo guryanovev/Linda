@@ -39,51 +39,55 @@ namespace Linda.Core
                 _configGroups = _configSourceProvider.GetConfigGroups(_configRoot);
             }
 
-            var content = YamlFilesProvider.GetAllConfigContent(_configGroups);
+            //var content = YamlFilesProvider.GetAllConfigContent(_configGroups);
 
-            var des = new Deserializer().Deserialize(new StringReader(content));
+            object resultConfig = new TConfig();
 
-            var res = (TConfig)Converter((Dictionary<object, object>)des, typeof(TConfig));
+            Mapper.CreateMap<TConfig, TConfig>();
 
-            return res;
+            foreach (var configGroup in _configGroups)
+            {
+                var content = YamlFilesProvider.GetConfigGroupContent(configGroup);
+
+                var sourceGroup = new Deserializer().Deserialize(new StringReader(content));
+
+                Converter(sourceGroup, ref resultConfig);
+            }
+
+            return (TConfig)resultConfig;
         }
 
-        public object Converter(Dictionary<object, object> source, Type destType)
+        public void Converter(object source, ref object result)
         {
-            var result = Activator.CreateInstance(destType);
+            if (!(source is Dictionary<object, object>))
+            {
+                result = Convert.ChangeType(source, result.GetType());
+                return;
+            }
 
+            var sourceDictionary = source as Dictionary<object, object>;
+            var destType = result.GetType();
             var properties = destType.GetProperties();
 
-            foreach (var element in source)
+            foreach (var element in sourceDictionary)
             {
                 try
                 {
-                    PropertyInfo pInfo = properties.Single(p => p.Name == (string) element.Key);
+                    var pInfo = properties.Single(p => p.Name == (string) element.Key);
 
                     var propertyType = pInfo.PropertyType;
 
-                    object tmpresult;
+                    var tmpresult = propertyType != typeof (string) ? Activator.CreateInstance(propertyType) : string.Empty;
 
-                    //var value = Convert((Dictionary<object, object>)element.Value, type);
-
-                    var elementType = element.Value.GetType();
-
-
-                    if (!elementType.IsValueType && elementType.Name != "String")
-                        tmpresult = Converter((Dictionary<object, object>) element.Value, propertyType);
-                    else
-                        tmpresult = Convert.ChangeType(element.Value, propertyType);
+                    Converter(element.Value, ref tmpresult);
 
                     pInfo.SetValue(result, tmpresult, null);
-
                 }
                 catch (InvalidOperationException ex)
                 {
 
                 }
             }
-
-            return result;
         }
     }
 }
