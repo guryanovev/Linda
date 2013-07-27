@@ -28,7 +28,7 @@
         /// <returns>configuration object</returns>
         protected TConfig LoadConfig<TConfig>(string relativePath = null) where TConfig : new()
         {
-            var manager = new DefaultConfigManager(GetFullPath(relativePath), new ConfigFolderContainer());
+            var manager = new DefaultConfigManager(GetFullPath(relativePath), new YamlConfigSourceProvider());
             return manager.GetConfig<TConfig>();
         }
 

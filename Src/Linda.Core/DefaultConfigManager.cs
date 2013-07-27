@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Globalization;
 using System.Reflection;
 using YamlDotNet.RepresentationModel;
 using System.Linq;
@@ -36,18 +37,16 @@ namespace Linda.Core
         {
             if (_configGroups == null)
             {
-                _configGroups = _configSourceProvider.GetConfigGroups(_configRoot);
+                _configGroups = _configSourceProvider.GetConfigGroups(_configRoot, new YamlFilesProvider());
             }
 
             //var content = YamlFilesProvider.GetAllConfigContent(_configGroups);
 
             object resultConfig = new TConfig();
 
-            Mapper.CreateMap<TConfig, TConfig>();
-
             foreach (var configGroup in _configGroups)
             {
-                var content = YamlFilesProvider.GetConfigGroupContent(configGroup);
+                var content = ConfigContentProvider.GetConfigGroupContent(configGroup);
 
                 var sourceGroup = new Deserializer().Deserialize(new StringReader(content));
 
