@@ -19,17 +19,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
-using YamlDotNet.RepresentationModel.Serialization.NamingConventions;
-using YamlDotNet.RepresentationModel.Serialization.NodeDeserializers;
-using YamlDotNet.RepresentationModel.Serialization.NodeTypeResolvers;
-
 namespace Linda.Core
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using YamlDotNet.Core;
+    using YamlDotNet.Core.Events;
+    using YamlDotNet.RepresentationModel.Serialization.NamingConventions;
+    using YamlDotNet.RepresentationModel.Serialization.NodeDeserializers;
+    using YamlDotNet.RepresentationModel.Serialization.NodeTypeResolvers;
     using YamlDotNet.RepresentationModel.Serialization;
 
     /// <summary>
@@ -47,8 +46,8 @@ namespace Linda.Core
 			{ "tag:yaml.org,2002:timestamp", typeof(DateTime) },
 		};
 
-        private readonly Dictionary<string, Type> tagMappings;
-        private readonly List<IYamlTypeConverter> converters;
+        private readonly Dictionary<string, Type> _tagMappings;
+        private readonly List<IYamlTypeConverter> _converters;
         private TypeDescriptorProxy typeDescriptor = new TypeDescriptorProxy();
         private IValueDeserializer valueDeserializer;
 
@@ -83,9 +82,9 @@ namespace Linda.Core
                     )
                 );
 
-            converters = new List<IYamlTypeConverter>();
+            this._converters = new List<IYamlTypeConverter>();
             NodeDeserializers = new List<INodeDeserializer>();
-            NodeDeserializers.Add(new TypeConverterNodeDeserializer(converters));
+            NodeDeserializers.Add(new TypeConverterNodeDeserializer(this._converters));
             NodeDeserializers.Add(new NullNodeDeserializer());
             NodeDeserializers.Add(new ScalarNodeDeserializer());
             NodeDeserializers.Add(new ArrayNodeDeserializer());
@@ -94,32 +93,30 @@ namespace Linda.Core
             NodeDeserializers.Add(new GenericCollectionNodeDeserializer(objectFactory));
             NodeDeserializers.Add(new NonGenericListNodeDeserializer(objectFactory));
             NodeDeserializers.Add(new EnumerableNodeDeserializer());
-
             NodeDeserializers.Add(new MyObjectNodeDeserializer(objectFactory, typeDescriptor));
 
-            tagMappings = new Dictionary<string, Type>(predefinedTagMappings);
-            TypeResolvers = new List<INodeTypeResolver>();
-            TypeResolvers.Add(new TagNodeTypeResolver(tagMappings));
-            TypeResolvers.Add(new TypeNameInTagNodeTypeResolver());
-            TypeResolvers.Add(new DefaultContainersNodeTypeResolver());
+            this._tagMappings = new Dictionary<string, Type>(predefinedTagMappings);
+            TypeResolvers = new List<INodeTypeResolver>
+                                {
+                                    new TagNodeTypeResolver(this._tagMappings),
+                                    new TypeNameInTagNodeTypeResolver(),
+                                    new DefaultContainersNodeTypeResolver()
+                                };
 
             valueDeserializer =
                 new AliasValueDeserializer(
                     new NodeValueDeserializer(
-                        NodeDeserializers,
-                        TypeResolvers
-                    )
-                );
+                        NodeDeserializers, TypeResolvers));
         }
 
         public void RegisterTagMapping(string tag, Type type)
         {
-            tagMappings.Add(tag, type);
+            this._tagMappings.Add(tag, type);
         }
 
         public void RegisterTypeConverter(IYamlTypeConverter typeConverter)
         {
-            converters.Add(typeConverter);
+            this._converters.Add(typeConverter);
         }
 
         public T Deserialize<T>(TextReader input)
