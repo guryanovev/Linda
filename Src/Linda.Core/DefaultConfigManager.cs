@@ -40,18 +40,11 @@ namespace Linda.Core
                 _configGroups = _configSourceProvider.GetConfigGroups(_configRoot, new YamlFilesProvider());
             }
 
-            var resultConfig = new TConfig();
+            var content = ConfigContentProvider.GetAllConfigContent(_configGroups);
 
-            var converter = new DictToObjectConverter();
+            var resultConfig = new MyDeserializer().Deserialize<TConfig>(new StringReader(content));
 
-            foreach (var configGroup in _configGroups)
-            {
-                var content = ConfigContentProvider.GetConfigGroupContent(configGroup);
 
-                var sourceGroup = new Deserializer().Deserialize(new StringReader(content));
-
-                converter.Convert(sourceGroup, ref resultConfig);
-            }
 
             return resultConfig;
         }
