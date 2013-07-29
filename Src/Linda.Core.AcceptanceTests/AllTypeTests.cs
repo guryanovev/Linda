@@ -9,7 +9,7 @@ namespace Linda.Core.AcceptanceTests
     class AllTypeTests : TestsBase
     {
         [Test]
-        [Culture("")]
+        [Culture("en-US")]
         public void Test_AllTypeConfig()
         {
             CreateFile(
