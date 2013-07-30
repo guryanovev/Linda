@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Globalization;
-using System.Reflection;
-using YamlDotNet.RepresentationModel;
-using System.Linq;
-
-namespace Linda.Core
+﻿namespace Linda.Core
 {
-    using AutoMapper;
     using System.Collections.Generic;
     using System.IO;
-    using YamlDotNet.RepresentationModel.Serialization;
 
     public class DefaultConfigManager : IConfigManager
     {
