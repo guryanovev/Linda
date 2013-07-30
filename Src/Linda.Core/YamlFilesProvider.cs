@@ -8,11 +8,11 @@
         {
             var newConfigGroup = new ConfigGroup();
 
-            var yamlFiles = Directory.GetFiles(path, "*.yml");
+            var yamlFiles = new DirectoryInfo(path).GetFiles("*.yml");
 
             foreach (var yamlFile in yamlFiles)
             {
-                newConfigGroup.AddConfigSource(new ConfigSource(yamlFile));
+                newConfigGroup.AddConfigSource(new ConfigSource(yamlFile.FullName));
             }
 
             return newConfigGroup;

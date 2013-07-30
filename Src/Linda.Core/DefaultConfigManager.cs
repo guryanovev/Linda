@@ -40,7 +40,7 @@ namespace Linda.Core
                 _configGroups = _configSourceProvider.GetConfigGroups(_configRoot, new YamlFilesProvider());
             }
 
-            var content = ConfigContentProvider.GetAllConfigContent(_configGroups);
+            var content = new ConfigContentProvider().GetAllConfigContent(_configGroups);
 
             if (content == string.Empty)
             {

@@ -4,9 +4,9 @@
     using System.IO;
     using System.Text;
 
-    public static class ConfigContentProvider
+    public class ConfigContentProvider
     {
-        public static string GetConfigSourceContent(ConfigSource configSource)
+        public string GetConfigSourceContent(ConfigSource configSource)
         {
             if (File.Exists(configSource.Path))
             {
@@ -19,7 +19,7 @@
             throw new FileNotFoundException();
         }
 
-        public static string GetConfigGroupContent(ConfigGroup configGroup)
+        public string GetConfigGroupContent(ConfigGroup configGroup)
         {
             var configGroupContent = new StringBuilder();
 
@@ -31,13 +31,13 @@
             return configGroupContent.ToString();
         }
 
-        public static string GetAllConfigContent(IEnumerable<ConfigGroup> configGroups)
+        public string GetAllConfigContent(IEnumerable<ConfigGroup> configGroups)
         {
             var content = new StringBuilder();
 
             foreach (var configGroup in configGroups)
             {
-                content.AppendLine(GetConfigGroupContent(configGroup));
+                content.Append(GetConfigGroupContent(configGroup));
             }
 
             return content.ToString();
