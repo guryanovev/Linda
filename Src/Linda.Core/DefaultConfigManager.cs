@@ -42,14 +42,14 @@ namespace Linda.Core
 
             var content = ConfigContentProvider.GetAllConfigContent(_configGroups);
 
+            if (content == string.Empty)
+            {
+                return default(TConfig);
+            }
+
             var resultConfig = new MyDeserializer().Deserialize<TConfig>(new StringReader(content));
-
-
 
             return resultConfig;
         }
-
-        // TODO Перенести это в отдельный класс
-
     }
 }

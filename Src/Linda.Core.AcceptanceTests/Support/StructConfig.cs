@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Linda.Core.AcceptanceTests.Support
 {
-    struct SimpleStruct
+    internal struct SimpleStruct
     {
         public int Bar { get; set; }
 
         public string Baz { get; set; }
     }
 
-    class StructConfig
+    internal class StructConfig
     {
         public SimpleStruct ItIsStruct { get; set; }
     }

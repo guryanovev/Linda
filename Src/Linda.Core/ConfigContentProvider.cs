@@ -4,7 +4,6 @@
     using System.IO;
     using System.Text;
 
-    // TODO изменить поадекватнее=)
     public static class ConfigContentProvider
     {
         public static string GetConfigSourceContent(ConfigSource configSource)
