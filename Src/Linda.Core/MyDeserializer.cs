@@ -1,101 +1,64 @@
-﻿//  This file is part of YamlDotNet - A .NET library for YAML.
-//  Copyright (c) 2008, 2009, 2010, 2011, 2012, 2013 Antoine Aubry
-
-//  Permission is hereby granted, free of charge, to any person obtaining a copy of
-//  this software and associated documentation files (the "Software"), to deal in
-//  the Software without restriction, including without limitation the rights to
-//  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-//  of the Software, and to permit persons to whom the Software is furnished to do
-//  so, subject to the following conditions:
-
-//  The above copyright notice and this permission notice shall be included in all
-//  copies or substantial portions of the Software.
-
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-//  SOFTWARE.
-
-namespace Linda.Core
+﻿namespace Linda.Core
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
+
     using YamlDotNet.Core;
     using YamlDotNet.Core.Events;
+    using YamlDotNet.RepresentationModel.Serialization;
     using YamlDotNet.RepresentationModel.Serialization.NamingConventions;
     using YamlDotNet.RepresentationModel.Serialization.NodeDeserializers;
     using YamlDotNet.RepresentationModel.Serialization.NodeTypeResolvers;
-    using YamlDotNet.RepresentationModel.Serialization;
 
     /// <summary>
-    /// A faзade for the YAML library with the standard configuration.
+    /// A fasade for the YAML library with the standard configuration.
     /// </summary>
     public sealed class MyDeserializer
     {
-        private static readonly Dictionary<string, Type> predefinedTagMappings = new Dictionary<string, Type>
+        private static readonly Dictionary<string, Type> PredefinedTagMappings = new Dictionary<string, Type>
 		{
 			{ "tag:yaml.org,2002:map", typeof(Dictionary<object, object>) },
 			{ "tag:yaml.org,2002:bool", typeof(bool) },
-			{ "tag:yaml.org,2002:float", typeof(double) },
-			{ "tag:yaml.org,2002:int", typeof(int) },
+            { "tag:yaml.org,2002:float", typeof(double) },
+            { "tag:yaml.org,2002:int", typeof(int) },
 			{ "tag:yaml.org,2002:str", typeof(string) },
 			{ "tag:yaml.org,2002:timestamp", typeof(DateTime) },
 		};
 
         private readonly Dictionary<string, Type> _tagMappings;
         private readonly List<IYamlTypeConverter> _converters;
-        private TypeDescriptorProxy typeDescriptor = new TypeDescriptorProxy();
-        private IValueDeserializer valueDeserializer;
-
-        public IList<INodeDeserializer> NodeDeserializers { get; private set; }
-        public IList<INodeTypeResolver> TypeResolvers { get; private set; }
-
-        private class TypeDescriptorProxy : ITypeDescriptor
-        {
-            public ITypeDescriptor TypeDescriptor;
-
-            public IEnumerable<IPropertyDescriptor> GetProperties(Type type)
-            {
-                return TypeDescriptor.GetProperties(type);
-            }
-
-            public IPropertyDescriptor GetProperty(Type type, string name)
-            {
-                return TypeDescriptor.GetProperty(type, name);
-            }
-        }
+        private readonly TypeDescriptorProxy _typeDescriptor = new TypeDescriptorProxy();
+        private readonly IValueDeserializer _valueDeserializer;
 
         public MyDeserializer(IObjectFactory objectFactory = null, INamingConvention namingConvention = null)
         {
             objectFactory = objectFactory ?? new DefaultObjectFactory();
             namingConvention = namingConvention ?? new NullNamingConvention();
 
-            typeDescriptor.TypeDescriptor =
+            this._typeDescriptor.TypeDescriptor =
                 new YamlAttributesTypeDescriptor(
                     new NamingConventionTypeDescriptor(
                         new ReadableAndWritablePropertiesTypeDescriptor(),
-                        namingConvention
-                    )
-                );
+                        namingConvention));
 
             this._converters = new List<IYamlTypeConverter>();
-            NodeDeserializers = new List<INodeDeserializer>();
-            NodeDeserializers.Add(new TypeConverterNodeDeserializer(this._converters));
-            NodeDeserializers.Add(new NullNodeDeserializer());
-            NodeDeserializers.Add(new ScalarNodeDeserializer());
-            NodeDeserializers.Add(new ArrayNodeDeserializer());
-            NodeDeserializers.Add(new GenericDictionaryNodeDeserializer(objectFactory));
-            NodeDeserializers.Add(new NonGenericDictionaryNodeDeserializer(objectFactory));
-            NodeDeserializers.Add(new GenericCollectionNodeDeserializer(objectFactory));
-            NodeDeserializers.Add(new NonGenericListNodeDeserializer(objectFactory));
-            NodeDeserializers.Add(new EnumerableNodeDeserializer());
-            NodeDeserializers.Add(new MyObjectNodeDeserializer(objectFactory, typeDescriptor));
+            NodeDeserializers = new List<INodeDeserializer>
+                                    {
+                                        new TypeConverterNodeDeserializer(this._converters),
+                                        new NullNodeDeserializer(),
+                                        new ScalarNodeDeserializer(),
+                                        new ArrayNodeDeserializer(),
+                                        new GenericDictionaryNodeDeserializer(objectFactory),
+                                        new NonGenericDictionaryNodeDeserializer(objectFactory),
+                                        new GenericCollectionNodeDeserializer(objectFactory),
+                                        new NonGenericListNodeDeserializer(objectFactory),
+                                        new EnumerableNodeDeserializer(),
+                                        new MyObjectNodeDeserializer(
+                                            objectFactory, this._typeDescriptor)
+                                    };
 
-            this._tagMappings = new Dictionary<string, Type>(predefinedTagMappings);
+            this._tagMappings = new Dictionary<string, Type>(PredefinedTagMappings);
             TypeResolvers = new List<INodeTypeResolver>
                                 {
                                     new TagNodeTypeResolver(this._tagMappings),
@@ -103,11 +66,15 @@ namespace Linda.Core
                                     new DefaultContainersNodeTypeResolver()
                                 };
 
-            valueDeserializer =
+            this._valueDeserializer =
                 new AliasValueDeserializer(
                     new NodeValueDeserializer(
                         NodeDeserializers, TypeResolvers));
         }
+
+        public IList<INodeDeserializer> NodeDeserializers { get; private set; }
+
+        public IList<INodeTypeResolver> TypeResolvers { get; private set; }
 
         public void RegisterTagMapping(string tag, Type type)
         {
@@ -171,7 +138,7 @@ namespace Linda.Core
             {
                 using (var state = new SerializerState())
                 {
-                    result = valueDeserializer.DeserializeValue(reader, type, state, valueDeserializer);
+                    result = this._valueDeserializer.DeserializeValue(reader, type, state, this._valueDeserializer);
                 }
             }
 
@@ -186,6 +153,21 @@ namespace Linda.Core
             }
 
             return result;
+        }
+
+        private class TypeDescriptorProxy : ITypeDescriptor
+        {
+            public ITypeDescriptor TypeDescriptor;
+
+            public IEnumerable<IPropertyDescriptor> GetProperties(Type type)
+            {
+                return TypeDescriptor.GetProperties(type);
+            }
+
+            public IPropertyDescriptor GetProperty(Type type, string name)
+            {
+                return TypeDescriptor.GetProperty(type, name);
+            }
         }
     }
 }
