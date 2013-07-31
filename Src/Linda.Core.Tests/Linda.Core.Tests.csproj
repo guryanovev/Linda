@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultConfigManagerTests.cs" />
     <Compile Include="DeserializerTests.cs" />
     <Compile Include="DirectoryBasedConfigLookupTests.cs" />
     <Compile Include="FileBasedConfigLookupTests.cs" />

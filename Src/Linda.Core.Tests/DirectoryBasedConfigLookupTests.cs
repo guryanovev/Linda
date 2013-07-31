@@ -14,14 +14,12 @@
         [Test]
         public void OneFileTest()
         {
-            var fileSystemStub = new Mock<IFilesSystem>();
-
-            fileSystemStub.Setup(fs => fs.Exists(Path.Combine("this", "config"))).Returns(true);
-            fileSystemStub.Setup(fs => fs.GetFileContent("foo.yml")).Returns("Foo: FooValue");
-            fileSystemStub.Setup(fs => fs.GetFiles(Path.Combine("this", "config"))).Returns(new string[1] { "foo.yml" });
-            fileSystemStub.Setup(fs => fs.GetParentDirectory("this")).Returns((string)null);
-
-            var fileSystem = fileSystemStub.Object;
+            var fileSystem =
+                Mock.Of<IFilesSystem>(
+                    fs =>
+                    fs.Exists(Path.Combine("this", "config")) && fs.GetFileContent("foo.yml") == "Foo: FooValue"
+                    && fs.GetFiles(Path.Combine("this", "config")) == new string[1] { "foo.yml" }
+                    && fs.GetParentDirectory("this") == (string)null);
 
             var dbcl = new DirectoryBasedConfigLookup(fileSystem);
 
@@ -40,16 +38,14 @@
         [Test]
         public void SomeFilesTest()
         {
-            var fileSystemStub = new Mock<IFilesSystem>();
-
-            fileSystemStub.Setup(fs => fs.Exists(Path.Combine("this", "config"))).Returns(true);
-            fileSystemStub.Setup(fs => fs.GetFileContent("foo.yml")).Returns("Foo: FooValue");
-            fileSystemStub.Setup(fs => fs.GetFileContent("bar.yml")).Returns("Bar: BarValue");
-            fileSystemStub.Setup(fs => fs.GetFileContent("baz.yml")).Returns("Baz: BazValue");
-            fileSystemStub.Setup(fs => fs.GetFiles(Path.Combine("this", "config"))).Returns(new string[3] { "foo.yml", "bar.yml", "baz.yml" });
-            fileSystemStub.Setup(fs => fs.GetParentDirectory("this")).Returns((string)null);
-
-            var fileSystem = fileSystemStub.Object;
+            var fileSystem =
+                Mock.Of<IFilesSystem>(
+                    fs =>
+                    fs.Exists(Path.Combine("this", "config")) && fs.GetFileContent("foo.yml") == "Foo: FooValue"
+                    && fs.GetFileContent("bar.yml") == "Bar: BarValue"
+                    && fs.GetFileContent("baz.yml") == "Baz: BazValue"
+                    && fs.GetFiles(Path.Combine("this", "config")) == new string[3] { "foo.yml", "bar.yml", "baz.yml" }
+                    && fs.GetParentDirectory("this") == (string)null);
 
             var dbcl = new DirectoryBasedConfigLookup(fileSystem);
 
@@ -68,22 +64,21 @@
         [Test]
         public void HierarchyWithOneFilesTest()
         {
-            var fileSystemStub = new Mock<IFilesSystem>();
+            var fileSystem =
+                Mock.Of<IFilesSystem>(
+                    fs =>
+                    fs.Exists(Path.Combine("this", "config"))
+                    && fs.Exists(Path.Combine("underground", "config"))
+                    && fs.Exists(Path.Combine("core of the earth", "config"))
+                    && fs.GetFileContent("foo.yml") == "Foo: FooValue" && fs.GetFileContent("bar.yml") == "Bar: BarValue"
+                    && fs.GetFileContent("baz.yml") == "Baz: BazValue"
+                    && fs.GetFiles(Path.Combine("this", "config")) == new string[1] { "foo.yml" }
+                    && fs.GetFiles(Path.Combine("underground", "config")) == new string[1] { "bar.yml" }
+                    && fs.GetFiles(Path.Combine("core of the earth", "config")) == new string[1] { "baz.yml" }
+                    && fs.GetParentDirectory("this") == "underground"
+                    && fs.GetParentDirectory("underground") == "core of the earth"
+                    && fs.GetParentDirectory("core of the earth") == (string)null);
 
-            fileSystemStub.Setup(fs => fs.Exists(Path.Combine("this", "config"))).Returns(true);
-            fileSystemStub.Setup(fs => fs.Exists(Path.Combine("underground", "config"))).Returns(true);
-            fileSystemStub.Setup(fs => fs.Exists(Path.Combine("core of the earth", "config"))).Returns(true);
-            fileSystemStub.Setup(fs => fs.GetFileContent("foo.yml")).Returns("Foo: FooValue");
-            fileSystemStub.Setup(fs => fs.GetFileContent("bar.yml")).Returns("Bar: BarValue");
-            fileSystemStub.Setup(fs => fs.GetFileContent("baz.yml")).Returns("Baz: BazValue");
-            fileSystemStub.Setup(fs => fs.GetFiles(Path.Combine("this", "config"))).Returns(new string[1] { "foo.yml" });
-            fileSystemStub.Setup(fs => fs.GetFiles(Path.Combine("underground", "config"))).Returns(new string[1] { "bar.yml" });
-            fileSystemStub.Setup(fs => fs.GetFiles(Path.Combine("core of the earth", "config"))).Returns(new string[1] { "baz.yml" });
-            fileSystemStub.Setup(fs => fs.GetParentDirectory("this")).Returns("underground");
-            fileSystemStub.Setup(fs => fs.GetParentDirectory("underground")).Returns("core of the earth");
-            fileSystemStub.Setup(fs => fs.GetParentDirectory("core of the earth")).Returns((string)null);
-
-            var fileSystem = fileSystemStub.Object;
 
             var dbcl = new DirectoryBasedConfigLookup(fileSystem);
 
@@ -95,8 +90,6 @@
             {
                 content.Append(cg.RetrieveContent());
             }
-
-            var res = content.ToString();
 
             Assert.That(content.ToString(), Is.EqualTo("Baz: BazValue\r\nBar: BarValue\r\nFoo: FooValue\r\n"));
         }
@@ -104,25 +97,24 @@
         [Test]
         public void HierarchyWithSomeFilesTest()
         {
-            var fileSystemStub = new Mock<IFilesSystem>();
+            var fileSystem =
+                Mock.Of<IFilesSystem>(
+                    fs =>
+                    fs.Exists(Path.Combine("this", "config")) && fs.Exists(Path.Combine("underground", "config"))
+                    && fs.Exists(Path.Combine("core of the earth", "config"))
+                    && fs.GetFileContent("foo.yml") == "Foo: FooValue"
+                    && fs.GetFileContent("bar.yml") == "Bar: BarValue"
+                    && fs.GetFileContent("baz.yml") == "Baz: BazValue"
+                    && fs.GetFileContent("foo2.yml") == "Foo2: Foo2Value"
+                    && fs.GetFileContent("bar2.yml") == "Bar2: Bar2Value"
+                    && fs.GetFileContent("baz2.yml") == "Baz2: Baz2Value"
+                    && fs.GetFiles(Path.Combine("this", "config")) == new string[2] { "foo.yml", "foo2.yml" }
+                    && fs.GetFiles(Path.Combine("underground", "config")) == new string[2] { "bar.yml", "bar2.yml" }
+                    && fs.GetFiles(Path.Combine("core of the earth", "config")) == new string[2] { "baz.yml", "baz2.yml" }
+                    && fs.GetParentDirectory("this") == "underground"
+                    && fs.GetParentDirectory("underground") == "core of the earth"
+                    && fs.GetParentDirectory("core of the earth") == (string)null);
 
-            fileSystemStub.Setup(fs => fs.Exists(Path.Combine("this", "config"))).Returns(true);
-            fileSystemStub.Setup(fs => fs.Exists(Path.Combine("underground", "config"))).Returns(true);
-            fileSystemStub.Setup(fs => fs.Exists(Path.Combine("core of the earth", "config"))).Returns(true);
-            fileSystemStub.Setup(fs => fs.GetFileContent("foo.yml")).Returns("Foo: FooValue");
-            fileSystemStub.Setup(fs => fs.GetFileContent("bar.yml")).Returns("Bar: BarValue");
-            fileSystemStub.Setup(fs => fs.GetFileContent("baz.yml")).Returns("Baz: BazValue");
-            fileSystemStub.Setup(fs => fs.GetFileContent("foo2.yml")).Returns("Foo2: Foo2Value");
-            fileSystemStub.Setup(fs => fs.GetFileContent("bar2.yml")).Returns("Bar2: Bar2Value");
-            fileSystemStub.Setup(fs => fs.GetFileContent("baz2.yml")).Returns("Baz2: Baz2Value");
-            fileSystemStub.Setup(fs => fs.GetFiles(Path.Combine("this", "config"))).Returns(new string[2] { "foo.yml", "foo2.yml" });
-            fileSystemStub.Setup(fs => fs.GetFiles(Path.Combine("underground", "config"))).Returns(new string[2] { "bar.yml", "foo2.yml" });
-            fileSystemStub.Setup(fs => fs.GetFiles(Path.Combine("core of the earth", "config"))).Returns(new string[2] { "baz.yml", "baz2.yml" });
-            fileSystemStub.Setup(fs => fs.GetParentDirectory("this")).Returns("underground");
-            fileSystemStub.Setup(fs => fs.GetParentDirectory("underground")).Returns("core of the earth");
-            fileSystemStub.Setup(fs => fs.GetParentDirectory("core of the earth")).Returns((string)null);
-
-            var fileSystem = fileSystemStub.Object;
 
             var dbcl = new DirectoryBasedConfigLookup(fileSystem);
 
@@ -135,9 +127,7 @@
                 content.Append(cg.RetrieveContent());
             }
 
-            var res = content.ToString();
-
-            Assert.That(content.ToString(), Is.EqualTo("Baz: BazValue\r\nBaz2: Baz2Value\r\nBar: BarValue\r\nFoo2: Foo2Value\r\nFoo: FooValue\r\nFoo2: Foo2Value\r\n"));
+            Assert.That(content.ToString(), Is.EqualTo("Baz: BazValue\r\nBaz2: Baz2Value\r\nBar: BarValue\r\nBar2: Bar2Value\r\nFoo: FooValue\r\nFoo2: Foo2Value\r\n"));
         }
     }
 }
