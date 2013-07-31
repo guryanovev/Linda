@@ -2,6 +2,6 @@
 {
     public interface IYamlDeserializer
     {
-        T Deserialize<T>(string content);
+        T Deserialize<T>(string content) where T : new();
     }
 }

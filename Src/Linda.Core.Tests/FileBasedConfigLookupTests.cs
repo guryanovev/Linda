@@ -1,6 +1,5 @@
 ﻿namespace Linda.Core.Tests
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -38,14 +37,6 @@
         [Test]
         public void SomeFileTest()
         {
-            /*var filesSystem = new Mock<IFilesSystem>();
-
-            filesSystem.Setup(fs => fs.Exists("path")).Returns(true);
-            filesSystem.Setup(fs => fs.GetFiles("path")).Returns(() => new List<string> { "path/foo.yml", "path/bar.yml" });
-            filesSystem.Setup(fs => fs.GetFileContent("path/foo.yml")).Returns("Foo: fooValue");
-            filesSystem.Setup(fs => fs.GetFileContent("path/bar.yml")).Returns("Bar: barValue");
-            filesSystem.Setup(fs => fs.GetParentDirectory("path")).Returns((string)null);*/
-
             var filesSystem =
                 Mock.Of<IFilesSystem>(
                     f =>

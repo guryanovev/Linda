@@ -89,7 +89,9 @@
 
             var result = dcm.GetConfig<SimpleConfig>();
 
-            Assert.That(result, Is.Null);
+            var simpleConfig = new SimpleConfig();
+
+            Assert.That(result, Is.EqualTo(simpleConfig));
         }
     }
 }

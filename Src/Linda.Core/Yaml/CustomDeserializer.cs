@@ -96,9 +96,10 @@
             this._converters.Add(typeConverter);
         }
 
-        public T Deserialize<T>(string content)
+        public T Deserialize<T>(string content) where T : new()
         {
-            return (T)Deserialize(new EventReader(new Parser(new StringReader(content))), typeof(T));
+            var result = (T)Deserialize(new EventReader(new Parser(new StringReader(content))), typeof(T));
+            return result == null ? new T() : result;
         }
 
         /// <summary>

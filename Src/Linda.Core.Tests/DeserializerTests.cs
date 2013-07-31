@@ -76,7 +76,9 @@
 
             var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(yamlSimpleConfig.ToString());
 
-            Assert.That(newSimpleConfig, Is.EqualTo(null));
+            var simpleConfig = new SimpleConfig();
+
+            Assert.That(newSimpleConfig, Is.EqualTo(simpleConfig));
         }
     }
 }

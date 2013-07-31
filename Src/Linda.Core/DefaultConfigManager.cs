@@ -1,8 +1,9 @@
 ﻿namespace Linda.Core
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
-
+    using Linda.Core;
     using Linda.Core.Lookup;
     using Linda.Core.Yaml;
 
@@ -48,12 +49,7 @@
                 content += configGroup.RetrieveContent();
             }
 
-            if (content == string.Empty)
-            {
-                return default(TConfig);
-            }
-
-            var resultConfig = this._deserializer.Deserialize<TConfig>(content);
+            var resultConfig = _deserializer.Deserialize<TConfig>(content);
 
             return resultConfig;
         }

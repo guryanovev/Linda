@@ -16,7 +16,9 @@
 
             var config = LoadConfig<ComplexConfig>();
 
-            Assert.That(config, Is.Null);
+            var complexConfig = new ComplexConfig();
+
+            Assert.That(config, Is.EqualTo(complexConfig));
         }
 
         [Test]
@@ -124,17 +126,13 @@ List:
             var config1 = new ComplexConfig();
             config1.Bar = "barValue";
             config1.Date = new DateTime(2002, 8, 24);
- 
+
             var dict = new Dictionary<string, ComplexConfig.Config>();
 
             dict.Add("first", new ComplexConfig.Config { Bytes = new List<byte> { 123, 24, 13, 98 }, DoubleProperty = 45.277, IsProperty = true, NumberOfConfig = 1 });
             dict.Add("second", new ComplexConfig.Config { Bytes = new List<byte> { 178, 36, 47 }, DoubleProperty = 32.645, IsProperty = false, NumberOfConfig = 2 });
 
             config1.DictProperty = dict;
-            /*Assert.That(config.Bar, Is.EqualTo("barValue"));
-            Assert.That(config.Date, Is.EqualTo(new DateTime(2002, 8, 24)));
-            Assert.That(config.StructProperty, Is.EqualTo(new List<ComplexConfig.Struct>()));
-            Assert.That(config.DictProperty, Is.EquivalentTo(dict));*/
 
             Assert.That(config.Equals(config1), Is.True);
         }

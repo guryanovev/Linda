@@ -29,5 +29,18 @@
             Assert.That(config.Foo, Is.EqualTo("fooValue"));
             Assert.That(config.Bar, Is.EqualTo("barValue"));
         }
+
+        [Test]
+        public void HierarchyTestWithAnotherFiles()
+        {
+            CreateFile("config/config.yml", "Foo: fooValue");
+            CreateFile("app/config/config.txt", "Bar: barValue");
+
+            var config = LoadConfig<SimpleConfig>();
+
+            Assert.That(config, Is.Not.Null);
+            Assert.That(config.Foo, Is.EqualTo("fooValue"));
+            Assert.That(config.Bar, Is.Null);
+        }
     }
 }
