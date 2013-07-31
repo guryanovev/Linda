@@ -22,7 +22,7 @@
 
             new Serializer().Serialize(new StringWriter(yamlSimpleConfig), simpleConfig);
 
-            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(new StringReader(yamlSimpleConfig.ToString()));
+            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(yamlSimpleConfig.ToString());
 
             Assert.That(newSimpleConfig, Is.EqualTo(simpleConfig));
         }
@@ -38,7 +38,7 @@
 
             yamlSimpleConfig.AppendLine("Baz: Baz");
 
-            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(new StringReader(yamlSimpleConfig.ToString()));
+            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(yamlSimpleConfig.ToString());
 
             Assert.That(newSimpleConfig, Is.EqualTo(simpleConfig));
         }
@@ -52,7 +52,7 @@
 
             yamlSimpleConfig.Append("Foo: Foo");
 
-            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(new StringReader(yamlSimpleConfig.ToString()));
+            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(yamlSimpleConfig.ToString());
 
             Assert.That(newSimpleConfig, Is.EqualTo(simpleConfig));
         }
@@ -64,7 +64,7 @@
 
             var yamlSimpleConfig = new StringBuilder().Append("Baz : baz");
 
-            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(new StringReader(yamlSimpleConfig.ToString()));
+            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(yamlSimpleConfig.ToString());
 
             Assert.That(newSimpleConfig, Is.EqualTo(simpleConfig));
         }
@@ -74,7 +74,7 @@
         {
             var yamlSimpleConfig = new StringBuilder();
 
-            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(new StringReader(yamlSimpleConfig.ToString()));
+            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(yamlSimpleConfig.ToString());
 
             Assert.That(newSimpleConfig, Is.EqualTo(null));
         }
