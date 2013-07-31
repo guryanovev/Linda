@@ -43,7 +43,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="YamlDotNet.Core, Version=2.0.1.26319, Culture=neutral, PublicKeyToken=2b53052c5884d7a1, processorArchitecture=MSIL">
