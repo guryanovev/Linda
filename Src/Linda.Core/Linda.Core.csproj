@@ -61,7 +61,6 @@
     <Compile Include="IConfigManager.cs" />
     <Compile Include="IFilesSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ConfigContentProvider.cs" />
     <Compile Include="DefaultFilesSystem.cs" />
     <Compile Include="Yaml\IYamlDeserializer.cs" />
   </ItemGroup>

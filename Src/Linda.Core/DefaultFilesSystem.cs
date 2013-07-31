@@ -36,7 +36,7 @@
 
         public string GetParentDirectory(string path)
         {
-            return Directory.GetParent(path).FullName;
+            return Directory.GetParent(path) == null ? null : Directory.GetParent(path).FullName;
         }
     }
 }

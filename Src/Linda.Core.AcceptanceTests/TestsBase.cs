@@ -3,6 +3,7 @@
     using System.IO;
 
     using Linda.Core.Lookup;
+    using Linda.Core.Yaml;
 
     using NUnit.Framework;
 
@@ -31,7 +32,7 @@
         /// <returns>configuration object</returns>
         protected TConfig LoadConfig<TConfig>(string relativePath = null) where TConfig : new()
         {
-            var manager = new DefaultConfigManager(GetFullPath(relativePath), new DirectoryBasedConfigLookup());
+            var manager = new DefaultConfigManager(GetFullPath(relativePath), new DirectoryBasedConfigLookup(), new CustomDeserializer());
             return manager.GetConfig<TConfig>();
         }
 
