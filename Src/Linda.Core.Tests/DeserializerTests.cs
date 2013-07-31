@@ -11,7 +11,7 @@
 
     using YamlDotNet.RepresentationModel.Serialization;
 
-    class DeserializerTests
+    public class DeserializerTests
     {
         [Test]
         public void DeserializeTest()
@@ -78,6 +78,5 @@
 
             Assert.That(newSimpleConfig, Is.EqualTo(null));
         }
-
     }
 }

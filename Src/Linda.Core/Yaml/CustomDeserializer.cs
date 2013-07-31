@@ -15,14 +15,26 @@
     public sealed class CustomDeserializer : IYamlDeserializer
     {
         private static readonly Dictionary<string, Type> PredefinedTagMappings = new Dictionary<string, Type>
-		{
-			{ "tag:yaml.org,2002:map", typeof(Dictionary<object, object>) },
-			{ "tag:yaml.org,2002:bool", typeof(bool) },
-            { "tag:yaml.org,2002:float", typeof(double) },
-            { "tag:yaml.org,2002:int", typeof(int) },
-			{ "tag:yaml.org,2002:str", typeof(string) },
-			{ "tag:yaml.org,2002:timestamp", typeof(DateTime) },
-		};
+                                                                                     {
+                                                                                         {
+                                                                                             "tag:yaml.org,2002:map", typeof(Dictionary<object, object>) 
+                                                                                         }, 
+                                                                                         {
+                                                                                             "tag:yaml.org,2002:bool", typeof(bool)
+                                                                                         }, 
+                                                                                         {
+                                                                                             "tag:yaml.org,2002:float", typeof(double)
+                                                                                         }, 
+                                                                                         {
+                                                                                             "tag:yaml.org,2002:int", typeof(int)
+                                                                                         }, 
+                                                                                         {
+                                                                                             "tag:yaml.org,2002:str", typeof(string)
+                                                                                         }, 
+                                                                                         {
+                                                                                             "tag:yaml.org,2002:timestamp", typeof(DateTime)
+                                                                                         }, 
+                                                                                     };
 
         private readonly Dictionary<string, Type> _tagMappings;
         private readonly List<IYamlTypeConverter> _converters;

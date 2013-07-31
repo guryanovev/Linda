@@ -31,7 +31,6 @@
             while (!reader.Accept<MappingEnd>())
             {
                 var propertyName = reader.Expect<Scalar>();
-
                 PropertyInfo property;
 
                 try
@@ -44,7 +43,6 @@
                     continue;
                 }
                 
-
                 var propertyValue = nestedObjectDeserializer(reader, property.PropertyType);
                 var propertyValuePromise = propertyValue as IValuePromise;
                 if (propertyValuePromise == null)

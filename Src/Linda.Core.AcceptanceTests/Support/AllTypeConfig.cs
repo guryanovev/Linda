@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace Linda.Core.AcceptanceTests.Support
+﻿namespace Linda.Core.AcceptanceTests.Support
 {
+    using System;
     using System.Collections.Generic;
 
     internal class AllTypeConfig

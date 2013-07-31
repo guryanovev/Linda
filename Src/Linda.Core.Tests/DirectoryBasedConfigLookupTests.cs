@@ -9,7 +9,7 @@
 
     using NUnit.Framework;
 
-    class DirectoryBasedConfigLookupTests
+    public class DirectoryBasedConfigLookupTests
     {
         [Test]
         public void OneFileTest()
@@ -139,7 +139,5 @@
 
             Assert.That(content.ToString(), Is.EqualTo("Baz: BazValue\r\nBaz2: Baz2Value\r\nBar: BarValue\r\nFoo2: Foo2Value\r\nFoo: FooValue\r\nFoo2: Foo2Value\r\n"));
         }
-        
-
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Linda.Core.AcceptanceTests.Support
+﻿namespace Linda.Core.AcceptanceTests.Support
 {
     internal struct SimpleStruct
     {

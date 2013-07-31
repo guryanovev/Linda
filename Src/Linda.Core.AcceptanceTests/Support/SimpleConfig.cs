@@ -1,6 +1,7 @@
 namespace Linda.Core.AcceptanceTests.Support
 {
     using System;
+
     public class SimpleConfig : IEquatable<SimpleConfig>
     {
         public string Foo { get; set; }

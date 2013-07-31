@@ -55,8 +55,6 @@
 
             var resultConfig = _deserializer.Deserialize<TConfig>(content);
 
-            //var resultConfig = new CustomDeserializer().Deserialize<TConfig>(new StringReader(content));
-
             return resultConfig;
         }
     }

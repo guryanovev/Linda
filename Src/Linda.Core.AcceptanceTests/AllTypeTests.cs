@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Linda.Core.AcceptanceTests.Support;
-using NUnit.Framework;
-namespace Linda.Core.AcceptanceTests
+﻿namespace Linda.Core.AcceptanceTests
 {
-    class AllTypeTests : TestsBase
+    using System;
+
+    using Linda.Core.AcceptanceTests.Support;
+
+    using NUnit.Framework;
+
+    public class AllTypeTests : TestsBase
     {
         [Test]
         [Culture("en-US")]
@@ -21,7 +21,6 @@ DateProp: 2013-07-27
 DoubleProp: 1.333
 FloatProp: 2.666");
 
-
             var config = LoadConfig<AllTypeConfig>();
 
             Assert.That(config, Is.Not.Null);
@@ -31,7 +30,6 @@ FloatProp: 2.666");
             Assert.That(config.StringProp, Is.EqualTo("Hello World"));
             Assert.That(config.DoubleProp, Is.EqualTo(1.333));
             Assert.That(config.DateProp, Is.EqualTo(new DateTime(2013, 7, 27)));
-
         }
 
         [Test]

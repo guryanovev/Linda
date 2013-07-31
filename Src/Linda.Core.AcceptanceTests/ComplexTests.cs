@@ -94,7 +94,8 @@ StructProperty:
         [Test]
         public void TestLoadComplexConfigWithDict()
         {
-            CreateFile("config/config1.yml", @"Bar: barValue
+            CreateFile("config/config1.yml",
+@"Bar: barValue
 DictProperty:
     first:
             NumberOfConfig: 1

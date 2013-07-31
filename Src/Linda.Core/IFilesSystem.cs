@@ -4,8 +4,6 @@
 
     public interface IFilesSystem
     {
-        //ConfigGroup GetConfigGroupFromPath(string path);
-
         string GetFileContent(string path);
 
         IEnumerable<string> GetFiles(string directory);
