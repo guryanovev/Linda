@@ -63,11 +63,10 @@
 
             var dcm = new DefaultConfigManager("this", configLookup, new CustomDeserializer());
 
-            dcm.GetConfig<SimpleConfig>();
-
-            dcm.GetConfig<SimpleConfig>();
-
-            dcm.GetConfig<SimpleConfig>();
+            for (int i = 0; i < 1000; i++)
+            {
+                dcm.GetConfig<SimpleConfig>();
+            }
 
             configLookupStub.Verify(cl => cl.GetConfigGroups("this"), Times.Once());
         }
