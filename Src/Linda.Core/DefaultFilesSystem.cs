@@ -21,22 +21,22 @@
 
         public string GetFileContent(string path)
         {
-            throw new System.NotImplementedException();
+            return File.ReadAllText(path);
         }
 
         public IEnumerable<string> GetFiles(string directory)
         {
-            throw new System.NotImplementedException();
+            return Directory.GetFiles(directory);
         }
 
         public bool Exists(string path)
         {
-            throw new System.NotImplementedException();
+            return Directory.Exists(path);
         }
 
         public string GetParentDirectory(string path)
         {
-            throw new System.NotImplementedException();
+            return Directory.GetParent(path).FullName;
         }
     }
 }

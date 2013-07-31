@@ -2,6 +2,7 @@
 {
     using System.Collections;
     using System.Collections.Generic;
+    using System.Text;
 
     public class ConfigGroup : IEnumerable<ConfigSource>
     {
@@ -19,7 +20,14 @@
 
         public string RetrieveContent()
         {
-            // todo get content from sources
+            var resultContent = new StringBuilder();
+
+            foreach (var configSource in _configSource)
+            {
+                resultContent.AppendLine(configSource.RetrieveContent());
+            }
+
+            return resultContent.ToString();
         }
 
         public IEnumerator<ConfigSource> GetEnumerator()

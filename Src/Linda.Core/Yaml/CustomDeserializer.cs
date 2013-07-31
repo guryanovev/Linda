@@ -12,10 +12,6 @@
     using YamlDotNet.RepresentationModel.Serialization.NodeTypeResolvers;
 
     // todo: cleanup
-
-    /// <summary>
-    /// A fasade for the YAML library with the standard configuration.
-    /// </summary>
     public sealed class CustomDeserializer : IYamlDeserializer
     {
         private static readonly Dictionary<string, Type> PredefinedTagMappings = new Dictionary<string, Type>
@@ -88,29 +84,9 @@
             this._converters.Add(typeConverter);
         }
 
-        public T Deserialize<T>(TextReader input)
+        public T Deserialize<T>(string content)
         {
-            return (T)this.Deserialize(input, typeof(T));
-        }
-
-        public object Deserialize(TextReader input)
-        {
-            return this.Deserialize(input, typeof(object));
-        }
-
-        public object Deserialize(TextReader input, Type type)
-        {
-            return this.Deserialize(new EventReader(new Parser(input)), type);
-        }
-
-        public T Deserialize<T>(EventReader reader)
-        {
-            return (T)this.Deserialize(reader, typeof(T));
-        }
-
-        public object Deserialize(EventReader reader)
-        {
-            return this.Deserialize(reader, typeof(object));
+            return (T)Deserialize(new EventReader(new Parser(new StringReader(content))), typeof(T));
         }
 
         /// <summary>
@@ -170,12 +146,6 @@
             {
                 return this.TypeDescriptor.GetProperty(type, name);
             }
-        }
-
-        public T Deserialize<T>(string content)
-        {
-            // todo implement
-            throw new NotImplementedException();
         }
     }
 }
