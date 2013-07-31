@@ -6,7 +6,7 @@
     {
         string GetFileContent(string path);
 
-        IEnumerable<string> GetFiles(string directory);
+        IEnumerable<string> GetFiles(string directory, string searchPattern);
 
         bool Exists(string path);
 

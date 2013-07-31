@@ -10,9 +10,9 @@
             return File.ReadAllText(path);
         }
 
-        public IEnumerable<string> GetFiles(string directory)
+        public IEnumerable<string> GetFiles(string directory, string searchPattern)
         {
-            return Directory.GetFiles(directory, "*.yml");
+            return Directory.GetFiles(directory, searchPattern);
         }
 
         public bool Exists(string path)

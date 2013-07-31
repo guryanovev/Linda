@@ -27,7 +27,7 @@
                 if (_filesSystem.Exists(configDirectoryPath))
                 {
                     var configGroup = new ConfigGroup();
-                    foreach (var file in _filesSystem.GetFiles(configDirectoryPath))
+                    foreach (var file in _filesSystem.GetFiles(configDirectoryPath, "*.yml"))
                     {
                         var currentFile = file;
                         configGroup.AddConfigSource(new ConfigSource(() => _filesSystem.GetFileContent(currentFile)));
