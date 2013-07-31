@@ -55,8 +55,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigContentProviderTests.cs" />
-    <Compile Include="FilesProviderTest.cs" />
     <Compile Include="DeserializerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
