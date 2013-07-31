@@ -15,7 +15,7 @@
         {
             this.CreateFile("foo.txt", string.Empty);
 
-            var filesProviderStub = new Mock<IFilesProvider>();
+            var filesProviderStub = new Mock<IFilesSystem>();
 
             filesProviderStub.Setup(f => f.GetConfigGroupFromPath(It.IsAny<string>())).Returns<string>(
                 path =>

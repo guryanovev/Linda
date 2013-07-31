@@ -17,6 +17,11 @@
             _configSource.Add(cs);
         }
 
+        public string RetrieveContent()
+        {
+            // todo get content from sources
+        }
+
         public IEnumerator<ConfigSource> GetEnumerator()
         {
             return _configSource.GetEnumerator();

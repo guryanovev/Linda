@@ -50,18 +50,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyDeserializer.cs" />
-    <Compile Include="MyObjectNodeDeserializer.cs" />
-    <Compile Include="YamlConfigSourceProvider.cs" />
+    <Compile Include="Lookup\FileBasedConfigLookup.cs" />
+    <Compile Include="Yaml\CustomDeserializer.cs" />
+    <Compile Include="Yaml\CustomObjectNodeDeserializer.cs" />
+    <Compile Include="Lookup\DirectoryBasedConfigLookup.cs" />
     <Compile Include="ConfigGroup.cs" />
     <Compile Include="ConfigSource.cs" />
     <Compile Include="DefaultConfigManager.cs" />
-    <Compile Include="IConfigSourceProvider.cs" />
+    <Compile Include="Lookup\IConfigLookup.cs" />
     <Compile Include="IConfigManager.cs" />
-    <Compile Include="IFilesProvider.cs" />
+    <Compile Include="IFilesSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConfigContentProvider.cs" />
-    <Compile Include="YamlFilesProvider.cs" />
+    <Compile Include="DefaultFilesSystem.cs" />
+    <Compile Include="Yaml\IYamlDeserializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

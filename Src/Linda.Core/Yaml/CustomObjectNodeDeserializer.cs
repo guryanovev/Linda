@@ -1,4 +1,4 @@
-﻿namespace Linda.Core
+﻿namespace Linda.Core.Yaml
 {
     using System;
     using System.Reflection;
@@ -7,15 +7,15 @@
     using YamlDotNet.Core.Events;
     using YamlDotNet.RepresentationModel.Serialization;
 
-    public sealed class MyObjectNodeDeserializer : INodeDeserializer
+    public sealed class CustomObjectNodeDeserializer : INodeDeserializer
     {
         private readonly IObjectFactory _objectFactory;
         private readonly ITypeDescriptor _typeDescriptor;
 
-        public MyObjectNodeDeserializer(IObjectFactory objectFactory, ITypeDescriptor typeDescriptor)
+        public CustomObjectNodeDeserializer(IObjectFactory objectFactory, ITypeDescriptor typeDescriptor)
         {
-            _objectFactory = objectFactory;
-            _typeDescriptor = typeDescriptor;
+            this._objectFactory = objectFactory;
+            this._typeDescriptor = typeDescriptor;
         }
 
         bool INodeDeserializer.Deserialize(EventReader reader, Type expectedType, Func<EventReader, Type, object> nestedObjectDeserializer, out object value)
@@ -27,7 +27,7 @@
                 return false;
             }
 
-            value = _objectFactory.Create(expectedType);
+            value = this._objectFactory.Create(expectedType);
             while (!reader.Accept<MappingEnd>())
             {
                 var propertyName = reader.Expect<Scalar>();
@@ -36,7 +36,7 @@
 
                 try
                 {
-                    property = _typeDescriptor.GetProperty(expectedType, propertyName.Value).Property;
+                    property = this._typeDescriptor.GetProperty(expectedType, propertyName.Value).Property;
                 }
                 catch (Exception ex)
                 {

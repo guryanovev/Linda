@@ -1,20 +1,23 @@
 ﻿namespace Linda.Core
 {
+    using System;
+
     public class ConfigSource
     {
-        private readonly string _path;
+        private readonly Func<string> _contentProvider;
 
-        public ConfigSource(string path)
+        public ConfigSource(string content) : this(() => content)
         {
-            _path = path;
         }
 
-        public string Path
+        public ConfigSource(Func<string> contentProvider)
         {
-            get
-            {
-                return _path;
-            }
+            _contentProvider = contentProvider;
+        }
+
+        public string RetrieveContent()
+        {
+            return _contentProvider();
         }
     }
 }

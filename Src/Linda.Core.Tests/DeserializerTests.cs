@@ -5,6 +5,7 @@
 
     using Linda.Core.AcceptanceTests;
     using Linda.Core.AcceptanceTests.Support;
+    using Linda.Core.Yaml;
 
     using NUnit.Framework;
 
@@ -21,7 +22,7 @@
 
             new Serializer().Serialize(new StringWriter(yamlSimpleConfig), simpleConfig);
 
-            var newSimpleConfig = new MyDeserializer().Deserialize<SimpleConfig>(new StringReader(yamlSimpleConfig.ToString()));
+            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(new StringReader(yamlSimpleConfig.ToString()));
 
             Assert.That(newSimpleConfig, Is.EqualTo(simpleConfig));
         }
@@ -37,7 +38,7 @@
 
             yamlSimpleConfig.AppendLine("Baz: Baz");
 
-            var newSimpleConfig = new MyDeserializer().Deserialize<SimpleConfig>(new StringReader(yamlSimpleConfig.ToString()));
+            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(new StringReader(yamlSimpleConfig.ToString()));
 
             Assert.That(newSimpleConfig, Is.EqualTo(simpleConfig));
         }
@@ -51,7 +52,7 @@
 
             yamlSimpleConfig.Append("Foo: Foo");
 
-            var newSimpleConfig = new MyDeserializer().Deserialize<SimpleConfig>(new StringReader(yamlSimpleConfig.ToString()));
+            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(new StringReader(yamlSimpleConfig.ToString()));
 
             Assert.That(newSimpleConfig, Is.EqualTo(simpleConfig));
         }
@@ -63,7 +64,7 @@
 
             var yamlSimpleConfig = new StringBuilder().Append("Baz : baz");
 
-            var newSimpleConfig = new MyDeserializer().Deserialize<SimpleConfig>(new StringReader(yamlSimpleConfig.ToString()));
+            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(new StringReader(yamlSimpleConfig.ToString()));
 
             Assert.That(newSimpleConfig, Is.EqualTo(simpleConfig));
         }
@@ -73,7 +74,7 @@
         {
             var yamlSimpleConfig = new StringBuilder();
 
-            var newSimpleConfig = new MyDeserializer().Deserialize<SimpleConfig>(new StringReader(yamlSimpleConfig.ToString()));
+            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(new StringReader(yamlSimpleConfig.ToString()));
 
             Assert.That(newSimpleConfig, Is.EqualTo(null));
         }

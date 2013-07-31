@@ -1,6 +1,9 @@
 ﻿namespace Linda.Core.AcceptanceTests
 {
     using System.IO;
+
+    using Linda.Core.Lookup;
+
     using NUnit.Framework;
 
     [TestFixture]
@@ -28,7 +31,7 @@
         /// <returns>configuration object</returns>
         protected TConfig LoadConfig<TConfig>(string relativePath = null) where TConfig : new()
         {
-            var manager = new DefaultConfigManager(GetFullPath(relativePath), new YamlConfigSourceProvider());
+            var manager = new DefaultConfigManager(GetFullPath(relativePath), new DirectoryBasedConfigLookup());
             return manager.GetConfig<TConfig>();
         }
 

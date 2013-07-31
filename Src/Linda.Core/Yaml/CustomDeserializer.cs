@@ -1,4 +1,4 @@
-﻿namespace Linda.Core
+﻿namespace Linda.Core.Yaml
 {
     using System;
     using System.Collections.Generic;
@@ -11,10 +11,12 @@
     using YamlDotNet.RepresentationModel.Serialization.NodeDeserializers;
     using YamlDotNet.RepresentationModel.Serialization.NodeTypeResolvers;
 
+    // todo: cleanup
+
     /// <summary>
     /// A fasade for the YAML library with the standard configuration.
     /// </summary>
-    public sealed class MyDeserializer
+    public sealed class CustomDeserializer : IYamlDeserializer
     {
         private static readonly Dictionary<string, Type> PredefinedTagMappings = new Dictionary<string, Type>
 		{
@@ -31,7 +33,7 @@
         private readonly TypeDescriptorProxy _typeDescriptor = new TypeDescriptorProxy();
         private readonly IValueDeserializer _valueDeserializer;
 
-        public MyDeserializer(IObjectFactory objectFactory = null, INamingConvention namingConvention = null)
+        public CustomDeserializer(IObjectFactory objectFactory = null, INamingConvention namingConvention = null)
         {
             objectFactory = objectFactory ?? new DefaultObjectFactory();
             namingConvention = namingConvention ?? new NullNamingConvention();
@@ -43,7 +45,7 @@
                         namingConvention));
 
             this._converters = new List<IYamlTypeConverter>();
-            NodeDeserializers = new List<INodeDeserializer>
+            this.NodeDeserializers = new List<INodeDeserializer>
                                     {
                                         new TypeConverterNodeDeserializer(this._converters),
                                         new NullNodeDeserializer(),
@@ -54,12 +56,12 @@
                                         new GenericCollectionNodeDeserializer(objectFactory),
                                         new NonGenericListNodeDeserializer(objectFactory),
                                         new EnumerableNodeDeserializer(),
-                                        new MyObjectNodeDeserializer(
+                                        new CustomObjectNodeDeserializer(
                                             objectFactory, this._typeDescriptor)
                                     };
 
             this._tagMappings = new Dictionary<string, Type>(PredefinedTagMappings);
-            TypeResolvers = new List<INodeTypeResolver>
+            this.TypeResolvers = new List<INodeTypeResolver>
                                 {
                                     new TagNodeTypeResolver(this._tagMappings),
                                     new TypeNameInTagNodeTypeResolver(),
@@ -69,7 +71,7 @@
             this._valueDeserializer =
                 new AliasValueDeserializer(
                     new NodeValueDeserializer(
-                        NodeDeserializers, TypeResolvers));
+                        this.NodeDeserializers, this.TypeResolvers));
         }
 
         public IList<INodeDeserializer> NodeDeserializers { get; private set; }
@@ -88,27 +90,27 @@
 
         public T Deserialize<T>(TextReader input)
         {
-            return (T)Deserialize(input, typeof(T));
+            return (T)this.Deserialize(input, typeof(T));
         }
 
         public object Deserialize(TextReader input)
         {
-            return Deserialize(input, typeof(object));
+            return this.Deserialize(input, typeof(object));
         }
 
         public object Deserialize(TextReader input, Type type)
         {
-            return Deserialize(new EventReader(new Parser(input)), type);
+            return this.Deserialize(new EventReader(new Parser(input)), type);
         }
 
         public T Deserialize<T>(EventReader reader)
         {
-            return (T)Deserialize(reader, typeof(T));
+            return (T)this.Deserialize(reader, typeof(T));
         }
 
         public object Deserialize(EventReader reader)
         {
-            return Deserialize(reader, typeof(object));
+            return this.Deserialize(reader, typeof(object));
         }
 
         /// <summary>
@@ -161,13 +163,19 @@
 
             public IEnumerable<IPropertyDescriptor> GetProperties(Type type)
             {
-                return TypeDescriptor.GetProperties(type);
+                return this.TypeDescriptor.GetProperties(type);
             }
 
             public IPropertyDescriptor GetProperty(Type type, string name)
             {
-                return TypeDescriptor.GetProperty(type, name);
+                return this.TypeDescriptor.GetProperty(type, name);
             }
+        }
+
+        public T Deserialize<T>(string content)
+        {
+            // todo implement
+            throw new NotImplementedException();
         }
     }
 }

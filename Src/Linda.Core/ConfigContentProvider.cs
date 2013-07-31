@@ -1,9 +1,11 @@
 ﻿namespace Linda.Core
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
 
+    [Obsolete]
     public class ConfigContentProvider
     {
         public string GetConfigSourceContent(ConfigSource configSource)

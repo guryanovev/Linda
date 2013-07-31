@@ -3,13 +3,22 @@
     using System.Collections.Generic;
     using System.IO;
 
+    using Linda.Core.Lookup;
+    using Linda.Core.Yaml;
+
     public class DefaultConfigManager : IConfigManager
     {
-        private readonly IConfigSourceProvider _configSourceProvider;
+        private readonly IConfigLookup _configLookup;
 
         private readonly string _configRoot;
 
+        private readonly IYamlDeserializer _deserializer;
+
         private IEnumerable<ConfigGroup> _configGroups;
+
+        public DefaultConfigManager(string configRoot) : this(configRoot, new DirectoryBasedConfigLookup(), new CustomDeserializer())
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultConfigManager"/> class. 
@@ -17,10 +26,12 @@
         /// <param name="configRoot">
         /// full path to config root directory
         /// </param>
-        /// <param name="configSourceProvider"></param>
-        public DefaultConfigManager(string configRoot, IConfigSourceProvider configSourceProvider)
+        /// <param name="configLookup"></param>
+        /// <param name="deserializer"></param>
+        public DefaultConfigManager(string configRoot, IConfigLookup configLookup, IYamlDeserializer deserializer)
         {
-            _configSourceProvider = configSourceProvider;
+            _configLookup = configLookup;
+            _deserializer = deserializer;
             _configRoot = configRoot;
         }
 
@@ -28,17 +39,23 @@
         {
             if (_configGroups == null)
             {
-                _configGroups = _configSourceProvider.GetConfigGroups(_configRoot, new YamlFilesProvider());
+                _configGroups = this._configLookup.GetConfigGroups(_configRoot);
             }
 
-            var content = new ConfigContentProvider().GetAllConfigContent(_configGroups);
+            var content = string.Empty;
+            foreach (var configGroup in _configGroups)
+            {
+                content += configGroup.RetrieveContent();
+            }
 
             if (content == string.Empty)
             {
                 return default(TConfig);
             }
 
-            var resultConfig = new MyDeserializer().Deserialize<TConfig>(new StringReader(content));
+            var resultConfig = _deserializer.Deserialize<TConfig>(content);
+
+            //var resultConfig = new CustomDeserializer().Deserialize<TConfig>(new StringReader(content));
 
             return resultConfig;
         }
