@@ -20,41 +20,24 @@
         {
             var newConfigGroups = new List<ConfigGroup>();
 
-            // todo call file system methods
-
             var currentDirectory = path;
             while (currentDirectory != null)
             {
                 var configDirectoryPath = Path.Combine(currentDirectory, "config");
                 if (_filesSystem.Exists(configDirectoryPath))
                 {
-                    // todo create config group
+                    var configGroup = new ConfigGroup();
                     foreach (var file in _filesSystem.GetFiles(configDirectoryPath))
                     {
                         var currentFile = file;
-                        // todo extract config source info
-                        new ConfigSource(() => _filesSystem.GetFileContent(currentFile));
+                        configGroup.AddConfigSource(new ConfigSource(() => _filesSystem.GetFileContent(currentFile)));
                     }
+
+                    newConfigGroups.Add(configGroup);
                 }
 
                 currentDirectory = _filesSystem.GetParentDirectory(currentDirectory);
             }
-
-            
-
-//            var dir = new DirectoryInfo(path);
-//
-//            while (dir != null)
-//            {
-//                if (Directory.Exists(Path.Combine(dir.FullName, "config")))
-//                {
-//                    var newConfigGroup = yamlFilesSystem.GetConfigGroupFromPath(Path.Combine(dir.FullName, "config"));
-//
-//                    newConfigGroups.Add(newConfigGroup);
-//                }
-//
-//                dir = dir.Parent;
-//            }
 
             newConfigGroups.Reverse();
 

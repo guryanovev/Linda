@@ -1,6 +1,7 @@
 ﻿namespace Linda.Core.Lookup
 {
     using System.Collections.Generic;
+    using System.IO;
 
     public class FileBasedConfigLookup : IConfigLookup
     {
@@ -17,7 +18,29 @@
 
         public IEnumerable<ConfigGroup> GetConfigGroups(string path)
         {
-            throw new System.NotImplementedException();
+            var newConfigGroups = new List<ConfigGroup>();
+
+            var currentDirectory = path;
+            while (currentDirectory != null)
+            {
+                if (_filesSystem.Exists(currentDirectory))
+                {
+                    var configGroup = new ConfigGroup();
+                    foreach (var file in _filesSystem.GetFiles(currentDirectory))
+                    {
+                        var currentFile = file;
+                        configGroup.AddConfigSource(new ConfigSource(() => _filesSystem.GetFileContent(currentFile)));
+                    }
+
+                    newConfigGroups.Add(configGroup);
+                }
+
+                currentDirectory = _filesSystem.GetParentDirectory(currentDirectory);
+            }
+
+            newConfigGroups.Reverse();
+
+            return newConfigGroups;
         }
     }
 }
