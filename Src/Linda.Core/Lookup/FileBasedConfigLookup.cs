@@ -1,7 +1,6 @@
 ﻿namespace Linda.Core.Lookup
 {
     using System.Collections.Generic;
-    using System.IO;
 
     public class FileBasedConfigLookup : IConfigLookup
     {

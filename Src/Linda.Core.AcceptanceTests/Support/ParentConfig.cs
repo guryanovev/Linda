@@ -1,7 +1,14 @@
 namespace Linda.Core.AcceptanceTests.Support
 {
-    internal class ParentConfig
+    using System;
+
+    internal class ParentConfig : IEquatable<ParentConfig>
     {
         public SimpleConfig ChildConfig { get; set; }
+
+        public bool Equals(ParentConfig other)
+        {
+            return this.ChildConfig.Equals(other.ChildConfig);
+        }
     }
 }

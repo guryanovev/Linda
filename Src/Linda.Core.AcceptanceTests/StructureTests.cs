@@ -17,5 +17,17 @@
             Assert.That(config.Foo, Is.EqualTo("fooValue"));
             Assert.That(config.Bar, Is.EqualTo("barValue"));
         }
+
+        [Test]
+        public void TestMultipleFilesWithIdenticalProperties()
+        {
+            CreateFile("config/config1.yml", "Foo: fooValue1");
+            CreateFile("config/config2.yml", "Foo: fooValue");
+
+            var config = LoadConfig<SimpleConfig>();
+
+            Assert.That(config.Foo, Is.EqualTo("fooValue"));
+            Assert.That(config.Bar, Is.Null);
+        }
     }
 }

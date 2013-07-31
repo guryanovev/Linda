@@ -99,7 +99,7 @@
         public T Deserialize<T>(string content) where T : new()
         {
             var result = (T)Deserialize(new EventReader(new Parser(new StringReader(content))), typeof(T));
-            return result == null ? new T() : result;
+            return Equals(result, null) ? new T() : result;
         }
 
         /// <summary>

@@ -1,7 +1,6 @@
 ﻿namespace Linda.Core.AcceptanceTests.Support
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -23,18 +22,18 @@
 
         public bool Equals(ComplexConfig other)
         {
-            if (this.DictProperty.Count != other.DictProperty.Count)
+            if (DictProperty.Count != other.DictProperty.Count)
             {
                 return false;
             }
 
-            if (this.StructProperty.Count != other.StructProperty.Count)
+            if (StructProperty.Count != other.StructProperty.Count)
             {
                 return false;
             }
 
-            bool barEquals = this.Bar == other.Bar;
-            bool dateEquals = this.Date == other.Date;
+            bool barEquals = Bar == other.Bar;
+            bool dateEquals = Date == other.Date;
 
             foreach (var dict in DictProperty)
             {
@@ -84,7 +83,7 @@
             public bool Equals(Config other)
             {
                 return Bytes.SequenceEqual(other.Bytes)
-                    && (Math.Abs(this.DoubleProperty - other.DoubleProperty) < 0.0001)
+                    && (Math.Abs(DoubleProperty - other.DoubleProperty) < 0.0001)
                        && (IsProperty == other.IsProperty)
                        && (NumberOfConfig == other.NumberOfConfig);
             }

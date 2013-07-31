@@ -74,7 +74,7 @@ StructProperty:
             - 321.25
             - 98.25");
 
-            var config = this.LoadConfig<ComplexConfig>();
+            var config = LoadConfig<ComplexConfig>();
             var config1 = new ComplexConfig();
             config1.Bar = "barValue";
             config1.Date = new DateTime();
@@ -122,7 +122,7 @@ List:
     - 2
     - 3");
 
-            var config = this.LoadConfig<ComplexConfig>();
+            var config = LoadConfig<ComplexConfig>();
             var config1 = new ComplexConfig();
             config1.Bar = "barValue";
             config1.Date = new DateTime(2002, 8, 24);
@@ -135,6 +135,61 @@ List:
             config1.DictProperty = dict;
 
             Assert.That(config.Equals(config1), Is.True);
+        }
+
+        [Test]
+        public void TestLoadDifferentsConfig()
+        {
+            CreateFile("config/config1.yml", 
+@"Bar: barValue
+Baz: bazValue");
+
+            CreateFile("config/config2.yml", @"Date: 2012-12-12");
+
+            CreateFile("config/config3.yml", 
+@"ChildConfig:
+    Foo: fooValue
+Date: 2012-12-13
+StructProperty:
+    -
+        Foo: fooValueStruct
+        List:
+            - 1.23
+            - 4.56");
+
+            var simpleConfig = LoadConfig<SimpleConfig>();
+            var parentConfig = LoadConfig<ParentConfig>();
+            var complexConfig = LoadConfig<ComplexConfig>();
+
+            var newSimpleConfig = new SimpleConfig { Bar = "barValue", Foo = null };
+            var newParentConfig = new ParentConfig { ChildConfig = new SimpleConfig { Bar = null, Foo = "fooValue" } };
+            var newComplexConfig = new ComplexConfig
+                                       {
+                                           Bar = "barValue",
+                                           Date = new DateTime(2012, 12, 13),
+                                           DictProperty = new Dictionary<string, ComplexConfig.Config>(),
+                                           StructProperty =
+                                               new List<ComplexConfig.Struct>
+                                                   {
+                                                       new ComplexConfig.Struct
+                                                           {
+                                                               Foo
+                                                                   =
+                                                                   "fooValueStruct",
+                                                               List
+                                                                   =
+                                                                   new List<double>
+                                                                       {
+                                                                           1.23,
+                                                                           4.56
+                                                                       }
+                                                           }
+                                                   }
+                                       };
+
+            Assert.That(simpleConfig.Equals(newSimpleConfig), Is.True);
+            Assert.That(parentConfig.Equals(newParentConfig), Is.True);
+            Assert.That(complexConfig.Equals(newComplexConfig), Is.True);
         }
     }
 }

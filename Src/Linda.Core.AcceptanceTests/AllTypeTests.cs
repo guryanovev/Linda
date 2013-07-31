@@ -9,7 +9,6 @@
     public class AllTypeTests : TestsBase
     {
         [Test]
-        [Culture("en-US")]
         public void Test_AllTypeConfig()
         {
             CreateFile(

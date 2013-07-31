@@ -1,9 +1,6 @@
 ﻿namespace Linda.Core
 {
-    using System;
     using System.Collections.Generic;
-    using System.IO;
-    using Linda.Core;
     using Linda.Core.Lookup;
     using Linda.Core.Yaml;
 
