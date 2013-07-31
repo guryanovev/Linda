@@ -53,7 +53,7 @@
                 return default(TConfig);
             }
 
-            var resultConfig = _deserializer.Deserialize<TConfig>(content);
+            var resultConfig = this._deserializer.Deserialize<TConfig>(content);
 
             return resultConfig;
         }

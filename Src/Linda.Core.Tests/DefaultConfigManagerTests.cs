@@ -39,10 +39,6 @@
             var sc = new SimpleConfig { Foo = "FooValue" };
 
             Assert.That(result, Is.EqualTo(sc));
-
-            result = dcm.GetConfig<SimpleConfig>();
-
-            configLookupStub.Verify(cl => cl.GetConfigGroups("this"), Times.Once());
         }
 
         [Test]
@@ -71,7 +67,30 @@
 
             dcm.GetConfig<SimpleConfig>();
 
+            dcm.GetConfig<SimpleConfig>();
+
             configLookupStub.Verify(cl => cl.GetConfigGroups("this"), Times.Once());
+        }
+
+        [Test]
+        public void EmptyConfigGroupsTest()
+        {
+            var configLookupStub = new Mock<IConfigLookup>();
+
+            configLookupStub.Setup(cl => cl.GetConfigGroups("this")).Returns(() =>
+            {
+                var configGroups = new List<ConfigGroup>();
+
+                return (IEnumerable<ConfigGroup>)configGroups;
+            });
+
+            var configLookup = configLookupStub.Object;
+
+            var dcm = new DefaultConfigManager("this", configLookup, new CustomDeserializer());
+
+            var result = dcm.GetConfig<SimpleConfig>();
+
+            Assert.That(result, Is.Null);
         }
     }
 }
