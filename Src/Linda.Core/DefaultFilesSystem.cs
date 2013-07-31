@@ -12,7 +12,7 @@
 
         public IEnumerable<string> GetFiles(string directory)
         {
-            return Directory.GetFiles(directory);
+            return Directory.GetFiles(directory, "*.yml");
         }
 
         public bool Exists(string path)
