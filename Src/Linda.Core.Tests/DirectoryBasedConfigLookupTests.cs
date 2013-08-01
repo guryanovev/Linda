@@ -52,10 +52,11 @@
             Assert.That(groups, Is.Not.Null);
 
             var sources = groups.ToArray();
-            Assert.That(sources.Length, Is.EqualTo(3));
-            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo("Foo: FooValue"));
-            Assert.That(sources[1].RetrieveContent().Trim(), Is.EqualTo("Bar: BarValue"));
-            Assert.That(sources[2].RetrieveContent().Trim(), Is.EqualTo("Baz: BazValue"));
+            Assert.That(sources.Length, Is.EqualTo(1));
+            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo(
+@"Foo: FooValue
+Bar: BarValue
+Baz: BazValue"));
         }
 
         [Test]
@@ -119,13 +120,17 @@
             Assert.That(groups, Is.Not.Null);
 
             var sources = groups.ToArray();
-            Assert.That(sources.Length, Is.EqualTo(6));
-            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo("Baz: BazValue"));
-            Assert.That(sources[1].RetrieveContent().Trim(), Is.EqualTo("Baz2: Baz2Value"));
-            Assert.That(sources[2].RetrieveContent().Trim(), Is.EqualTo("Bar: BarValue"));
-            Assert.That(sources[3].RetrieveContent().Trim(), Is.EqualTo("Bar2: Bar2Value"));
-            Assert.That(sources[4].RetrieveContent().Trim(), Is.EqualTo("Foo: FooValue"));
-            Assert.That(sources[5].RetrieveContent().Trim(), Is.EqualTo("Foo2: Foo2Value"));
+            Assert.That(sources.Length, Is.EqualTo(3));
+            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo(
+@"Baz: BazValue
+Baz2: Baz2Value"));
+
+            Assert.That(sources[1].RetrieveContent().Trim(), Is.EqualTo(
+@"Bar: BarValue
+Bar2: Bar2Value"));
+            Assert.That(sources[2].RetrieveContent().Trim(), Is.EqualTo(
+@"Foo: FooValue
+Foo2: Foo2Value"));
         }
     }
 }
