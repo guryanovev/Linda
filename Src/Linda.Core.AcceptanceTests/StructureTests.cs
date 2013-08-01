@@ -19,7 +19,7 @@
         }
 
         [Test]
-        public void TestMultipleFilesWithIdenticalProperties()
+        public void Test_MultipleFilesWithIdenticalProperties()
         {
             CreateFile("config/config1.yml", "Foo: fooValue1");
             CreateFile("config/config2.yml", "Foo: fooValue");
