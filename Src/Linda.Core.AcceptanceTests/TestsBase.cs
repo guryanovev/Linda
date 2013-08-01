@@ -2,6 +2,7 @@
 {
     using System.IO;
 
+    using Linda.Core.Detecting;
     using Linda.Core.Lookup;
     using Linda.Core.Yaml;
 
@@ -32,7 +33,7 @@
         /// <returns>configuration object</returns>
         protected TConfig LoadConfig<TConfig>(string relativePath = null) where TConfig : new()
         {
-            var manager = new DefaultConfigManager(GetFullPath(relativePath), new DirectoryBasedConfigLookup(), new CustomDeserializer());
+            var manager = new DefaultConfigManager(new DirectoryBasedConfigLookup(), new CustomDeserializer(), new ManualRootDetector(GetFullPath(relativePath)));
             return manager.GetConfig<TConfig>();
         }
 

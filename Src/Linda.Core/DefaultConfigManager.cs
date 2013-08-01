@@ -1,6 +1,8 @@
 ﻿namespace Linda.Core
 {
     using System.Collections.Generic;
+
+    using Linda.Core.Detecting;
     using Linda.Core.Lookup;
     using Linda.Core.Yaml;
 
@@ -12,7 +14,11 @@
 
         private IEnumerable<ConfigGroup> _configGroups;
 
-        public DefaultConfigManager(string configRoot) : this(configRoot, new FileBasedConfigLookup(), new CustomDeserializer(), rootDetector)
+        public DefaultConfigManager() : this(new FileBasedConfigLookup(), new CustomDeserializer(), new DefaultRootDetector())
+        {
+        }
+
+        public DefaultConfigManager(string configRoot) : this(new FileBasedConfigLookup(), new CustomDeserializer(), new ManualRootDetector(configRoot))
         {
         }
 
@@ -21,12 +27,12 @@
         /// </summary>
         /// <param name="configLookup"></param>
         /// <param name="deserializer"></param>
+        /// <param name="rootDetector"></param>
         public DefaultConfigManager(IConfigLookup configLookup, IYamlDeserializer deserializer, IRootDetector rootDetector)
         {
             _configLookup = configLookup;
             _deserializer = deserializer;
             _rootDetector = rootDetector;
-            _configRoot = configRoot;
         }
 
         public TConfig GetConfig<TConfig>() where TConfig : new()
@@ -38,6 +44,7 @@
             }
 
             var content = string.Empty;
+
             foreach (var configGroup in _configGroups)
             {
                 content += configGroup.RetrieveContent();

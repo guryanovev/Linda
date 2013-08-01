@@ -1,21 +1,16 @@
 ﻿namespace Linda.Core.Detecting
 {
     using System;
+    using System.IO;
 
     public class DefaultRootDetector : IRootDetector
     {
         public string GetConfigRoot()
         {
-//            if (isWebApplication)
-//            {
-//                return GetWebRelative("bin");
-//            }
-//            else
-//            {
-//                return GetCurrentWorkingDirectory();
-//            }
+            // TODO сделать для Web!
+            var str = AppDomain.CurrentDomain.BaseDirectory;
 
-            throw new NotImplementedException();
+            return str;
         }
     }
 }

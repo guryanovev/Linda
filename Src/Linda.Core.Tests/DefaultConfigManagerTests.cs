@@ -4,6 +4,7 @@
     using System.Collections.Generic;
 
     using Linda.Core.AcceptanceTests.Support;
+    using Linda.Core.Detecting;
     using Linda.Core.Lookup;
     using Linda.Core.Yaml;
 
@@ -12,41 +13,58 @@
 
     public class DefaultConfigManagerTests
     {
-        [Test]
-        public void SimpleTest()
+        private Mock<IConfigLookup> _configLookupStub;
+
+        [SetUp]
+        public void Init()
         {
-            var configLookupStub = new Mock<IConfigLookup>();
+            _configLookupStub = new Mock<IConfigLookup>();
+        }
 
-            configLookupStub.Setup(cl => cl.GetConfigGroups("this")).Returns(() =>
-                {
-                    var configGroups = new List<ConfigGroup>();
+        [Test]
+        public void Test_SingleConfigSource_ShoulPassContentToDeserializer()
+        {
+            _configLookupStub.Setup(cl => cl.GetConfigGroups("this")).Returns(() =>
+            {
+                var configGroups = new List<ConfigGroup>{};
 
-                    var newConfigGroup = new ConfigGroup();
+                var newConfigGroup = new ConfigGroup();
 
-                    newConfigGroup.AddConfigSource(new ConfigSource("Foo: FooValue"));
+                newConfigGroup.AddConfigSource(new ConfigSource("Foo: FooValue"));
 
-                    configGroups.Add(newConfigGroup);
+                configGroups.Add(newConfigGroup);
 
-                    return (IEnumerable<ConfigGroup>)configGroups;
-                });
+                return (IEnumerable<ConfigGroup>)configGroups;
+            });
 
-            var configLookup = configLookupStub.Object;
+            var configLookup = _configLookupStub.Object;
 
-            var dcm = new DefaultConfigManager("this", configLookup, new CustomDeserializer());
+            var deserelizer = new Mock<IYamlDeserializer>();
 
-            var result = dcm.GetConfig<SimpleConfig>();
+            deserelizer.Setup(d => d.Deserialize<SimpleConfig>(It.IsAny<string>()))
+                       .Callback(
+                           new Action<string>(
+                               content =>
+                                   {
+                                       Assert.That(content, Is.Not.Null);
+                                       Assert.That(content.Trim(), Is.EqualTo("Foo: FooValue"));
+                                   }));
 
-            var sc = new SimpleConfig { Foo = "FooValue" };
+            var manager = new DefaultConfigManager(configLookup, deserelizer.Object, new ManualRootDetector("this"));
 
-            Assert.That(result, Is.EqualTo(sc));
+
+            //var result = 
+                manager.GetConfig<SimpleConfig>();
+
+//            var config = new SimpleConfig { Foo = "FooValue" };
+//
+//            Assert.That(result, Is.EqualTo(config));
         }
 
         [Test]
         public void OneCallGetConfigGroupsTest()
         {
-            var configLookupStub = new Mock<IConfigLookup>();
-
-            configLookupStub.Setup(cl => cl.GetConfigGroups("this")).Returns(() =>
+            this._configLookupStub.Setup(cl => cl.GetConfigGroups("this")).Returns(() =>
             {
                 var configGroups = new List<ConfigGroup>();
 
@@ -59,33 +77,31 @@
                 return (IEnumerable<ConfigGroup>)configGroups;
             });
 
-            var configLookup = configLookupStub.Object;
+            var configLookup = this._configLookupStub.Object;
 
-            var dcm = new DefaultConfigManager("this", configLookup, new CustomDeserializer());
+            var dcm = new DefaultConfigManager(configLookup, new CustomDeserializer(), new ManualRootDetector("this"));
 
             for (int i = 0; i < 1000; i++)
             {
                 dcm.GetConfig<SimpleConfig>();
             }
 
-            configLookupStub.Verify(cl => cl.GetConfigGroups("this"), Times.Once());
+            this._configLookupStub.Verify(cl => cl.GetConfigGroups("this"), Times.Once());
         }
 
         [Test]
         public void EmptyConfigGroupsTest()
         {
-            var configLookupStub = new Mock<IConfigLookup>();
-
-            configLookupStub.Setup(cl => cl.GetConfigGroups("this")).Returns(() =>
+            this._configLookupStub.Setup(cl => cl.GetConfigGroups("this")).Returns(() =>
             {
                 var configGroups = new List<ConfigGroup>();
 
                 return (IEnumerable<ConfigGroup>)configGroups;
             });
 
-            var configLookup = configLookupStub.Object;
+            var configLookup = this._configLookupStub.Object;
 
-            var dcm = new DefaultConfigManager("this", configLookup, new CustomDeserializer());
+            var dcm = new DefaultConfigManager(configLookup, new CustomDeserializer(), new ManualRootDetector("this"));
 
             var result = dcm.GetConfig<SimpleConfig>();
 

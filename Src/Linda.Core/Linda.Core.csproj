@@ -50,6 +50,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Detecting\DefaultRootDetector.cs" />
+    <Compile Include="Detecting\IRootDetector.cs" />
+    <Compile Include="Detecting\ManualRootDetector.cs" />
     <Compile Include="Lookup\FileBasedConfigLookup.cs" />
     <Compile Include="Yaml\CustomDeserializer.cs" />
     <Compile Include="Yaml\CustomObjectNodeDeserializer.cs" />

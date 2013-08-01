@@ -1,4 +1,4 @@
-﻿namespace Linda.Core
+﻿namespace Linda.Core.Detecting
 {
     public class ManualRootDetector : IRootDetector
     {
