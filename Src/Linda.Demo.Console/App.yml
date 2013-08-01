@@ -1,5 +1,4 @@
-﻿configuration:
-    startup: 
-        supportedRuntime:
-			- version: "v4.0"
-			- sku: ".NETFramework,Version=v4.5"
+﻿Startup: 
+   SupportedRuntime:
+      Version: "v4.0"
+      Sku: ".NETFramework,Version=v4.5"

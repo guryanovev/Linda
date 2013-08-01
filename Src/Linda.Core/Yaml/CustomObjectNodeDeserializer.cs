@@ -37,7 +37,7 @@
                 {
                     property = this._typeDescriptor.GetProperty(expectedType, propertyName.Value).Property;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     reader.Skip();
                     continue;

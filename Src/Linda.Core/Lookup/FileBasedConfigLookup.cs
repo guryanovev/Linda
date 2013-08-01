@@ -6,6 +6,21 @@
     {
         private readonly IFilesSystem _filesSystem;
 
+        private string _searchPattern = "*.yml";
+
+        public string SearchPattern
+        {
+            get
+            {
+                return _searchPattern;
+            }
+
+            set
+            {
+                _searchPattern = value;
+            }
+        }
+
         public FileBasedConfigLookup() : this(new DefaultFilesSystem())
         {
         }
@@ -21,7 +36,7 @@
 
             if (_filesSystem.Exists(directory))
             {
-                foreach (var file in _filesSystem.GetFiles(directory, "*.yml"))
+                foreach (var file in _filesSystem.GetFiles(directory, SearchPattern))
                 {
                     var currentFile = file;
                     result.AddConfigSource(new ConfigSource(() => _filesSystem.GetFileContent(currentFile)));
