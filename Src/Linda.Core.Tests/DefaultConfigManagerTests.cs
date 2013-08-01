@@ -26,22 +26,19 @@
         {
             _configLookupStub.Setup(cl => cl.GetConfigGroups("this")).Returns(() =>
             {
-                var configGroups = new List<ConfigGroup>{};
-
-                var newConfigGroup = new ConfigGroup();
-
-                newConfigGroup.AddConfigSource(new ConfigSource("Foo: FooValue"));
-
-                configGroups.Add(newConfigGroup);
+                var configGroups = new List<ConfigGroup>
+                                       {
+                                           new ConfigGroup(new ConfigSource("Foo: FooValue"))
+                                       };
 
                 return (IEnumerable<ConfigGroup>)configGroups;
             });
 
             var configLookup = _configLookupStub.Object;
 
-            var deserelizer = new Mock<IYamlDeserializer>();
+            var deserializer = new Mock<IYamlDeserializer>();
 
-            deserelizer.Setup(d => d.Deserialize<SimpleConfig>(It.IsAny<string>()))
+            deserializer.Setup(d => d.Deserialize<SimpleConfig>(It.IsAny<string>()))
                        .Callback(
                            new Action<string>(
                                content =>
@@ -50,15 +47,9 @@
                                        Assert.That(content.Trim(), Is.EqualTo("Foo: FooValue"));
                                    }));
 
-            var manager = new DefaultConfigManager(configLookup, deserelizer.Object, new ManualRootDetector("this"));
+            var manager = new DefaultConfigManager(configLookup, deserializer.Object, new ManualRootDetector("this"));
 
-
-            //var result = 
-                manager.GetConfig<SimpleConfig>();
-
-//            var config = new SimpleConfig { Foo = "FooValue" };
-//
-//            Assert.That(result, Is.EqualTo(config));
+            manager.GetConfig<SimpleConfig>();
         }
 
         [Test]
