@@ -13,6 +13,16 @@
             _configSource = new List<ConfigSource>();
         }
 
+        public ConfigGroup(params ConfigSource[] configSources)
+        {
+            _configSource = new List<ConfigSource>();
+
+            foreach (var configSource in configSources)
+            {
+                AddConfigSource(configSource);
+            }
+        }
+
         public void AddConfigSource(ConfigSource cs)
         {
             _configSource.Add(cs);
