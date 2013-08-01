@@ -34,7 +34,7 @@
         }
 
         [Test]
-        public void SomeFilesTest()
+        public void Test_MultipleFiles_ShouldReturnGroupWithThreeSources()
         {
             var fileSystem =
                 Mock.Of<IFilesSystem>(
@@ -45,22 +45,21 @@
                     && fs.GetFiles(Path.Combine("this", "config"), "*.yml") == new string[3] { "foo.yml", "bar.yml", "baz.yml" }
                     && fs.GetParentDirectory("this") == (string)null);
 
-            var dbcl = new DirectoryBasedConfigLookup(fileSystem);
+            var lookup = new DirectoryBasedConfigLookup(fileSystem);
 
-            var cgs = dbcl.GetConfigGroups("this");
+            var groups = lookup.GetConfigGroups("this");
 
-            var content = new StringBuilder();
+            Assert.That(groups, Is.Not.Null);
 
-            foreach (var cg in cgs)
-            {
-                content.AppendLine(cg.RetrieveContent());
-            }
-
-            Assert.That(content.ToString(), Is.EqualTo("Foo: FooValue\r\nBar: BarValue\r\nBaz: BazValue\r\n\r\n"));
+            var sources = groups.ToArray();
+            Assert.That(sources.Length, Is.EqualTo(3));
+            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo("Foo: FooValue"));
+            Assert.That(sources[1].RetrieveContent().Trim(), Is.EqualTo("Bar: BarValue"));
+            Assert.That(sources[2].RetrieveContent().Trim(), Is.EqualTo("Baz: BazValue"));
         }
 
         [Test]
-        public void HierarchyWithOneFilesTest()
+        public void Test_HierarchyFiles_ShouldReturnGroupWithThreeSources()
         {
             var fileSystem =
                 Mock.Of<IFilesSystem>(
@@ -78,22 +77,21 @@
                     && fs.GetParentDirectory("core of the earth") == (string)null);
 
 
-            var dbcl = new DirectoryBasedConfigLookup(fileSystem);
+            var lookup = new DirectoryBasedConfigLookup(fileSystem);
 
-            var cgs = dbcl.GetConfigGroups("this");
+            var groups = lookup.GetConfigGroups("this");
 
-            var content = new StringBuilder();
+            Assert.That(groups, Is.Not.Null);
 
-            foreach (var cg in cgs)
-            {
-                content.Append(cg.RetrieveContent());
-            }
-
-            Assert.That(content.ToString(), Is.EqualTo("Baz: BazValue\r\nBar: BarValue\r\nFoo: FooValue\r\n"));
+            var sources = groups.ToArray();
+            Assert.That(sources.Length, Is.EqualTo(3));
+            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo("Baz: BazValue"));
+            Assert.That(sources[1].RetrieveContent().Trim(), Is.EqualTo("Bar: BarValue"));
+            Assert.That(sources[2].RetrieveContent().Trim(), Is.EqualTo("Foo: FooValue"));
         }
 
         [Test]
-        public void HierarchyWithSomeFilesTest()
+        public void Test_HierarchyFiles_ShouldReturnGroupWithSixSources()
         {
             var fileSystem =
                 Mock.Of<IFilesSystem>(
@@ -114,18 +112,20 @@
                     && fs.GetParentDirectory("core of the earth") == (string)null);
 
 
-            var dbcl = new DirectoryBasedConfigLookup(fileSystem);
+            var lookup = new DirectoryBasedConfigLookup(fileSystem);
 
-            var cgs = dbcl.GetConfigGroups("this");
+            var groups = lookup.GetConfigGroups("this");
 
-            var content = new StringBuilder();
+            Assert.That(groups, Is.Not.Null);
 
-            foreach (var cg in cgs)
-            {
-                content.Append(cg.RetrieveContent());
-            }
-
-            Assert.That(content.ToString(), Is.EqualTo("Baz: BazValue\r\nBaz2: Baz2Value\r\nBar: BarValue\r\nBar2: Bar2Value\r\nFoo: FooValue\r\nFoo2: Foo2Value\r\n"));
+            var sources = groups.ToArray();
+            Assert.That(sources.Length, Is.EqualTo(6));
+            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo("Baz: BazValue"));
+            Assert.That(sources[1].RetrieveContent().Trim(), Is.EqualTo("Baz2: Baz2Value"));
+            Assert.That(sources[2].RetrieveContent().Trim(), Is.EqualTo("Bar: BarValue"));
+            Assert.That(sources[3].RetrieveContent().Trim(), Is.EqualTo("Bar2: Bar2Value"));
+            Assert.That(sources[4].RetrieveContent().Trim(), Is.EqualTo("Foo: FooValue"));
+            Assert.That(sources[5].RetrieveContent().Trim(), Is.EqualTo("Foo2: Foo2Value"));
         }
     }
 }
