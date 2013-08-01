@@ -14,67 +14,62 @@
     public class DeserializerTests
     {
         [Test]
-        public void DeserializeTest()
+        public void Test_TwoArgumentsInYamlString_ShouldReturnObjectWithTwoArguments()
         {
-            var simpleConfig = new SimpleConfig { Bar = "Bar", Foo = "Foo" };
+            const string YamlSimpleString = @"Foo: FooValue
+Bar: BarValue";
 
-            var yamlSimpleConfig = new StringBuilder();
+            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(YamlSimpleString);
 
-            new Serializer().Serialize(new StringWriter(yamlSimpleConfig), simpleConfig);
+            var config = new SimpleConfig() { Bar = "BarValue", Foo = "FooValue" };
 
-            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(yamlSimpleConfig.ToString());
-
-            Assert.That(newSimpleConfig, Is.EqualTo(simpleConfig));
+            Assert.That(newSimpleConfig, Is.EqualTo(config));
         }
 
         [Test]
-        public void DeserializeWrongAttributesTest()
+        public void Test_ThreeArgumentsInYamlString_ShouldReturnObjectWithTwoArguments()
         {
-            var simpleConfig = new SimpleConfig { Bar = "Bar", Foo = "Foo" };
+            const string YamlSimpleString = @"Foo: FooValue
+Bar: BarValue
+Baz: BazValue";
 
-            var yamlSimpleConfig = new StringBuilder();
+            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(YamlSimpleString);
 
-            new Serializer().Serialize(new StringWriter(yamlSimpleConfig), simpleConfig);
+            var config = new SimpleConfig() { Bar = "BarValue", Foo = "FooValue" };
 
-            yamlSimpleConfig.AppendLine("Baz: Baz");
-
-            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(yamlSimpleConfig.ToString());
-
-            Assert.That(newSimpleConfig, Is.EqualTo(simpleConfig));
+            Assert.That(newSimpleConfig, Is.EqualTo(config));
         }
 
         [Test]
-        public void DeserializeNotEnoughAttributesTest()
+        public void Test_SingleArgumentInYamlString_ShouldReturnObjectWithSingleNullProperty()
         {
-            var simpleConfig = new SimpleConfig { Bar = null, Foo = "Foo" };
+            const string YamlSimpleString = @"Foo: FooValue";
 
-            var yamlSimpleConfig = new StringBuilder();
+            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(YamlSimpleString);
 
-            yamlSimpleConfig.Append("Foo: Foo");
+            var config = new SimpleConfig { Bar = null, Foo = "FooValue" };
 
-            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(yamlSimpleConfig.ToString());
-
-            Assert.That(newSimpleConfig, Is.EqualTo(simpleConfig));
+            Assert.That(newSimpleConfig, Is.EqualTo(config));
         }
 
         [Test]
-        public void DeserializeAllNullAttributesTest()
+        public void Test_OneArgumentInYamlString_ShouldReturnObjectWithTwoNullsProperties()
         {
+            const string YamlSimpleString = @"Baz: BazValue";
+
+            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(YamlSimpleString);
+
             var simpleConfig = new SimpleConfig { Bar = null, Foo = null };
 
-            var yamlSimpleConfig = new StringBuilder().Append("Baz : baz");
-
-            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(yamlSimpleConfig.ToString());
-
             Assert.That(newSimpleConfig, Is.EqualTo(simpleConfig));
         }
 
         [Test]
-        public void DeserializeEmptyYamlStringTest()
+        public void Test_EmptyYamlString_ShouldReturnObjectWithTwoNullsProperties()
         {
-            var yamlSimpleConfig = new StringBuilder();
+            const string YamlSimpleString = "";
 
-            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(yamlSimpleConfig.ToString());
+            var newSimpleConfig = new CustomDeserializer().Deserialize<SimpleConfig>(YamlSimpleString);
 
             var simpleConfig = new SimpleConfig();
 

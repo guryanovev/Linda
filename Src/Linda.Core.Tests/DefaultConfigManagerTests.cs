@@ -22,7 +22,7 @@
         }
 
         [Test]
-        public void Test_SingleConfigSource_ShoulPassContentToDeserializer()
+        public void Test_SingleConfigSource_ShouldPassContentToDeserializer()
         {
             _configLookupStub.Setup(cl => cl.GetConfigGroups("this")).Returns(() =>
             {
@@ -42,10 +42,10 @@
                        .Callback(
                            new Action<string>(
                                content =>
-                                   {
-                                       Assert.That(content, Is.Not.Null);
-                                       Assert.That(content.Trim(), Is.EqualTo("Foo: FooValue"));
-                                   }));
+                               {
+                                   Assert.That(content, Is.Not.Null);
+                                   Assert.That(content.Trim(), Is.EqualTo("Foo: FooValue"));
+                               }));
 
             var manager = new DefaultConfigManager(configLookup, deserializer.Object, new ManualRootDetector("this"));
 
@@ -53,22 +53,17 @@
         }
 
         [Test]
-        public void OneCallGetConfigGroupsTest()
+        public void Test_SomeoneCallsGetConfig_ShouldOnceCallGetConfigGroups()
         {
-            this._configLookupStub.Setup(cl => cl.GetConfigGroups("this")).Returns(() =>
-            {
-                var configGroups = new List<ConfigGroup>();
+            _configLookupStub.Setup(cl => cl.GetConfigGroups("this")).Returns(
+                () =>
+                    {
+                        var configGroups = new List<ConfigGroup>();
 
-                var newConfigGroup = new ConfigGroup();
+                        return (IEnumerable<ConfigGroup>)configGroups;
+                    });
 
-                newConfigGroup.AddConfigSource(new ConfigSource("Foo: FooValue"));
-
-                configGroups.Add(newConfigGroup);
-
-                return (IEnumerable<ConfigGroup>)configGroups;
-            });
-
-            var configLookup = this._configLookupStub.Object;
+            var configLookup = _configLookupStub.Object;
 
             var dcm = new DefaultConfigManager(configLookup, new CustomDeserializer(), new ManualRootDetector("this"));
 
@@ -77,28 +72,74 @@
                 dcm.GetConfig<SimpleConfig>();
             }
 
-            this._configLookupStub.Verify(cl => cl.GetConfigGroups("this"), Times.Once());
+            _configLookupStub.Verify(cl => cl.GetConfigGroups("this"), Times.Once());
         }
 
         [Test]
-        public void EmptyConfigGroupsTest()
+        public void Test_TwoConfigSource_ShouldPassMergeContentToDeserializer()
         {
-            this._configLookupStub.Setup(cl => cl.GetConfigGroups("this")).Returns(() =>
+            _configLookupStub.Setup(cl => cl.GetConfigGroups("this")).Returns(() =>
             {
-                var configGroups = new List<ConfigGroup>();
+                var configGroups = new List<ConfigGroup>
+                                       {
+                                           new ConfigGroup(new ConfigSource("Foo: FooValue"), new ConfigSource("Bar: BarValue"))
+                                       };
 
                 return (IEnumerable<ConfigGroup>)configGroups;
             });
 
-            var configLookup = this._configLookupStub.Object;
+            var configLookup = _configLookupStub.Object;
 
-            var dcm = new DefaultConfigManager(configLookup, new CustomDeserializer(), new ManualRootDetector("this"));
+            var deserializer = new Mock<IYamlDeserializer>();
 
-            var result = dcm.GetConfig<SimpleConfig>();
+            deserializer.Setup(d => d.Deserialize<SimpleConfig>(It.IsAny<string>()))
+                       .Callback(
+                           new Action<string>(
+                               content =>
+                               {
+                                   Assert.That(content, Is.Not.Null);
+                                   Assert.That(content.Trim(), Is.EqualTo(
+@"Foo: FooValue
+Bar: BarValue"));
+                               }));
 
-            var simpleConfig = new SimpleConfig();
+            var manager = new DefaultConfigManager(configLookup, deserializer.Object, new ManualRootDetector("this"));
 
-            Assert.That(result, Is.EqualTo(simpleConfig));
+            manager.GetConfig<SimpleConfig>();
+        }
+
+        [Test]
+        public void Test_MultipleConfigGroup_ShouldPassMergeContentToDeserializer()
+        {
+            _configLookupStub.Setup(cl => cl.GetConfigGroups("this")).Returns(() =>
+            {
+                var configGroups = new List<ConfigGroup>
+                                       {
+                                           new ConfigGroup(new ConfigSource("Foo: FooValue")),
+                                           new ConfigGroup(new ConfigSource("Bar: BarValue"))
+                                       };
+
+                return (IEnumerable<ConfigGroup>)configGroups;
+            });
+
+            var configLookup = _configLookupStub.Object;
+
+            var deserializer = new Mock<IYamlDeserializer>();
+
+            deserializer.Setup(d => d.Deserialize<SimpleConfig>(It.IsAny<string>()))
+                       .Callback(
+                           new Action<string>(
+                               content =>
+                               {
+                                   Assert.That(content, Is.Not.Null);
+                                   Assert.That(content.Trim(), Is.EqualTo(
+@"Foo: FooValue
+Bar: BarValue"));
+                               }));
+
+            var manager = new DefaultConfigManager(configLookup, deserializer.Object, new ManualRootDetector("this"));
+
+            manager.GetConfig<SimpleConfig>();
         }
     }
 }
