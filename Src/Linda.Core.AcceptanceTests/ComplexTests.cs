@@ -10,7 +10,7 @@
     public class ComplexTests : TestsBase
     {
         [Test]
-        public void ComplexTestLoadNullConfig()
+        public void Test_SingleFile_ShouldEqualEmptyComplexComfig()
         {
             CreateFile("config/config1.yml", string.Empty);
 
@@ -22,7 +22,7 @@
         }
 
         [Test]
-        public void TestLoadComplexConfig()
+        public void Test_MultipleFiles_ShouldEqualComplexConfig()
         {
             CreateFile("config/config1.yml", string.Empty);
             CreateFile("config/config2.yml", 
@@ -45,7 +45,7 @@ AnotherDate: 2002-12-04");
         }
 
         [Test]
-        public void TestLoadComplexConfigWithStruct()
+        public void Test_SingleFile_ShouldEqualComplexConfig()
         {
             CreateFile("config/config1.yml",
 @"ListObjects:
@@ -94,7 +94,7 @@ StructProperty:
         }
 
         [Test]
-        public void TestLoadComplexConfigWithDict()
+        public void Test_SingleFile_ShouldEqualComplexConfig1()
         {
             CreateFile("config/config1.yml",
 @"Bar: barValue
@@ -138,7 +138,7 @@ List:
         }
 
         [Test]
-        public void TestLoadDifferentsConfig()
+        public void Test_MultipleFiles_ShouldEqualDifferentConfigs()
         {
             CreateFile("config/config1.yml", 
 @"Bar: barValue
