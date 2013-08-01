@@ -1,10 +1,29 @@
 ﻿namespace Linda.Demo.Console
 {
-    class Program
+    using System;
+
+    using System.Configuration;
+
+    using Linda.Core;
+
+    public class SimpleConfig
     {
-        static void Main(string[] args)
+        public string Foo { get; set; }
+
+        public string Bar { get; set; }
+    }
+
+    internal class Program
+    {
+        private static void Main(string[] args)
         {
 
+
+            var manager = new DefaultConfigManager();
+
+            var config = manager.GetConfig<SimpleConfig>();
+
+            Console.WriteLine(config.Bar);
         }
     }
 }

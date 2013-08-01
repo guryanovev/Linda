@@ -18,6 +18,11 @@
         {
         }
 
+        public DefaultConfigManager(IConfigLookup configLookup)
+            : this(configLookup, new CustomDeserializer(), new DefaultRootDetector())
+        {
+        }
+
         public DefaultConfigManager(string configRoot) : this(new FileBasedConfigLookup(), new CustomDeserializer(), new ManualRootDetector(configRoot))
         {
         }
