@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class FileBasedConfigLookup : BasedConfigLookupAbstract, IConfigLookup
+    public class FileBasedConfigLookup : BasedConfigLookupAbstract
     {
         private readonly IFilesSystem _filesSystem;
 
@@ -13,21 +13,6 @@
         public FileBasedConfigLookup(IFilesSystem filesSystem)
         {
             _filesSystem = filesSystem;
-        }
-
-        public IEnumerable<ConfigGroup> GetConfigGroups(string path)
-        {
-            var result = new List<ConfigGroup>();
-
-            var currentDirectory = path;
-            while (currentDirectory != null)
-            {
-                result.Add(this.GetConfigGroup(ref currentDirectory));
-            }
-
-            result.Reverse();
-
-            return result;
         }
 
         public override ConfigGroup GetConfigGroup(ref string directory)
