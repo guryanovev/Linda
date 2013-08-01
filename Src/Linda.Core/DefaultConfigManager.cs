@@ -7,29 +7,25 @@
     public class DefaultConfigManager : IConfigManager
     {
         private readonly IConfigLookup _configLookup;
-
-        private readonly string _configRoot;
-
         private readonly IYamlDeserializer _deserializer;
+        private readonly IRootDetector _rootDetector;
 
         private IEnumerable<ConfigGroup> _configGroups;
 
-        public DefaultConfigManager(string configRoot) : this(configRoot, new DirectoryBasedConfigLookup(), new CustomDeserializer())
+        public DefaultConfigManager(string configRoot) : this(configRoot, new FileBasedConfigLookup(), new CustomDeserializer(), rootDetector)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultConfigManager"/> class. 
         /// </summary>
-        /// <param name="configRoot">
-        /// full path to config root directory
-        /// </param>
         /// <param name="configLookup"></param>
         /// <param name="deserializer"></param>
-        public DefaultConfigManager(string configRoot, IConfigLookup configLookup, IYamlDeserializer deserializer)
+        public DefaultConfigManager(IConfigLookup configLookup, IYamlDeserializer deserializer, IRootDetector rootDetector)
         {
             _configLookup = configLookup;
             _deserializer = deserializer;
+            _rootDetector = rootDetector;
             _configRoot = configRoot;
         }
 
@@ -37,7 +33,8 @@
         {
             if (_configGroups == null)
             {
-                _configGroups = this._configLookup.GetConfigGroups(_configRoot);
+                var configRoot = _rootDetector.GetConfigRoot();
+                _configGroups = _configLookup.GetConfigGroups(configRoot);
             }
 
             var content = string.Empty;

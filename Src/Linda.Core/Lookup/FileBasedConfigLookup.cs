@@ -17,7 +17,7 @@
 
         public IEnumerable<ConfigGroup> GetConfigGroups(string path)
         {
-            var newConfigGroups = new List<ConfigGroup>();
+            var result = new List<ConfigGroup>();
 
             var currentDirectory = path;
             while (currentDirectory != null)
@@ -31,15 +31,15 @@
                         configGroup.AddConfigSource(new ConfigSource(() => _filesSystem.GetFileContent(currentFile)));
                     }
 
-                    newConfigGroups.Add(configGroup);
+                    result.Add(configGroup);
                 }
 
                 currentDirectory = _filesSystem.GetParentDirectory(currentDirectory);
             }
 
-            newConfigGroups.Reverse();
+            result.Reverse();
 
-            return newConfigGroups;
+            return result;
         }
     }
 }

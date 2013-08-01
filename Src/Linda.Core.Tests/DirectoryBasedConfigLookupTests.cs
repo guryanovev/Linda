@@ -1,6 +1,7 @@
 ﻿namespace Linda.Core.Tests
 {
     using System.IO;
+    using System.Linq;
     using System.Text;
 
     using Linda.Core.Lookup;
@@ -12,7 +13,7 @@
     public class DirectoryBasedConfigLookupTests
     {
         [Test]
-        public void OneFileTest()
+        public void Test_SingleFile_ShouldReturnGroupWithSingleSource()
         {
             var fileSystem =
                 Mock.Of<IFilesSystem>(
@@ -21,18 +22,15 @@
                     && fs.GetFiles(Path.Combine("this", "config"), "*.yml") == new string[1] { "foo.yml" }
                     && fs.GetParentDirectory("this") == (string)null);
 
-            var dbcl = new DirectoryBasedConfigLookup(fileSystem);
+            var lookup = new DirectoryBasedConfigLookup(fileSystem);
 
-            var cgs = dbcl.GetConfigGroups("this");
+            var groups = lookup.GetConfigGroups("this");
 
-            var content = new StringBuilder();
+            Assert.That(groups, Is.Not.Null);
 
-            foreach (var cg in cgs)
-            {
-                content.AppendLine(cg.RetrieveContent());
-            }
-
-            Assert.That(content.ToString(), Is.EqualTo("Foo: FooValue\r\n\r\n"));
+            var sources = groups.ToArray();
+            Assert.That(sources.Length, Is.EqualTo(1));
+            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo("Foo: FooValue"));
         }
 
         [Test]
