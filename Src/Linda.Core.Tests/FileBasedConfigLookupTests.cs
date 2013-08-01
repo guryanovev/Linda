@@ -32,7 +32,7 @@
         }
 
         [Test]
-        public void Test_MultipleFiles_ShouldReturnGroupWithTwoSources()
+        public void Test_MultipleFiles_ShouldReturnGroupWithSingleSource()
         {
             var filesSystem =
                 Mock.Of<IFilesSystem>(
@@ -50,9 +50,10 @@
             Assert.That(groups, Is.Not.Null);
 
             var sources = groups.ToArray();
-            Assert.That(sources.Length, Is.EqualTo(2));
-            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo("Foo: fooValue"));
-            Assert.That(sources[1].RetrieveContent().Trim(), Is.EqualTo("Bar: barValue"));
+            Assert.That(sources.Length, Is.EqualTo(1));
+            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo(
+@"Foo: fooValue
+Bar: barValue"));
         }
 
         [Test]
@@ -81,11 +82,14 @@
             Assert.That(groups, Is.Not.Null);
 
             var sources = groups.ToArray();
-            Assert.That(sources.Length, Is.EqualTo(4));
-            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo("FooBar: fooBarValue"));
-            Assert.That(sources[1].RetrieveContent().Trim(), Is.EqualTo("Bar: barValue"));
-            Assert.That(sources[2].RetrieveContent().Trim(), Is.EqualTo("Baz: bazValue"));
-            Assert.That(sources[3].RetrieveContent().Trim(), Is.EqualTo("Foo: fooValue"));
+            Assert.That(sources.Length, Is.EqualTo(3));
+            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo(@"FooBar: fooBarValue"));
+
+            Assert.That(sources[1].RetrieveContent().Trim(), Is.EqualTo(
+@"Bar: barValue
+Baz: bazValue"));
+
+            Assert.That(sources[2].RetrieveContent().Trim(), Is.EqualTo(@"Foo: fooValue"));
         }
     }
 }
