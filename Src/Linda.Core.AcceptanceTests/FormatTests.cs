@@ -6,16 +6,6 @@
     public class FormatTests : TestsBase
     {
         [Test]
-        public void SimpleTest()
-        {
-            this.CreateFile("config/config1.txt", "Foo: fooValue");
-
-            var config = LoadConfig<SimpleConfig>();
-
-            Assert.That(config, Is.EqualTo(new SimpleConfig()));
-        }
-
-        [Test]
         public void Test_SimpleConfig_ShouldLoadConfiguration()
         {
             CreateFile(
@@ -48,7 +38,7 @@ Bar: barValue");
         }
 
         [Test]
-        public void TestWithAnotherFiles()
+        public void Test_ShouldLoadSimpleConfig()
         {
             CreateFile("config/config1.txt", "Foo: fooValue");
             CreateFile("config/config2.yml", "Bar: barValue");
@@ -62,7 +52,7 @@ Bar: barValue");
 
         [Test]
         [ExpectedException(typeof(YamlDotNet.Core.SyntaxErrorException))]
-        public void ExpectedExceptionTestWithWronfYamlFiles()
+        public void Test_ExpectedExceptionTestWithWronfYamlFiles()
         {
             CreateFile("config/config1.yml", "Foo:fooValue");
             CreateFile("config/config2.yml", "Baz: bazValue");
