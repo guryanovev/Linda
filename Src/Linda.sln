@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linda.Core.Tests", "Linda.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linda.Demo.Console", "Linda.Demo.Console\Linda.Demo.Console.csproj", "{A7FD44A1-E020-447C-85B2-B2AD45846176}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linda.Demo.Web", "Linda.Demo.Web\Linda.Demo.Web.csproj", "{9884C1D9-A3D4-43F2-B11E-D8E746F7EB0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{A7FD44A1-E020-447C-85B2-B2AD45846176}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7FD44A1-E020-447C-85B2-B2AD45846176}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7FD44A1-E020-447C-85B2-B2AD45846176}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9884C1D9-A3D4-43F2-B11E-D8E746F7EB0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9884C1D9-A3D4-43F2-B11E-D8E746F7EB0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9884C1D9-A3D4-43F2-B11E-D8E746F7EB0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9884C1D9-A3D4-43F2-B11E-D8E746F7EB0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
