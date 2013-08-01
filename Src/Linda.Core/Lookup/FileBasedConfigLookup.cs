@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class FileBasedConfigLookup : IConfigLookup
+    public class FileBasedConfigLookup : BasedConfigLookupAbstract, IConfigLookup
     {
         private readonly IFilesSystem _filesSystem;
 
@@ -22,22 +22,28 @@
             var currentDirectory = path;
             while (currentDirectory != null)
             {
-                if (_filesSystem.Exists(currentDirectory))
-                {
-                    var configGroup = new ConfigGroup();
-                    foreach (var file in _filesSystem.GetFiles(currentDirectory, "*.yml"))
-                    {
-                        var currentFile = file;
-                        configGroup.AddConfigSource(new ConfigSource(() => _filesSystem.GetFileContent(currentFile)));
-                    }
-
-                    result.Add(configGroup);
-                }
-
-                currentDirectory = _filesSystem.GetParentDirectory(currentDirectory);
+                result.Add(this.GetConfigGroup(ref currentDirectory));
             }
 
             result.Reverse();
+
+            return result;
+        }
+
+        public override ConfigGroup GetConfigGroup(ref string directory)
+        {
+            var result = new ConfigGroup();
+
+            if (_filesSystem.Exists(directory))
+            {
+                foreach (var file in _filesSystem.GetFiles(directory, "*.yml"))
+                {
+                    var currentFile = file;
+                    result.AddConfigSource(new ConfigSource(() => _filesSystem.GetFileContent(currentFile)));
+                }
+            }
+
+            directory = _filesSystem.GetParentDirectory(directory);
 
             return result;
         }
