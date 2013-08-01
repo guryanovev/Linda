@@ -106,6 +106,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\YamlController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -127,8 +128,26 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.yml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Yaml\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Linda.Core\Linda.Core.csproj">
+      <Project>{0b948073-1c52-4335-897b-591cc701356a}</Project>
+      <Name>Linda.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Linda.Demo.Console\Linda.Demo.Console.csproj">
+      <Project>{a7fd44a1-e020-447c-85b2-b2ad45846176}</Project>
+      <Name>Linda.Demo.Console</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
