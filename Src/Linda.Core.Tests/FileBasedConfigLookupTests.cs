@@ -20,8 +20,7 @@
                     && f.GetFileContent("path/config.yml") == "Foo: fooValue"
                     && f.GetParentDirectory("path") == (string)null);
 
-            var lookup = new FileBasedConfigLookup(filesSystem);
-            lookup.SearchPatternRegEx = "*.yml";
+            var lookup = new FileBasedConfigLookup(filesSystem, "*.yml");
 
             var groups = lookup.GetConfigGroups("path").ToList();
 
@@ -44,8 +43,7 @@
                     && f.GetFileContent("path/bar.yml") == "Bar: barValue"
                     && f.GetParentDirectory("path") == (string)null);
 
-            var lookup = new FileBasedConfigLookup(filesSystem);
-            lookup.SearchPatternRegEx = "*.yml";
+            var lookup = new FileBasedConfigLookup(filesSystem, "*.yml");
 
             var groups = lookup.GetConfigGroups("path").ToList();
 
@@ -77,8 +75,7 @@ Bar: barValue"));
                     && f.GetParentDirectory("under path") == "parent under path"
                     && f.GetParentDirectory("parent under path") == (string)null);
 
-            var lookup = new FileBasedConfigLookup(filesSystem);
-            lookup.SearchPatternRegEx = "*.yml";
+            var lookup = new FileBasedConfigLookup(filesSystem, "*.yml");
 
             var groups = lookup.GetConfigGroups("path").ToList();
 
