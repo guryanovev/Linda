@@ -14,9 +14,7 @@ namespace Linda.Demo.Web.Controllers
     {
         public ActionResult Index()
         {
-            var lookup = new FileBasedConfigLookup { SearchPattern = "web.yml" };
-
-            var manager = new DefaultConfigManager(lookup);
+            var manager = new DefaultConfigManager();
 
             var config = manager.GetConfig<Configuration>();
 
@@ -24,6 +22,5 @@ namespace Linda.Demo.Web.Controllers
 
             return View();
         }
-
     }
 }

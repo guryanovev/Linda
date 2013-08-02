@@ -1,6 +1,7 @@
 ﻿namespace Linda.Core.Lookup
 {
-    using System.Collections.Generic;
+    using System;
+    using System.Web;
 
     public class FileBasedConfigLookup : BasedConfigLookupAbstract
     {
@@ -27,6 +28,14 @@
 
         public FileBasedConfigLookup(IFilesSystem filesSystem)
         {
+            if (CheckIfWeb())
+            {
+                SearchPattern = "web.yml";
+            }
+            else
+            {
+                SearchPattern = "app.yml";
+            }
             _filesSystem = filesSystem;
         }
 
@@ -46,6 +55,18 @@
             directory = _filesSystem.GetParentDirectory(directory);
 
             return result;
+        }
+
+        private static bool CheckIfWeb()
+        {
+            try
+            {
+                return HttpContext.Current != null;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

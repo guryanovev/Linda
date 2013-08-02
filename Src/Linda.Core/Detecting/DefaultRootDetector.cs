@@ -3,17 +3,29 @@
     using System;
     using System.IO;
     using System.Reflection;
+    using System.Web;
 
     public class DefaultRootDetector : IRootDetector
     {
         public string GetConfigRoot()
         {
-            // TODO исправить костыль
-            var str = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath;
+            var isWeb = CheckIfWeb();
 
-            if (str == null) return AppDomain.CurrentDomain.BaseDirectory;
+            var result = isWeb ? HttpContext.Current.Server.MapPath("~/bin") : AppDomain.CurrentDomain.BaseDirectory;
 
-            return str;
+            return result;
+        }
+
+        private static bool CheckIfWeb()
+        {
+            try
+            {
+                return HttpContext.Current != null;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
