@@ -21,7 +21,7 @@
                     && f.GetParentDirectory("path") == (string)null);
 
             var lookup = new FileBasedConfigLookup(filesSystem);
-            lookup.SearchPattern = "*.yml";
+            lookup.SearchPatternRegEx = "*.yml";
 
             var groups = lookup.GetConfigGroups("path").ToList();
 
@@ -45,7 +45,7 @@
                     && f.GetParentDirectory("path") == (string)null);
 
             var lookup = new FileBasedConfigLookup(filesSystem);
-            lookup.SearchPattern = "*.yml";
+            lookup.SearchPatternRegEx = "*.yml";
 
             var groups = lookup.GetConfigGroups("path").ToList();
 
@@ -78,7 +78,7 @@ Bar: barValue"));
                     && f.GetParentDirectory("parent under path") == (string)null);
 
             var lookup = new FileBasedConfigLookup(filesSystem);
-            lookup.SearchPattern = "*.yml";
+            lookup.SearchPatternRegEx = "*.yml";
 
             var groups = lookup.GetConfigGroups("path").ToList();
 

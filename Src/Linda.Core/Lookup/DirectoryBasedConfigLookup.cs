@@ -1,20 +1,26 @@
 ﻿namespace Linda.Core.Lookup
 {
-    using System.Collections.Generic;
     using System.IO;
 
     public class DirectoryBasedConfigLookup : BasedConfigLookupAbstract
     {
         private readonly IFilesSystem _filesSystem;
-        private string _searchPattern = "*.yml";
+        private string _searchPatternRegEx = string.Empty;
         private string _directoryName = "config";
+
+        public DirectoryBasedConfigLookup(string searchPatternRegEx)
+            : this(new DefaultFilesSystem(), searchPatternRegEx)
+        {
+        }
 
         public DirectoryBasedConfigLookup() : this(new DefaultFilesSystem())
         {
         }
 
-        public DirectoryBasedConfigLookup(IFilesSystem filesSystem)
+        public DirectoryBasedConfigLookup(IFilesSystem filesSystem, string searchPatternRegEx = null)
         {
+            SearchPatternRegEx = searchPatternRegEx ?? "[a-zA-Z0-9\\._-]*.yml";
+
             _filesSystem = filesSystem;
         }
 
@@ -31,16 +37,16 @@
             }
         }
 
-        public string SearchPattern
+        public string SearchPatternRegEx
         {
             get
             {
-                return _searchPattern;
+                return _searchPatternRegEx;
             }
 
             set
             {
-                _searchPattern = value;
+                _searchPatternRegEx = value;
             }
         }
 
@@ -51,7 +57,7 @@
             var configDirectoryPath = Path.Combine(directory, DirectoryName);
             if (_filesSystem.Exists(configDirectoryPath))
             {
-                foreach (var file in _filesSystem.GetFiles(configDirectoryPath, SearchPattern))
+                foreach (var file in _filesSystem.GetFiles(configDirectoryPath, SearchPatternRegEx))
                 {
                     var currentFile = file;
                     result.AddConfigSource(new ConfigSource(() => _filesSystem.GetFileContent(currentFile)));

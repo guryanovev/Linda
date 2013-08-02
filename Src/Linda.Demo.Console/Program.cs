@@ -52,9 +52,9 @@
 
         private static void FileBasedConfig()
         {
-            var lookup = new FileBasedConfigLookup { SearchPattern = "App.yml" };
+            //var lookup = new FileBasedConfigLookup { SearchPatternRegEx = "App.yml" };
 
-            var manager = new DefaultConfigManager(lookup);
+            var manager = new DefaultConfigManager();
 
             var config = manager.GetConfig<Configuration>();
 
@@ -65,7 +65,7 @@
 
         private static void DirectoryBasedConfig()
         {
-            var lookup = new DirectoryBasedConfigLookup { DirectoryName = "config", SearchPattern = "*.yml" };
+            var lookup = new DirectoryBasedConfigLookup { DirectoryName = "config", SearchPatternRegEx = "*.yml" };
 
             var manager = new DefaultConfigManager(lookup);
 

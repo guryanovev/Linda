@@ -22,14 +22,26 @@
             }
         }
 
+        public FileBasedConfigLookup(string searchPatternRegEx)
+            : this(new DefaultFilesSystem(), searchPatternRegEx)
+        {
+        }
+
         public FileBasedConfigLookup() : this(new DefaultFilesSystem())
         {
         }
 
-        public FileBasedConfigLookup(IFilesSystem filesSystem)
+        public FileBasedConfigLookup(IFilesSystem filesSystem, string searchPatternRegEx = null)
         {
-            SearchPatternRegEx = CheckIfWeb() ? "web.yml" : "app.yml";
-            //SearchPatternRegEx = "(App|Web).yml";
+            if (searchPatternRegEx == null)
+            {
+                SearchPatternRegEx = CheckIfWeb() ? "web.yml" : "app.yml";
+            }
+            else
+            {
+                SearchPatternRegEx = searchPatternRegEx;
+            }
+            
             _filesSystem = filesSystem;
         }
 

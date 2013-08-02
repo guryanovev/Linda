@@ -30,7 +30,7 @@
 
                 if (match.Length == file.Name.Length)
                 {
-                    result.Add(match.ToString());
+                    result.Add(file.FullName);
                 }
             }
 
