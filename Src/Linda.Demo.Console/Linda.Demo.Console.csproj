@@ -50,7 +50,6 @@
     <None Include="App.yml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="App.yml" />
     <None Include="config\app.yml" />
   </ItemGroup>
   <ItemGroup>
