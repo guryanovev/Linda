@@ -8,6 +8,7 @@ namespace Linda.Demo.Web.Controllers
 {
     using Linda.Core;
     using Linda.Demo.Console;
+    using Linda.Demo.Web.Models;
 
     public class YamlController : Controller
     {
@@ -15,9 +16,11 @@ namespace Linda.Demo.Web.Controllers
         {
             var manager = new DefaultConfigManager();
 
-            var config = manager.GetConfig<Configuration>();
+            var config = manager.GetConfig<LindaPage>();
 
-            ViewBag.Message = config.Startup.SupportedRuntime.Sku + "\n" + config.Startup.SupportedRuntime.Version;
+            ViewBag.Title = config.Title;
+            ViewBag.LinkToGithub = config.LinkToGithub;
+            ViewBag.Tabs = config.Tabs;
 
             return View();
         }
