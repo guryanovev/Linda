@@ -7,7 +7,6 @@ using System.Web.Mvc;
 namespace Linda.Demo.Web.Controllers
 {
     using Linda.Core;
-    using Linda.Core.Lookup;
     using Linda.Demo.Console;
 
     public class YamlController : Controller
