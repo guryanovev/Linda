@@ -30,14 +30,13 @@
 
             var manager = new DefaultConfigManager(lookup);
 
-            var c = new Configuration();
-            
             var config = manager.GetConfig<Configuration>();
 
             Console.WriteLine(config.Startup.SupportedRuntime.Sku);
 
             Console.WriteLine(config.Startup.SupportedRuntime.Version);
 
+            // todo
         }
     }
 }
