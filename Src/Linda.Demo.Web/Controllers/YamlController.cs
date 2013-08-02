@@ -7,23 +7,22 @@ using System.Web.Mvc;
 namespace Linda.Demo.Web.Controllers
 {
     using Linda.Core;
-    using Linda.Core.Lookup;
     using Linda.Demo.Console;
+    using Linda.Demo.Web.Models;
 
     public class YamlController : Controller
     {
         public ActionResult Index()
         {
-            var lookup = new FileBasedConfigLookup { SearchPattern = "web.yml" };
+            var manager = new DefaultConfigManager();
 
-            var manager = new DefaultConfigManager(lookup);
+            var config = manager.GetConfig<LindaPage>();
 
-            var config = manager.GetConfig<Configuration>();
-
-            ViewBag.Message = config.Startup.SupportedRuntime.Sku + "\n" + config.Startup.SupportedRuntime.Version;
+            ViewBag.Title = config.Title;
+            ViewBag.LinkToGithub = config.LinkToGithub;
+            ViewBag.Tabs = config.Tabs;
 
             return View();
         }
-
     }
 }

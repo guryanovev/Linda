@@ -2,15 +2,30 @@
 {
     using System;
     using System.IO;
+    using System.Reflection;
+    using System.Web;
 
     public class DefaultRootDetector : IRootDetector
     {
         public string GetConfigRoot()
         {
-            // TODO сделать для Web!
-            var str = AppDomain.CurrentDomain.BaseDirectory;
+            var isWeb = CheckIfWeb();
 
-            return str;
+            var result = isWeb ? HttpContext.Current.Server.MapPath("~/bin") : AppDomain.CurrentDomain.BaseDirectory;
+
+            return result;
+        }
+
+        private static bool CheckIfWeb()
+        {
+            try
+            {
+                return HttpContext.Current != null;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

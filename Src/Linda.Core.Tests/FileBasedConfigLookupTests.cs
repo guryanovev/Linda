@@ -16,11 +16,12 @@
                 Mock.Of<IFilesSystem>(
                     f =>
                     f.Exists("path") &&
-                    f.GetFiles("path", "*.yml") == new List<string> { "path/config.yml" }
+                    f.GetFiles("path", "[a-zA-Z0-9\\._-]*.yml") == new List<string> { "path/config.yml" }
                     && f.GetFileContent("path/config.yml") == "Foo: fooValue"
                     && f.GetParentDirectory("path") == (string)null);
 
             var lookup = new FileBasedConfigLookup(filesSystem);
+            lookup.SearchPatternRegEx = "[a-zA-Z0-9\\._-]*.yml";
 
             var groups = lookup.GetConfigGroups("path").ToList();
 
@@ -37,13 +38,14 @@
             var filesSystem =
                 Mock.Of<IFilesSystem>(
                     f =>
-                    f.Exists("path") 
-                    && f.GetFiles("path", "*.yml") == new List<string> { "path/foo.yml", "path/bar.yml" }
+                    f.Exists("path")
+                    && f.GetFiles("path", "[a-zA-Z0-9\\._-]*.yml") == new List<string> { "path/foo.yml", "path/bar.yml" }
                     && f.GetFileContent("path/foo.yml") == "Foo: fooValue"
                     && f.GetFileContent("path/bar.yml") == "Bar: barValue"
                     && f.GetParentDirectory("path") == (string)null);
 
             var lookup = new FileBasedConfigLookup(filesSystem);
+            lookup.SearchPatternRegEx = "[a-zA-Z0-9\\._-]*.yml";
 
             var groups = lookup.GetConfigGroups("path").ToList();
 
@@ -63,10 +65,10 @@ Bar: barValue"));
                 Mock.Of<IFilesSystem>(
                     f =>
                     f.Exists("path") && f.Exists("under path") && f.Exists("under path")
-                    && f.Exists("parent under path") && f.GetFiles("path", "*.yml") == new List<string> { "path/config1.yml" }
-                    && f.GetFiles("under path", "*.yml")
+                    && f.Exists("parent under path") && f.GetFiles("path", "[a-zA-Z0-9\\._-]*.yml") == new List<string> { "path/config1.yml" }
+                    && f.GetFiles("under path", "[a-zA-Z0-9\\._-]*.yml")
                        == new List<string> { "under path/config2.yml", "under path/config3.yml" }
-                    && f.GetFiles("parent under path", "*.yml") == new List<string> { "parent under path/config4.yml" }
+                    && f.GetFiles("parent under path", "[a-zA-Z0-9\\._-]*.yml") == new List<string> { "parent under path/config4.yml" }
                     && f.GetFileContent("path/config1.yml") == "Foo: fooValue"
                     && f.GetFileContent("under path/config2.yml") == "Bar: barValue"
                     && f.GetFileContent("under path/config3.yml") == "Baz: bazValue"
@@ -76,6 +78,7 @@ Bar: barValue"));
                     && f.GetParentDirectory("parent under path") == (string)null);
 
             var lookup = new FileBasedConfigLookup(filesSystem);
+            lookup.SearchPatternRegEx = "[a-zA-Z0-9\\._-]*.yml";
 
             var groups = lookup.GetConfigGroups("path").ToList();
 

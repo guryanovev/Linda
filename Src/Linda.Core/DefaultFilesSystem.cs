@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Text.RegularExpressions;
 
     public class DefaultFilesSystem : IFilesSystem
     {
@@ -10,9 +11,30 @@
             return File.ReadAllText(path);
         }
 
-        public IEnumerable<string> GetFiles(string directory, string searchPattern)
+        public IEnumerable<string> GetFiles(string directory, string searchPatternRegEx)
         {
-            return Directory.GetFiles(directory, searchPattern);
+            var files = new DirectoryInfo(directory).GetFiles();
+
+            var result = new List<string>();
+
+            foreach (var file in files)
+            {
+                var regex = new Regex(searchPatternRegEx, RegexOptions.IgnoreCase);
+
+                if (!regex.IsMatch(file.Name))
+                {
+                    continue;
+                }
+
+                var match = regex.Match(file.Name);
+
+                if (match.Length == file.Name.Length)
+                {
+                    result.Add(file.FullName);
+                }
+            }
+
+            return result;
         }
 
         public bool Exists(string path)

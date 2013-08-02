@@ -1,4 +1,9 @@
-﻿Startup:
-  SupportedRuntime:
-    Version: "v4.0"
-    Sku: ".NETFramework,Version=v4.5"
+﻿Title: Linda.Demo.Web
+LinkToGithub: https://github.com/guryanovev/Linda
+Tabs:
+ - 
+  Name: File
+  Content: This is file content
+ - 
+  Name: Directory
+  Content: This is directory content
