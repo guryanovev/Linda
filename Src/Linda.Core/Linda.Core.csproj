@@ -71,6 +71,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Condition="HasTrailingSlash('$(SolutionDir)')" Project="$(SolutionDir).nuget\nuget.targets" />
   <Import Condition="!HasTrailingSlash('$(SolutionDir)')" Project="$(SolutionDir)\.nuget\nuget.targets" />
