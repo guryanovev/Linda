@@ -19,7 +19,7 @@
 
         public DirectoryBasedConfigLookup(IFilesSystem filesSystem, string searchPatternRegEx = null)
         {
-            SearchPatternRegEx = searchPatternRegEx ?? "[a-zA-Z0-9\\._-]*.yml";
+            SearchPatternRegEx = searchPatternRegEx ?? "[a-z0-9\\._-]*.yml";
 
             _filesSystem = filesSystem;
         }
