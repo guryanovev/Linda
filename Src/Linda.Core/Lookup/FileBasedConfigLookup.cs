@@ -7,18 +7,18 @@
     {
         private readonly IFilesSystem _filesSystem;
 
-        private string _searchPattern = "*.yml";
+        private string _searchPatternRegEx = string.Empty;
 
-        public string SearchPattern
+        public string SearchPatternRegEx
         {
             get
             {
-                return _searchPattern;
+                return _searchPatternRegEx;
             }
 
             set
             {
-                _searchPattern = value;
+                _searchPatternRegEx = value;
             }
         }
 
@@ -28,14 +28,8 @@
 
         public FileBasedConfigLookup(IFilesSystem filesSystem)
         {
-            if (CheckIfWeb())
-            {
-                SearchPattern = "web.yml";
-            }
-            else
-            {
-                SearchPattern = "app.yml";
-            }
+            SearchPatternRegEx = CheckIfWeb() ? "web.yml" : "app.yml";
+            //SearchPatternRegEx = "(App|Web).yml";
             _filesSystem = filesSystem;
         }
 
@@ -45,7 +39,7 @@
 
             if (_filesSystem.Exists(directory))
             {
-                foreach (var file in _filesSystem.GetFiles(directory, SearchPattern))
+                foreach (var file in _filesSystem.GetFiles(directory, SearchPatternRegEx))
                 {
                     var currentFile = file;
                     result.AddConfigSource(new ConfigSource(() => _filesSystem.GetFileContent(currentFile)));
