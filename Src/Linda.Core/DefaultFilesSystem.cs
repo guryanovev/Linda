@@ -19,7 +19,7 @@
 
             foreach (var file in files)
             {
-                var regex = new Regex(searchPatternRegEx);
+                var regex = new Regex(searchPatternRegEx, RegexOptions.IgnoreCase);
 
                 if (!regex.IsMatch(file.Name))
                 {

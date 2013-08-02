@@ -35,7 +35,7 @@
         {
             if (searchPatternRegEx == null)
             {
-                SearchPatternRegEx = CheckIfWeb() ? "[wW]eb.yml" : "[aA]pp.yml";
+                SearchPatternRegEx = CheckIfWeb() ? "web.yml" : "app.yml";
             }
             else
             {
