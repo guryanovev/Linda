@@ -5,7 +5,7 @@
     public class DirectoryBasedConfigLookup : BasedConfigLookupAbstract
     {
         private readonly IFilesSystem _filesSystem;
-        private string _searchPatternRegEx = string.Empty;
+        private string _searchPatternRegEx;
         private string _directoryName = "config";
 
         public DirectoryBasedConfigLookup(string searchPatternRegEx)
