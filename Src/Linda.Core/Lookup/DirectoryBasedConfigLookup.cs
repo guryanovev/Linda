@@ -5,11 +5,11 @@
     public class DirectoryBasedConfigLookup : BasedConfigLookupAbstract
     {
         private readonly IFilesSystem _filesSystem;
-        private string _searchPatternRegEx;
+        private string _searchPatternRegEx = "[a-zA-Z0-9\\._-]*.yml";
         private string _directoryName = "config";
 
         public DirectoryBasedConfigLookup(string searchPatternRegEx)
-            : this(new DefaultFilesSystem(), searchPatternRegEx)
+            : this(new DefaultFilesSystem())
         {
         }
 
@@ -17,10 +17,8 @@
         {
         }
 
-        public DirectoryBasedConfigLookup(IFilesSystem filesSystem, string searchPatternRegEx = null)
+        public DirectoryBasedConfigLookup(IFilesSystem filesSystem)
         {
-            SearchPatternRegEx = searchPatternRegEx ?? "[a-z0-9\\._-]*.yml";
-
             _filesSystem = filesSystem;
         }
 
@@ -49,6 +47,7 @@
                 _searchPatternRegEx = value;
             }
         }
+
 
         public override ConfigGroup GetConfigGroup(ref string directory)
         {

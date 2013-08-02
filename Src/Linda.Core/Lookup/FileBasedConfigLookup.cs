@@ -7,7 +7,7 @@
     {
         private readonly IFilesSystem _filesSystem;
 
-        private string _searchPatternRegEx = string.Empty;
+        private string _searchPatternRegEx;
 
         public string SearchPatternRegEx
         {
@@ -22,26 +22,15 @@
             }
         }
 
-        public FileBasedConfigLookup(string searchPatternRegEx)
-            : this(new DefaultFilesSystem(), searchPatternRegEx)
-        {
-        }
-
         public FileBasedConfigLookup() : this(new DefaultFilesSystem())
         {
         }
 
-        public FileBasedConfigLookup(IFilesSystem filesSystem, string searchPatternRegEx = null)
+        public FileBasedConfigLookup(IFilesSystem filesSystem)
         {
-            if (searchPatternRegEx == null)
-            {
-                SearchPatternRegEx = CheckIfWeb() ? "web.yml" : "app.yml";
-            }
-            else
-            {
-                SearchPatternRegEx = searchPatternRegEx;
-            }
-            
+
+            _searchPatternRegEx = CheckIfWeb() ? "web.yml" : "app.yml";
+  
             _filesSystem = filesSystem;
         }
 
