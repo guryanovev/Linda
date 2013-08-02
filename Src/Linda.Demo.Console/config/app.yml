@@ -1,0 +1,6 @@
+﻿Foo: fooValue
+Baz: bazValue
+StructProp:
+ -
+  Bar: barValue
+  Baz: bazValue
