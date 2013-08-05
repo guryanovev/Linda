@@ -2,8 +2,6 @@
 LinkToGithub: https://github.com/guryanovev/Linda
 Tabs:
  - 
-  Name: File
+  Name: FileTab
   Content: This is file content
- - 
-  Name: Directory
-  Content: This is directory content
+  Version: 3.0

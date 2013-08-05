@@ -1,0 +1,9 @@
+﻿Tabs:
+ -
+  Name: DirectoryTab
+  Content: This is directory content
+  Version: 4.1
+ -
+  Name: AnotherTab
+  Content: This is another content
+  Version: 4.5

@@ -4,6 +4,11 @@
 
     public class LindaPage
     {
+        public LindaPage()
+        {
+            this.Tabs = new List<Tab>();
+        }
+
         public string Title { get; set; }
 
         public string LinkToGithub { get; set; }
@@ -16,5 +21,7 @@
         public string Name { get; set; }
 
         public string Content { get; set; }
+
+        public double Version { get; set; }
     }
 }

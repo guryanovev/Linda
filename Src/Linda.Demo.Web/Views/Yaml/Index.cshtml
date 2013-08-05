@@ -1,3 +1,55 @@
-﻿<h2>@ViewBag.Title</h2>
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/style.css")" rel="stylesheet" type="text/css"/>
+    <script src="@Url.Content("~/Scripts/jquery.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/tabs.js")"></script>
+</head>
 
-<a href = '@ViewBag.LinkToGithub'>@ViewBag.LinkToGithub</a>
+    <body>
+
+        <div id="wrapper">
+
+            <header id="header">
+                <h2>@ViewBag.Title</h2>
+            </header>
+
+            <div id="link">
+                <a href = '@ViewBag.LinkToGithub'>@ViewBag.LinkToGithub</a>
+            </div>
+            
+            @if (ViewBag.Tabs.Count >= 1)
+            {
+                <div class="section">
+        
+                    <ul class="tabs">
+                        <li class="current">@ViewBag.Tabs[0].Name</li>
+
+                        @for (var i = 1; i < ViewBag.Tabs.Count; i++ )
+                        {
+                            <li>@ViewBag.Tabs[i].Name</li>
+                        }
+                    </ul>
+
+                    <div class="box visible">
+                        <p>Content: @ViewBag.Tabs[0].Content</p>
+                        <p>Version: @ViewBag.Tabs[0].Version</p>
+                    </div>
+                    
+                    @for (var i = 1; i < ViewBag.Tabs.Count; i++ )
+                    {
+                        <div class="box">
+                            <p>Content: @ViewBag.Tabs[i].Content</p>
+                            <p>Version: @ViewBag.Tabs[i].Version</p>
+                        </div>
+                    }
+
+                </div>
+            }
+
+        </div>
+
+    </body>
+</html>
