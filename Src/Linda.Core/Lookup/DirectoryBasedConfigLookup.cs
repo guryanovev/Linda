@@ -8,11 +8,6 @@
         private string _searchPatternRegEx = "[a-zA-Z0-9\\._-]*.yml";
         private string _directoryName = "config";
 
-        public DirectoryBasedConfigLookup(string searchPatternRegEx)
-            : this(new DefaultFilesSystem())
-        {
-        }
-
         public DirectoryBasedConfigLookup() : this(new DefaultFilesSystem())
         {
         }
@@ -47,7 +42,6 @@
                 _searchPatternRegEx = value;
             }
         }
-
 
         public override ConfigGroup GetConfigGroup(ref string directory)
         {

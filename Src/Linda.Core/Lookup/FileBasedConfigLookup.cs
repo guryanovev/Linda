@@ -7,7 +7,19 @@
     {
         private readonly IFilesSystem _filesSystem;
 
-        private string _searchPatternRegEx;
+        private string _searchPatternRegEx = "[a-zA-Z0-9\\._-]*.yml";
+
+        public FileBasedConfigLookup()
+            : this(new DefaultFilesSystem())
+        {
+        }
+
+        public FileBasedConfigLookup(IFilesSystem filesSystem)
+        {
+            _searchPatternRegEx = CheckIfWeb() ? "web.yml" : "app.yml";
+
+            _filesSystem = filesSystem;
+        }
 
         public string SearchPatternRegEx
         {
@@ -20,18 +32,6 @@
             {
                 _searchPatternRegEx = value;
             }
-        }
-
-        public FileBasedConfigLookup() : this(new DefaultFilesSystem())
-        {
-        }
-
-        public FileBasedConfigLookup(IFilesSystem filesSystem)
-        {
-
-            _searchPatternRegEx = CheckIfWeb() ? "web.yml" : "app.yml";
-  
-            _filesSystem = filesSystem;
         }
 
         public override ConfigGroup GetConfigGroup(ref string directory)

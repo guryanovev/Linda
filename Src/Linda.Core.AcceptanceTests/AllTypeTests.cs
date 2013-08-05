@@ -9,7 +9,7 @@
     public class AllTypeTests : TestsBase
     {
         [Test]
-        public void Test_AllTypeConfig()
+        public void Test_ShouldReturnAllTypeConfig()
         {
             CreateFile(
                 "config/config1.yml",
@@ -32,7 +32,7 @@ FloatProp: 2.666");
         }
 
         [Test]
-        public void Test_StructConfig()
+        public void Test_ShouldRerunStructConfig()
         {
             CreateFile(
                 "config/config1.yml",

@@ -11,7 +11,6 @@
     using YamlDotNet.RepresentationModel.Serialization.NodeDeserializers;
     using YamlDotNet.RepresentationModel.Serialization.NodeTypeResolvers;
 
-    // todo: cleanup
     public sealed class CustomDeserializer : IYamlDeserializer
     {
         private static readonly Dictionary<string, Type> PredefinedTagMappings = new Dictionary<string, Type>

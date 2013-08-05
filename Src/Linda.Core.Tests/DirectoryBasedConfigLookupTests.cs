@@ -2,11 +2,8 @@
 {
     using System.IO;
     using System.Linq;
-
     using Linda.Core.Lookup;
-
     using Moq;
-
     using NUnit.Framework;
 
     public class DirectoryBasedConfigLookupTests

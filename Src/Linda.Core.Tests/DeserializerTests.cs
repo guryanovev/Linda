@@ -1,15 +1,9 @@
 ﻿namespace Linda.Core.Tests
 {
-    using System.IO;
-    using System.Text;
-
-    using Linda.Core.AcceptanceTests;
     using Linda.Core.AcceptanceTests.Support;
     using Linda.Core.Yaml;
 
     using NUnit.Framework;
-
-    using YamlDotNet.RepresentationModel.Serialization;
 
     public class DeserializerTests
     {
