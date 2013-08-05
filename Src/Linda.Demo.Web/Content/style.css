@@ -15,28 +15,28 @@ p {
 	margin: 0 0 18px
 }
 #wrapper {
-	min-width: 1000px;
+    min-width: 1000px;
 	max-width: 1000px;
 	margin: 0 auto;
 }
 #header {
 	height: 50px;
+    width: 300px;
 	background: #00bfff;
-	margin-top:70px;
 }
-#header h2 {
+#header h1 {
 	text-align: center;
+    padding: 10px 10px 10px 10px;
 }
 #link {
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 
 .section {
-	width: 600px;
+	width: 500px;
 	background: #EFEFEF;
-    margin-left: 10px;
 }
 ul.tabs {
 	height: 28px;
