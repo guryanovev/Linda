@@ -4,6 +4,7 @@
   Content: This is directory content
   Version: 4.1
  -
-  Name: AnotherTab
-  Content: This is another content
+  Name: AnotherDirectoryTab
+  Content: This is another directory content
   Version: 4.5
+FooBar: fooBarValue

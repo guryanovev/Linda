@@ -21,7 +21,8 @@ p {
 }
 #header {
 	height: 50px;
-    width: 300px;
+    width: 500px;
+    border-radius: 100px 100px 100px 100px;
 	background: #00bfff;
 }
 #header h1 {
