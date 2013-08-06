@@ -1,4 +1,4 @@
-﻿namespace Linda.Demo.Web
+﻿namespace Linda.Demo.Web.App_Start
 {
     using System.Web.Mvc;
     using System.Web.Routing;
