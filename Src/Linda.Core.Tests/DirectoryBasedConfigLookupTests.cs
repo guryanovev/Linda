@@ -1,5 +1,6 @@
 ﻿namespace Linda.Core.Tests
 {
+    using System;
     using System.IO;
     using System.Linq;
     using Linda.Core.Lookup;
@@ -49,10 +50,7 @@
 
             var sources = groups.ToArray();
             Assert.That(sources.Length, Is.EqualTo(1));
-            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo(
-@"Foo: FooValue
-Bar: BarValue
-Baz: BazValue"));
+            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo("Foo: FooValue" + Environment.NewLine + "Bar: BarValue" + Environment.NewLine + "Baz: BazValue"));
         }
 
         [Test]
@@ -117,16 +115,9 @@ Baz: BazValue"));
 
             var sources = groups.ToArray();
             Assert.That(sources.Length, Is.EqualTo(3));
-            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo(
-@"Baz: BazValue
-Baz2: Baz2Value"));
-
-            Assert.That(sources[1].RetrieveContent().Trim(), Is.EqualTo(
-@"Bar: BarValue
-Bar2: Bar2Value"));
-            Assert.That(sources[2].RetrieveContent().Trim(), Is.EqualTo(
-@"Foo: FooValue
-Foo2: Foo2Value"));
+            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo("Baz: BazValue" + Environment.NewLine + "Baz2: Baz2Value"));
+            Assert.That(sources[1].RetrieveContent().Trim(), Is.EqualTo("Bar: BarValue" + Environment.NewLine + "Bar2: Bar2Value"));
+            Assert.That(sources[2].RetrieveContent().Trim(), Is.EqualTo("Foo: FooValue" + Environment.NewLine + "Foo2: Foo2Value"));
         }
     }
 }

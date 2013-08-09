@@ -1,5 +1,6 @@
 ﻿namespace Linda.Core.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Linda.Core.Lookup;
@@ -52,9 +53,7 @@
 
             var sources = groups.ToArray();
             Assert.That(sources.Length, Is.EqualTo(1));
-            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo(
-@"Foo: fooValue
-Bar: barValue"));
+            Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo("Foo: fooValue" + Environment.NewLine + "Bar: barValue"));
         }
 
         [Test]
@@ -86,11 +85,7 @@ Bar: barValue"));
             var sources = groups.ToArray();
             Assert.That(sources.Length, Is.EqualTo(3));
             Assert.That(sources[0].RetrieveContent().Trim(), Is.EqualTo(@"FooBar: fooBarValue"));
-
-            Assert.That(sources[1].RetrieveContent().Trim(), Is.EqualTo(
-@"Bar: barValue
-Baz: bazValue"));
-
+            Assert.That(sources[1].RetrieveContent().Trim(), Is.EqualTo("Bar: barValue" + Environment.NewLine + "Baz: bazValue"));
             Assert.That(sources[2].RetrieveContent().Trim(), Is.EqualTo(@"Foo: fooValue"));
         }
     }

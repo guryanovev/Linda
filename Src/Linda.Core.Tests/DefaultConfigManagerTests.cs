@@ -98,9 +98,7 @@
                                content =>
                                {
                                    Assert.That(content, Is.Not.Null);
-                                   Assert.That(content.Trim(), Is.EqualTo(
-@"Foo: FooValue
-Bar: BarValue"));
+                                   Assert.That(content.Trim(), Is.EqualTo("Foo: FooValue" + Environment.NewLine + "Bar: BarValue"));
                                }));
 
             var manager = new DefaultConfigManager(configLookup, deserializer.Object, new ManualRootDetector("this"));
@@ -132,9 +130,7 @@ Bar: BarValue"));
                                content =>
                                {
                                    Assert.That(content, Is.Not.Null);
-                                   Assert.That(content.Trim(), Is.EqualTo(
-@"Foo: FooValue
-Bar: BarValue"));
+                                   Assert.That(content.Trim(), Is.EqualTo("Foo: FooValue" + Environment.NewLine + "Bar: BarValue"));
                                }));
 
             var manager = new DefaultConfigManager(configLookup, deserializer.Object, new ManualRootDetector("this"));
