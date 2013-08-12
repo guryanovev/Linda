@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Run">
-<UsingTask AssemblyFile="MsBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="NUnit"/>
+<UsingTask AssemblyFile="Src\MsBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="NUnit"/>
     <PropertyGroup> 
-    <TestResults>$(MSBuildStartupDirectory)Artefacts\TestResults\</TestResults>
+    <TestResults>$(MSBuildStartupDirectory)Src\Artefacts\TestResults\</TestResults>
      
     <Configuration>Release</Configuration>
      
@@ -13,11 +13,11 @@
     </SolutionProperties>
     </PropertyGroup>
     <ItemGroup>
-  	<ProjectsToBuild Include="Linda.Core\Linda.Core.csproj"/>
-		<ProjectsToBuild Include="Linda.Core.AcceptanceTests\Linda.Core.AcceptanceTests.csproj"/>
-		<ProjectsToBuild Include="Linda.Core.Tests\Linda.Core.Tests.csproj"/>
-		<ProjectsToBuild Include="Linda.Demo.Console\Linda.Demo.Console.csproj"/>
-		<ProjectsToBuild Include="Linda.Demo.Web\Linda.Demo.Web.csproj"/>
+  	<ProjectsToBuild Include="Src\Linda.Core\Linda.Core.csproj"/>
+		<ProjectsToBuild Include="Src\Linda.Core.AcceptanceTests\Linda.Core.AcceptanceTests.csproj"/>
+		<ProjectsToBuild Include="Src\Linda.Core.Tests\Linda.Core.Tests.csproj"/>
+		<ProjectsToBuild Include="Src\Linda.Demo.Console\Linda.Demo.Console.csproj"/>
+		<ProjectsToBuild Include="Src\Linda.Demo.Web\Linda.Demo.Web.csproj"/>
     </ItemGroup>
 	
     <Target Name="Run">
@@ -57,6 +57,6 @@
   <Target Name="CopyToArtefacts">
 	<Copy
 		SourceFiles="Linda.Core\bin\Debug\Linda.Core.dll"
-		DestinationFolder="Artefacts\Core" />
+		DestinationFolder="Src\Artefacts\Core" />
   </Target>	
 </Project>
