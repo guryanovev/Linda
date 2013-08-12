@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Run">
 <UsingTask AssemblyFile="Src\MsBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="NUnit"/>
     <PropertyGroup> 
-    <TestResults>$(MSBuildStartupDirectory)Src\Artefacts\TestResults\</TestResults>
+    <!--<TestResults>$(MSBuildStartupDirectory)Src\Artefacts\TestResults\</TestResults>-->
      
     <Configuration>Release</Configuration>
      
@@ -24,14 +24,14 @@
      
 		<CallTarget Targets="BuildSolution" />
 		<CallTarget Targets="CopyToArtefacts" />
-		<CallTarget Targets="RunTests" />
+		<!--<CallTarget Targets="RunTests" />-->
 		
  
     </Target>
  
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <NUnitResultsFile>$(TestResults)\nunit-result.xml</NUnitResultsFile>
-  </PropertyGroup>
+  </PropertyGroup>-->
  
   <Target Name="BuildSolution">
     <Message Text="BuildSolution called." />
@@ -39,7 +39,7 @@
   </Target>
  
  
-  <Target Name="RunTests">
+  <!--<Target Name="RunTests">
     <CreateItem Include="Src\Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
       <Output TaskParameter="Include" ItemName="TestAssembly" />
     </CreateItem>
@@ -52,11 +52,11 @@
         ToolPath="C:\Program Files (x86)\NUnit 2.6.2\bin"
         OutputXmlFile="$(NUnitResultsFile)"
     />
-  </Target> 
+  </Target> -->
   
   <Target Name="CopyToArtefacts">
 	<Copy
-		SourceFiles="Linda.Core\bin\Debug\Linda.Core.dll"
-		DestinationFolder="Src\Artefacts\Core" />
+		SourceFiles="Src\Linda.Core\bin\Debug\Linda.Core.dll"
+		DestinationFolder="Src\Artefacts\Core\" />
   </Target>	
 </Project>
