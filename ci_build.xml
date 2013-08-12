@@ -1,6 +1,62 @@
 <?xml version="1.0"?>
-<Project ToolsVersion="4.5" DefaultTargets="BuildSolution" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Run">
+<UsingTask AssemblyFile="MsBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="NUnit"/>
+    <PropertyGroup> 
+    <TestResults>$(MSBuildStartupDirectory)Artefacts\TestResults\</TestResults>
+     
+    <Configuration>Release</Configuration>
+     
+    <SolutionProperties>
+      TestResults=$(TestResults);
+      Platform=Any CPU;
+      Configuration=$(Configuration)
+    </SolutionProperties>
+    </PropertyGroup>
+    <ItemGroup>
+  	<ProjectsToBuild Include="Linda.Core\Linda.Core.csproj"/>
+		<ProjectsToBuild Include="Linda.Core.AcceptanceTests\Linda.Core.AcceptanceTests.csproj"/>
+		<ProjectsToBuild Include="Linda.Core.Tests\Linda.Core.Tests.csproj"/>
+		<ProjectsToBuild Include="Linda.Demo.Console\Linda.Demo.Console.csproj"/>
+		<ProjectsToBuild Include="Linda.Demo.Web\Linda.Demo.Web.csproj"/>
+    </ItemGroup>
+	
+    <Target Name="Run">
+     
+		<CallTarget Targets="BuildSolution" />
+		<CallTarget Targets="CopyToArtefacts" />
+		<CallTarget Targets="RunTests" />
+		
+ 
+    </Target>
+ 
+  <PropertyGroup>
+    <NUnitResultsFile>$(TestResults)\nunit-result.xml</NUnitResultsFile>
+  </PropertyGroup>
+ 
   <Target Name="BuildSolution">
-    <MSBuild Projects="Src/Build.proj" Properties="Configuration=Debug;Platform=Any CPU" />
+    <Message Text="BuildSolution called." />
+    <MSBuild Projects="@(ProjectsToBuild)"/>
   </Target>
+ 
+ 
+  <Target Name="RunTests">
+    <CreateItem Include="Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
+      <Output TaskParameter="Include" ItemName="TestAssembly" />
+    </CreateItem>
+	
+	<CreateItem Include="Linda.Core.AcceptanceTests\bin\Debug\Linda.Core.AcceptanceTests.dll">
+		<Output TaskParameter="Include" ItemName="TestAssembly" />
+	</CreateItem>
+	
+    <NUnit   Assemblies="@(TestAssembly)"
+        ToolPath="C:\Program Files (x86)\NUnit 2.6.2\bin"
+        OutputXmlFile="$(NUnitResultsFile)"
+    />
+  </Target> 
+  
+  <Target Name="CopyToArtefacts">
+	<Copy
+		SourceFiles="Linda.Core\bin\Debug\Linda.Core.dll"
+		DestinationFolder="Artefacts\Core" />
+  </Target>	
 </Project>
