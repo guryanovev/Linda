@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Project ToolsVersion="4.5" DefaultTargets="BuildSolution" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="BuildSolution">
-    <MSBuild Projects="Src/Linda.sln" Properties="Configuration=Debug;Platform=Any CPU" />
+    <MSBuild Projects="Src/Build.proj" Properties="Configuration=Debug;Platform=Any CPU" />
   </Target>
 </Project>
