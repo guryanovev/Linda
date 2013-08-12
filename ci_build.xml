@@ -40,11 +40,11 @@
  
  
   <Target Name="RunTests">
-    <CreateItem Include="Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
+    <CreateItem Include="Src\Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
       <Output TaskParameter="Include" ItemName="TestAssembly" />
     </CreateItem>
 	
-	<CreateItem Include="Linda.Core.AcceptanceTests\bin\Debug\Linda.Core.AcceptanceTests.dll">
+	<CreateItem Include="Src\Linda.Core.AcceptanceTests\bin\Debug\Linda.Core.AcceptanceTests.dll">
 		<Output TaskParameter="Include" ItemName="TestAssembly" />
 	</CreateItem>
 	
