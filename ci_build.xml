@@ -4,7 +4,14 @@
     <PropertyGroup> 
     <!--<TestResults>$(MSBuildStartupDirectory)Src\Artefacts\TestResults\</TestResults>-->
      
-    <Configuration>Release</Configuration>
+    <Configuration>Debug</Configuration>
+	
+		<configuration> 
+		<startup> 
+			 <requiredRuntime version="v4.0.30319"/> 
+			 <supportedRuntime version="v4.0.30319"/> 
+		 </startup> 
+	</configuration>
      
     <SolutionProperties>
       TestResults=$(TestResults);
@@ -21,12 +28,9 @@
     </ItemGroup>
 	
     <Target Name="Run">
-     
 		<CallTarget Targets="BuildSolution" />
 		<CallTarget Targets="CopyToArtefacts" />
 		<!--<CallTarget Targets="RunTests" />-->
-		
- 
     </Target>
  
   <!--<PropertyGroup>

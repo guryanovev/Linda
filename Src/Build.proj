@@ -2,9 +2,16 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Run">
 <UsingTask AssemblyFile="MsBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="NUnit"/>
     <PropertyGroup> 
-    <TestResults>$(MSBuildStartupDirectory)\TestResults\</TestResults>
+    <TestResults>$(MSBuildStartupDirectory)\Artefacts\</TestResults>
      
-    <Configuration>Release</Configuration>
+    <Configuration>Debug</Configuration>
+	
+	<configuration> 
+		<startup> 
+			 <requiredRuntime version="v4.0.30319"/> 
+			 <supportedRuntime version="v4.0.30319"/> 
+		 </startup> 
+	</configuration>
      
     <SolutionProperties>
       TestResults=$(TestResults);
@@ -21,12 +28,9 @@
     </ItemGroup>
 	
     <Target Name="Run">
-     
 		<CallTarget Targets="BuildSolution" />
-		<CallTarget Targets="CopyToArtefacts" />
 		<CallTarget Targets="RunTests" />
-		
- 
+		<CallTarget Targets="CopyToArtefacts" />
     </Target>
  
   <PropertyGroup>
@@ -37,7 +41,6 @@
     <Message Text="BuildSolution called." />
     <MSBuild Projects="@(ProjectsToBuild)"/>
   </Target>
- 
  
   <Target Name="RunTests">
     <CreateItem Include="Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">

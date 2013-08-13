@@ -1,6 +1,7 @@
 ﻿namespace Linda.Core.AcceptanceTests
 {
     using System.IO;
+    using System.Threading;
 
     using Linda.Core.Detecting;
     using Linda.Core.Lookup;
@@ -22,6 +23,7 @@
         [TearDown]
         public void TearDown()
         {
+            Thread.Sleep(100);
             Directory.Delete(_tempDirectory, true);
         }
 
