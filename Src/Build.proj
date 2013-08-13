@@ -57,6 +57,6 @@
   <Target Name="CopyToArtefacts">
 	<Copy
 		SourceFiles="Linda.Core\bin\Debug\Linda.Core.dll"
-		DestinationFolder="Artefacts" />
+		DestinationFolder="Artefacts\Core" />
   </Target>	
 </Project>
