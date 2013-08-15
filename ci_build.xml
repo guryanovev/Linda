@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<Target Name="Build">
-		<MSBuild Projects="Src\Build.proj" Properties="Configuration=Debug;Platform=x86" Targets="BuildSolution;RunTestsOnTravicCI;CopyToArtefacts" />
+		<MSBuild Projects="Build.proj" Properties="Configuration=Debug;Platform=x86" Targets="BuildSolution;RunTestsOnTravicCI;CopyToArtefacts" />
 	</Target>
 </Project>
