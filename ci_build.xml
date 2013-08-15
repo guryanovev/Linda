@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Run">
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Run">
 <UsingTask AssemblyFile="Src\MsBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="NUnit"/>
     <PropertyGroup> 
     <!--<TestResults>$(MSBuildStartupDirectory)Src\Artefacts\TestResults\</TestResults>-->
