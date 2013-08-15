@@ -36,8 +36,8 @@
     <Message Text="BuildSolution called." />
     <MSBuild Projects="@(ProjectsToBuild)"/>
   </Target>
-  
-	<Target Name="CreateItemsForTest">
+
+  	<Target Name="RunTeamCityTests">
 		<CreateItem Include="Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
 			<Output TaskParameter="Include" ItemName="TestAssembly" />
 		</CreateItem>
@@ -45,18 +45,22 @@
 		<CreateItem Include="Linda.Core.AcceptanceTests\bin\Debug\Linda.Core.AcceptanceTests.dll">
 			<Output TaskParameter="Include" ItemName="TestAssembly" />
 		</CreateItem>
-	</Target>
-
-  	<Target Name="RunTeamCityTests">
-		<CallTarget Targets="CreateItemsForTest" />
+		
 		<NUnitTeamCity Assemblies="@(TestAssembly)" NUnitVersion="NUnit-2.6.2" />
 	</Target>
  
-  <Target Name="RunTestsOnTravicCI">
-	<CallTarget Targets="CreateItemsForTest" />
-	<NUnit Assemblies="@(TestAssembly)"
-			ToolPath="..\Tools\NUnit\" />
-  </Target> 
+    <Target Name="RunTestsOnTravicCI">
+		<CreateItem Include="Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
+			<Output TaskParameter="Include" ItemName="TestAssembly" />
+		</CreateItem>
+			
+		<CreateItem Include="Linda.Core.AcceptanceTests\bin\Debug\Linda.Core.AcceptanceTests.dll">
+			<Output TaskParameter="Include" ItemName="TestAssembly" />
+		</CreateItem>
+		
+		<NUnit Assemblies="@(TestAssembly)"
+				ToolPath="..\Tools\NUnit\" />
+    </Target> 
   
   <Target Name="CopyToArtefacts">
 	<Copy
