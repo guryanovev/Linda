@@ -53,7 +53,9 @@
 	</Target>
  
   <Target Name="RunTestsOnTravicCI">
-	<Exec Command="nunit-console ./Src/Linda.Core.AcceptanceTests/bin/Debug/Linda.Core.AcceptanceTests.dll ./Src/Linda.Core.Tests/bin/Debug/Linda.Core.Tests.dll -xml test-results.xml" />
+	<CallTarget Targets="CreateItemsForTest" />
+	<NUnit Assemblies="@(TestAssembly)"
+			ToolPath="..\Tools\NUnit\" />
   </Target> 
   
   <Target Name="CopyToArtefacts">
