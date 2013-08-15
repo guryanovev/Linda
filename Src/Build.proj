@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Run">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
 <UsingTask AssemblyFile="MsBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="NUnit"/>
     <PropertyGroup> 
+	
     <TestResults>$(MSBuildStartupDirectory)\Artefacts\</TestResults>
-     
     <Configuration>Debug</Configuration>
+	<Platform>Any CPU</Platform>
 	
 	<configuration> 
 		<startup> 
@@ -15,7 +16,7 @@
      
     <SolutionProperties>
       TestResults=$(TestResults);
-      Platform=Any CPU;
+      Platform=$(Platform);
       Configuration=$(Configuration)
     </SolutionProperties>
     </PropertyGroup>
@@ -26,12 +27,6 @@
 		<ProjectsToBuild Include="Linda.Demo.Console\Linda.Demo.Console.csproj"/>
 		<ProjectsToBuild Include="Linda.Demo.Web\Linda.Demo.Web.csproj"/>
     </ItemGroup>
-	
-    <Target Name="Run">
-		<CallTarget Targets="BuildSolution" />
-		<CallTarget Targets="RunTests" />
-		<CallTarget Targets="CopyToArtefacts" />
-    </Target>
  
   <PropertyGroup>
     <NUnitResultsFile>$(TestResults)\nunit-result.xml</NUnitResultsFile>
@@ -41,20 +36,24 @@
     <Message Text="BuildSolution called." />
     <MSBuild Projects="@(ProjectsToBuild)"/>
   </Target>
+  
+	<Target Name="CreateItemsForTest">
+		<CreateItem Include="Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
+			<Output TaskParameter="Include" ItemName="TestAssembly" />
+		</CreateItem>
+			
+		<CreateItem Include="Linda.Core.AcceptanceTests\bin\Debug\Linda.Core.AcceptanceTests.dll">
+			<Output TaskParameter="Include" ItemName="TestAssembly" />
+		</CreateItem>
+	</Target>
+
+  	<Target Name="RunTeamCityTests">
+		<CallTarget Targets="CreateItemsForTest" />
+		<NUnitTeamCity Assemblies="@(TestAssembly)" NUnitVersion="NUnit-2.6.2" />
+	</Target>
  
-  <Target Name="RunTests">
-    <CreateItem Include="Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
-      <Output TaskParameter="Include" ItemName="TestAssembly" />
-    </CreateItem>
-	
-	<CreateItem Include="Linda.Core.AcceptanceTests\bin\Debug\Linda.Core.AcceptanceTests.dll">
-		<Output TaskParameter="Include" ItemName="TestAssembly" />
-	</CreateItem>
-	
-    <NUnit   Assemblies="@(TestAssembly)"
-        ToolPath="C:\Program Files (x86)\NUnit 2.6.2\bin"
-        OutputXmlFile="$(NUnitResultsFile)"
-    />
+  <Target Name="RunTestsOnTravicCI">
+	<Exec Command="nunit-console ./Src/Linda.Core.AcceptanceTests/bin/Debug/Linda.Core.AcceptanceTests.dll ./Src/Linda.Core.Tests/bin/Debug/Linda.Core.Tests.dll -xml test-results.xml" />
   </Target> 
   
   <Target Name="CopyToArtefacts">
