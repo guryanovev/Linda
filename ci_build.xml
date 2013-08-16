@@ -21,7 +21,7 @@
   
     <Target Name="Build">
 		<CallTarget Targets="BuildSolution" />
-		<CallTarget Targets="CopyToArtefacts" />
+		<CallTarget Targets="CopyToArtifacts" />
 	</Target>
   
  
@@ -55,9 +55,9 @@
 				ToolPath="%PROGRAMFILES(x86)%\NUnit 2.6.2\bin" />
     </Target> 
   
-  <Target Name="CopyToArtefacts">
+  <Target Name="CopyToArtifacts">
 	<Copy
 		SourceFiles="Src\Linda.Core\bin\Debug\Linda.Core.dll"
-		DestinationFolder="Src\Artefacts\Core" />
+		DestinationFolder="Src\Artifacts\Core" />
   </Target>	
 </Project>

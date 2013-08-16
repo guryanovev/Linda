@@ -49,9 +49,9 @@
 				ToolPath="C:\Program Files (x86)\NUnit 2.6.2\bin" />
     </Target> 
   
-  <Target Name="CopyToArtefacts">
+  <Target Name="CopyToArtifacts">
 	<Copy
 		SourceFiles="Linda.Core\bin\Debug\Linda.Core.dll"
-		DestinationFolder="Artefacts\Core" />
+		DestinationFolder="Artifacts\Core" />
   </Target>	
 </Project>
