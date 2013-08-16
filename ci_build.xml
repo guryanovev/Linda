@@ -5,13 +5,6 @@
 	
     <Configuration>Debug</Configuration>
 	<Platform>Any CPU</Platform>
-	
-	<configuration> 
-		<startup> 
-			 <requiredRuntime version="v4.0.30319"/> 
-			 <supportedRuntime version="v4.0.30319"/> 
-		 </startup> 
-	</configuration>
      
     <SolutionProperties>
       Platform=$(Platform);
