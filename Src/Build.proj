@@ -3,7 +3,6 @@
 <UsingTask AssemblyFile="MsBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="NUnit"/>
     <PropertyGroup> 
 	
-    <TestResults>$(MSBuildStartupDirectory)\Artefacts\</TestResults>
     <Configuration>Debug</Configuration>
 	<Platform>Any CPU</Platform>
 	
@@ -15,7 +14,6 @@
 	</configuration>
      
     <SolutionProperties>
-      TestResults=$(TestResults);
       Platform=$(Platform);
       Configuration=$(Configuration)
     </SolutionProperties>
@@ -27,10 +25,6 @@
 		<ProjectsToBuild Include="Linda.Demo.Console\Linda.Demo.Console.csproj"/>
 		<ProjectsToBuild Include="Linda.Demo.Web\Linda.Demo.Web.csproj"/>
     </ItemGroup>
- 
-  <PropertyGroup>
-    <NUnitResultsFile>$(TestResults)\nunit-result.xml</NUnitResultsFile>
-  </PropertyGroup>
  
   <Target Name="BuildSolution">
     <Message Text="BuildSolution called." />
@@ -49,7 +43,7 @@
 		<NUnitTeamCity Assemblies="@(TestAssembly)" NUnitVersion="NUnit-2.6.2" />
 	</Target>
  
-    <Target Name="RunTestsOnTravicCI">
+    <Target Name="RunTestsOnLocalMachine">
 		<CreateItem Include="Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
 			<Output TaskParameter="Include" ItemName="TestAssembly" />
 		</CreateItem>
@@ -59,7 +53,7 @@
 		</CreateItem>
 		
 		<NUnit Assemblies="@(TestAssembly)"
-				ToolPath="..\Tools\NUnit\" />
+				ToolPath="C:\Program Files (x86)\NUnit 2.6.2\bin" />
     </Target> 
   
   <Target Name="CopyToArtefacts">

@@ -1,6 +1,70 @@
-<?xml version="1.0"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Target Name="Build">
-		<MSBuild Projects="Src\Build.proj" Properties="Configuration=Debug;Platform=x86" Targets="BuildSolution" />
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTarget="Build">
+<UsingTask AssemblyFile="MsBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="NUnit"/>
+    <PropertyGroup> 
+	
+    <Configuration>Debug</Configuration>
+	<Platform>Any CPU</Platform>
+	
+	<configuration> 
+		<startup> 
+			 <requiredRuntime version="v4.0.30319"/> 
+			 <supportedRuntime version="v4.0.30319"/> 
+		 </startup> 
+	</configuration>
+     
+    <SolutionProperties>
+      Platform=$(Platform);
+      Configuration=$(Configuration)
+    </SolutionProperties>
+    </PropertyGroup>
+    <ItemGroup>
+		<ProjectsToBuild Include="Src\Linda.Core\Linda.Core.csproj"/>
+		<ProjectsToBuild Include="Src\Linda.Core.AcceptanceTests\Linda.Core.AcceptanceTests.csproj"/>
+		<ProjectsToBuild Include="Src\Linda.Core.Tests\Linda.Core.Tests.csproj"/>
+		<ProjectsToBuild Include="Src\Linda.Demo.Console\Linda.Demo.Console.csproj"/>
+		<ProjectsToBuild Include="Src\Linda.Demo.Web\Linda.Demo.Web.csproj"/>
+    </ItemGroup>
+  
+    <Target Name="Build">
+		<CallTarget Targets="BuildSolution" />
+		<CallTarget Targets="CopyToArtefacts">
 	</Target>
+  
+ 
+    <Target Name="BuildSolution">
+		<Message Text="BuildSolution called." />
+		<MSBuild Projects="@(ProjectsToBuild)"/>
+    </Target>
+
+  	<Target Name="RunTeamCityTests">
+		<CreateItem Include="Src\Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
+			<Output TaskParameter="Include" ItemName="TestAssembly" />
+		</CreateItem>
+			
+		<CreateItem Include="Src\Linda.Core.AcceptanceTests\bin\Debug\Linda.Core.AcceptanceTests.dll">
+			<Output TaskParameter="Include" ItemName="TestAssembly" />
+		</CreateItem>
+		
+		<NUnitTeamCity Assemblies="@(TestAssembly)" NUnitVersion="NUnit-2.6.2" />
+	</Target>
+ 
+    <Target Name="RunTestsOnLocalMachine">
+		<CreateItem Include="Src\Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
+			<Output TaskParameter="Include" ItemName="TestAssembly" />
+		</CreateItem>
+			
+		<CreateItem Include="Src\Linda.Core.AcceptanceTests\bin\Debug\Linda.Core.AcceptanceTests.dll">
+			<Output TaskParameter="Include" ItemName="TestAssembly" />
+		</CreateItem>
+		
+		<NUnit Assemblies="@(TestAssembly)"
+				ToolPath="%PROGRAMFILES(x86)%\NUnit 2.6.2\bin" />
+    </Target> 
+  
+  <Target Name="CopyToArtefacts">
+	<Copy
+		SourceFiles="Src\Linda.Core\bin\Debug\Linda.Core.dll"
+		DestinationFolder="Src\Artefacts\Core" />
+  </Target>	
 </Project>
