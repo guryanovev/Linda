@@ -28,7 +28,7 @@
   
     <Target Name="Build">
 		<CallTarget Targets="BuildSolution" />
-		<CallTarget Targets="CopyToArtefacts">
+		<CallTarget Targets="CopyToArtefacts" />
 	</Target>
   
  
