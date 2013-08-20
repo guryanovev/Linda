@@ -5,7 +5,11 @@
 	
     <Configuration>Debug</Configuration>
 	<Platform>Any CPU</Platform>
-     
+	
+	<Major>1</Major>
+	<Minor>0</Minor>
+	<Build>$(BUILD_NUMBER)</Build>
+	
     <SolutionProperties>
       Platform=$(Platform);
       Configuration=$(Configuration)
@@ -18,11 +22,18 @@
 		<ProjectsToBuild Include="Linda.Demo.Console\Linda.Demo.Console.csproj"/>
 		<ProjectsToBuild Include="Linda.Demo.Web\Linda.Demo.Web.csproj"/>
     </ItemGroup>
+	
+	<Import Project="MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition="Exists('MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets')" />
+	
+    <Target Name="BeforeBuild" Condition="Exists('$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets')">
+		<Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)" />
+		<AssemblyInfo CodeLanguage="CS" OutputFile="AssemblyFileInfo.cs" AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)" AssemblyConfiguration="$(Configuration)" Condition="$(Revision) != '' " />
+    </Target>
  
-  <Target Name="BuildSolution">
-    <Message Text="BuildSolution called." />
-    <MSBuild Projects="@(ProjectsToBuild)"/>
-  </Target>
+    <Target Name="BuildSolution">
+		<Message Text="BuildSolution called." />
+		<MSBuild Projects="@(ProjectsToBuild)"/>
+    </Target>
 
   	<Target Name="RunTeamCityTests">
 		<CreateItem Include="Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
