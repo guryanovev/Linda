@@ -20,9 +20,10 @@
 		<ProjectsToBuild Include="Linda.Demo.Console\Linda.Demo.Console.csproj"/>
 		<ProjectsToBuild Include="Linda.Demo.Web\Linda.Demo.Web.csproj"/>
     </ItemGroup>
+	
+	<Import Project="\.build\MSBuild.Community.Tasks.targets" />
 
 	<Target Name="BeforeBuild">
-	<Import Project=".build\MSBuild.Community.Tasks.targets"/>
 		<MakeDir
 				Directories="Properties" />
 		<Version VersionFile="Properties\version.txt" Major="1" Minor="0" BuildType="Automatic" RevisionType="BuildIncrement" StartDate="21/08/2013">
