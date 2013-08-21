@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="Src\.build\MSBuild.Community.Tasks.targets"/>
 	<Target Name="Build">
 		<MSBuild Projects="Src\Build.proj" Properties="Configuration=Release;Platform=Any CPU" Targets="BeforeBuild;BuildSolution" />
 	</Target>
