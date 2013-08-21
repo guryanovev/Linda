@@ -3,7 +3,7 @@
 <UsingTask AssemblyFile="MsBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="NUnit"/>
     <PropertyGroup> 
 	
-    <Configuration>Debug</Configuration>
+    <Configuration>Release</Configuration>
 	<Platform>Any CPU</Platform>
      
     <SolutionProperties>
@@ -21,7 +21,6 @@
   
     <Target Name="Build">
 		<CallTarget Targets="BuildSolution" />
-		<CallTarget Targets="CopyToArtifacts" />
 	</Target>
   
  
