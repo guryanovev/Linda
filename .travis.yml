@@ -10,6 +10,7 @@ install:
 script:
   - cp Src/.nuget/mono_support/Microsoft.Build.dll Src/.nuget/Microsoft.Build.dll
   - export EnableNuGetPackageRestore="true"
+  - export MSBuildExtensionsPath="Src\.build"
   - mozroots --import --sync
   - xbuild ci_build.xml
   - mkdir ${HOME}/build_artifacts

@@ -21,7 +21,7 @@
 		<ProjectsToBuild Include="Linda.Demo.Web\Linda.Demo.Web.csproj"/>
     </ItemGroup>
 	
-	<Import Project="\.build\MSBuild.Community.Tasks.targets" />
+	<Import Project=".build\MSBuild.Community.Tasks.targets" />
 
 	<Target Name="BeforeBuild">
 		<MakeDir
