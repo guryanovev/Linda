@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-<UsingTask AssemblyFile=".build\MSBuild.Community.Tasks.dll" TaskName="NUnit"/>
+<UsingTask AssemblyFile=".build\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.NUnit"/>
   <PropertyGroup> 
 
     <Configuration>Debug</Configuration>
@@ -17,19 +17,29 @@
   </PropertyGroup>
   
     <ItemGroup>
-		  <ProjectsToBuild Include="Linda.Core\Linda.Core.csproj" />
-      <ProjectsToBuild Include="Linda.Core.AcceptanceTests\Linda.Core.AcceptanceTests.csproj"/>
-		  <ProjectsToBuild Include="Linda.Core.Tests\Linda.Core.Tests.csproj"/>
-		  <ProjectsToBuild Include="Linda.Demo.Console\Linda.Demo.Console.csproj"/>
-		  <ProjectsToBuild Include="Linda.Demo.Web\Linda.Demo.Web.csproj"/>
+		<ProjectsToBuild Include="Linda.Core\Linda.Core.csproj" />
+		<ProjectsToBuild Include="Linda.Core.AcceptanceTests\Linda.Core.AcceptanceTests.csproj"/>
+		<ProjectsToBuild Include="Linda.Core.Tests\Linda.Core.Tests.csproj"/>
+		<ProjectsToBuild Include="Linda.Demo.Console\Linda.Demo.Console.csproj"/>
+		<ProjectsToBuild Include="Linda.Demo.Web\Linda.Demo.Web.csproj"/>
     </ItemGroup>
 	
 	<Import Project=".build\MSBuild.Community.Tasks.targets" Condition="Exists('.build\MSBuild.Community.Tasks.targets')" />
 	
-    <Target Name="BeforeBuild" Condition="Exists('.build\MSBuild.Community.Tasks.Targets')">
-		  <Message Text="Version: $(Major).$(Minor).$(Build)" />
-		  <AssemblyInfo CodeLanguage="CS" OutputFile="AssemblyFileInfo.cs" AssemblyFileVersion="$(Major).$(Minor).$(Build)" AssemblyConfiguration="$(Configuration)" />
-    </Target>
+	<Target Name="BeforeBuild">
+		<MakeDir
+				Directories="Properties" />
+		<Version VersionFile="Properties\version.txt" Major="1" Minor="0" BuildType="Automatic" RevisionType="BuildIncrement" StartDate="21/08/2013">
+			<Output TaskParameter="Major" PropertyName="Major" />
+			<Output TaskParameter="Minor" PropertyName="Minor" />
+			<Output TaskParameter="Build" PropertyName="Build" />
+			<Output TaskParameter="Revision" PropertyName="Revision" />
+		</Version>
+		<AssemblyInfo CodeLanguage="CS"
+						OutputFile="Properties\VersionInfo.cs"
+						AssemblyVersion="$(Major).$(Minor)"
+						AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)" />
+	</Target>
  
     <Target Name="BuildSolution">
 		  <Message Text="BuildSolution called." />
