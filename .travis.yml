@@ -9,6 +9,7 @@ install:
 
 script:
   - cp Src/.nuget/mono_support/Microsoft.Build.dll Src/.nuget/Microsoft.Build.dll
+  - cp Src/.nuget/mono_support/MSBuild.Community.Tasks.dll Src/.nuget/MSBuild.Community.Tasks.dll
   - export EnableNuGetPackageRestore="true"
   - mozroots --import --sync
   - xbuild ci_build.xml
