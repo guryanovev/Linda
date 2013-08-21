@@ -2,17 +2,14 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 <UsingTask AssemblyFile=".build\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.NUnit"/>
   <PropertyGroup> 
-
-    <Configuration>Debug</Configuration>
-	  <Platform>Any CPU</Platform>
-	
-	  <Major>1</Major>
-	  <Minor>0</Minor>
-	  <Build>$(BUILD_NUMBER)</Build>
-	
+    <Configuration>Release</Configuration>
+	<Platform>Any CPU</Platform>
+	<Major>1</Major>
+	<Minor>0</Minor>
+	<Build>$(BUILD_NUMBER)</Build>
     <SolutionProperties>
-      Platform=$(Platform);
-      Configuration=$(Configuration)
+		Platform=$(Platform);
+		Configuration=$(Configuration)
     </SolutionProperties>
   </PropertyGroup>
   
