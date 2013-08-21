@@ -1,68 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-<UsingTask AssemblyFile="MsBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="NUnit"/>
-    <PropertyGroup> 
-	
+<UsingTask AssemblyFile=".build\MSBuild.Community.Tasks.dll" TaskName="NUnit"/>
+  <PropertyGroup> 
+
     <Configuration>Debug</Configuration>
-	<Platform>Any CPU</Platform>
+	  <Platform>Any CPU</Platform>
 	
-	<Major>1</Major>
-	<Minor>0</Minor>
-	<Build>$(BUILD_NUMBER)</Build>
+	  <Major>1</Major>
+	  <Minor>0</Minor>
+	  <Build>$(BUILD_NUMBER)</Build>
 	
     <SolutionProperties>
       Platform=$(Platform);
       Configuration=$(Configuration)
     </SolutionProperties>
-    </PropertyGroup>
+  </PropertyGroup>
+  
     <ItemGroup>
-		<ProjectsToBuild Include="Linda.Core\Linda.Core.csproj"/>
-		<ProjectsToBuild Include="Linda.Core.AcceptanceTests\Linda.Core.AcceptanceTests.csproj"/>
-		<ProjectsToBuild Include="Linda.Core.Tests\Linda.Core.Tests.csproj"/>
-		<ProjectsToBuild Include="Linda.Demo.Console\Linda.Demo.Console.csproj"/>
-		<ProjectsToBuild Include="Linda.Demo.Web\Linda.Demo.Web.csproj"/>
+		  <ProjectsToBuild Include="Linda.Core\Linda.Core.csproj" />
+      <ProjectsToBuild Include="Linda.Core.AcceptanceTests\Linda.Core.AcceptanceTests.csproj"/>
+		  <ProjectsToBuild Include="Linda.Core.Tests\Linda.Core.Tests.csproj"/>
+		  <ProjectsToBuild Include="Linda.Demo.Console\Linda.Demo.Console.csproj"/>
+		  <ProjectsToBuild Include="Linda.Demo.Web\Linda.Demo.Web.csproj"/>
     </ItemGroup>
 	
-	<Import Project="MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition="Exists('MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets')" />
+	<Import Project=".build\MSBuild.Community.Tasks.targets" Condition="Exists('.build\MSBuild.Community.Tasks.targets')" />
 	
-    <Target Name="BeforeBuild" Condition="Exists('$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets')">
-		<Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)" />
-		<AssemblyInfo CodeLanguage="CS" OutputFile="AssemblyFileInfo.cs" AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)" AssemblyConfiguration="$(Configuration)" Condition="$(Revision) != '' " />
+    <Target Name="BeforeBuild" Condition="Exists('.build\MSBuild.Community.Tasks.Targets')">
+		  <Message Text="Version: $(Major).$(Minor).$(Build)" />
+		  <AssemblyInfo CodeLanguage="CS" OutputFile="AssemblyFileInfo.cs" AssemblyFileVersion="$(Major).$(Minor).$(Build)" AssemblyConfiguration="$(Configuration)" />
     </Target>
  
     <Target Name="BuildSolution">
-		<Message Text="BuildSolution called." />
-		<MSBuild Projects="@(ProjectsToBuild)"/>
+		  <Message Text="BuildSolution called." />
+		  <MSBuild Projects="@(ProjectsToBuild)"/>
     </Target>
 
   	<Target Name="RunTeamCityTests">
-		<CreateItem Include="Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
-			<Output TaskParameter="Include" ItemName="TestAssembly" />
-		</CreateItem>
+		  <CreateItem Include="Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
+			  <Output TaskParameter="Include" ItemName="TestAssembly" />
+		  </CreateItem>
 			
-		<CreateItem Include="Linda.Core.AcceptanceTests\bin\Debug\Linda.Core.AcceptanceTests.dll">
-			<Output TaskParameter="Include" ItemName="TestAssembly" />
-		</CreateItem>
+		  <CreateItem Include="Linda.Core.AcceptanceTests\bin\Debug\Linda.Core.AcceptanceTests.dll">
+			  <Output TaskParameter="Include" ItemName="TestAssembly" />
+		  </CreateItem>
 		
-		<NUnitTeamCity Assemblies="@(TestAssembly)" NUnitVersion="NUnit-2.6.2" />
+		  <NUnitTeamCity Assemblies="@(TestAssembly)" NUnitVersion="NUnit-2.6.2" />
 	</Target>
  
     <Target Name="RunTestsOnLocalMachine">
-		<CreateItem Include="Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
-			<Output TaskParameter="Include" ItemName="TestAssembly" />
-		</CreateItem>
+		  <CreateItem Include="Linda.Core.Tests\bin\Debug\Linda.Core.Tests.dll">
+			  <Output TaskParameter="Include" ItemName="TestAssembly" />
+		  </CreateItem>
 			
-		<CreateItem Include="Linda.Core.AcceptanceTests\bin\Debug\Linda.Core.AcceptanceTests.dll">
-			<Output TaskParameter="Include" ItemName="TestAssembly" />
-		</CreateItem>
+		  <CreateItem Include="Linda.Core.AcceptanceTests\bin\Debug\Linda.Core.AcceptanceTests.dll">
+			  <Output TaskParameter="Include" ItemName="TestAssembly" />
+		  </CreateItem>
 		
 		<NUnit Assemblies="@(TestAssembly)"
 				ToolPath="C:\Program Files (x86)\NUnit 2.6.2\bin" />
     </Target> 
   
   <Target Name="CopyToArtifacts">
-	<Copy
-		SourceFiles="Linda.Core\bin\Debug\Linda.Core.dll"
-		DestinationFolder="Artifacts\Core" />
-  </Target>	
+	  <Copy
+		  SourceFiles="Linda.Core\bin\Debug\Linda.Core.dll"
+		  DestinationFolder="Artifacts\Core" />
+  </Target>
 </Project>
