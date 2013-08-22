@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-<UsingTask AssemblyFile="$(MSBuildExtensionsPath)\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.NUnit"/>
+<UsingTask AssemblyFile="Src\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.NUnit"/>
   <PropertyGroup> 
     <Configuration>Release</Configuration>
 	<Platform>Any CPU</Platform>
@@ -21,7 +21,7 @@
 		<ProjectsToBuild Include="Src\Linda.Demo.Web\Linda.Demo.Web.csproj"/>
     </ItemGroup>
 	
-	<Import Project="$(MSBuildExtensionsPath)\MSBuild.Community.Tasks.targets" />
+	<Import Project="Src\MSBuild.Community.Tasks.targets" />
 	
 	<Target Name="Build">
 		<CallTarget Targets="BeforeBuild" />
