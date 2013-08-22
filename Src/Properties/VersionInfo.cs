@@ -8,13 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Reflection;
-using System.Resources;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-
-[assembly: AssemblyVersion("1.0")]
-[assembly: AssemblyFileVersion("1.0.0.9")]
+[assembly: System.Reflection.AssemblyVersion("1.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.0.1.4")]
 
 

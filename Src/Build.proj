@@ -1,32 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-<UsingTask AssemblyFile=".build\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.NUnit"/>
-  <PropertyGroup> 
-    <Configuration>Release</Configuration>
-	<Platform>Any CPU</Platform>
-	<Major>1</Major>
-	<Minor>0</Minor>
-	<Build>$(BUILD_NUMBER)</Build>
-    <SolutionProperties>
-		Platform=$(Platform);
-		Configuration=$(Configuration)
-    </SolutionProperties>
-  </PropertyGroup>
-  
+	<UsingTask AssemblyFile=".build\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.NUnit"/>
+	<UsingTask AssemblyFile=".build\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.Version" />
+	<UsingTask AssemblyFile=".build\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.AssemblyInfo" />
+	<PropertyGroup> 
+		<Configuration>Release</Configuration>
+		<Platform>Any CPU</Platform>
+		<Major>1</Major>
+		<Minor>0</Minor>
+		<SolutionProperties>
+			Platform=$(Platform);
+			Configuration=$(Configuration)
+		</SolutionProperties>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<CleanDir Include="Artifacts" />
+		<CleanDir Include="Linda.Core\bin" />
+		<CleanDir Include="Linda.Core\obj" />
+		<CleanDir Include="Linda.Core.AcceptanceTests\bin" />
+		<CleanDir Include="Linda.Core.AcceptanceTests\obj" />
+		<CleanDir Include="Linda.Core.Tests\bin" />
+		<CleanDir Include="Linda.Core.Tests\obj" />
+		<CleanDir Include="Linda.Demo.Console\bin" />
+		<CleanDir Include="Linda.Demo.Console\obj" />
+		<CleanDir Include="Linda.Demo.Web\bin" />
+		<CleanDir Include="Linda.Demo.Web\obj" />
+		<CleanDir Include="packages" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<CleanFile Include="TestResult.xml" />
+	</ItemGroup>
+	
     <ItemGroup>
 		<ProjectsToBuild Include="Linda.Core\Linda.Core.csproj" />
-		<ProjectsToBuild Include="Linda.Core.AcceptanceTests\Linda.Core.AcceptanceTests.csproj"/>
-		<ProjectsToBuild Include="Linda.Core.Tests\Linda.Core.Tests.csproj"/>
-		<ProjectsToBuild Include="Linda.Demo.Console\Linda.Demo.Console.csproj"/>
-		<ProjectsToBuild Include="Linda.Demo.Web\Linda.Demo.Web.csproj"/>
+		<ProjectsToBuild Include="Linda.Core.AcceptanceTests\Linda.Core.AcceptanceTests.csproj" />
+		<ProjectsToBuild Include="Linda.Core.Tests\Linda.Core.Tests.csproj" />
+		<ProjectsToBuild Include="Linda.Demo.Console\Linda.Demo.Console.csproj" />
+		<ProjectsToBuild Include="Linda.Demo.Web\Linda.Demo.Web.csproj" />
     </ItemGroup>
 	
-	<Import Project=".build\MSBuild.Community.Tasks.targets" />
-
+	<Target Name="Clean">
+		<RemoveDir Directories="@(CleanDir)" />
+		<Delete Files="@(CleanFile)" />
+	</Target>
+	
 	<Target Name="BeforeBuild">
 		<MakeDir
 				Directories="Properties" />
-		<Version VersionFile="Properties\version.txt" Major="1" Minor="0" BuildType="Automatic" RevisionType="BuildIncrement" StartDate="21/08/2013">
+		<Version VersionFile="Properties\version.txt" Major="$(Major)" Minor="$(Minor)" BuildType="Automatic" RevisionType="BuildIncrement" StartDate="21/08/2013">
 			<Output TaskParameter="Major" PropertyName="Major" />
 			<Output TaskParameter="Minor" PropertyName="Minor" />
 			<Output TaskParameter="Build" PropertyName="Build" />
@@ -37,7 +60,7 @@
 						AssemblyVersion="$(Major).$(Minor)"
 						AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)" />
 	</Target>
- 
+
     <Target Name="BuildSolution">
 		  <Message Text="BuildSolution called." />
 		  <MSBuild Projects="@(ProjectsToBuild)"/>
@@ -68,9 +91,9 @@
 				ToolPath="C:\Program Files (x86)\NUnit 2.6.2\bin" />
     </Target> 
   
-  <Target Name="CopyToArtifacts">
-	  <Copy
-		  SourceFiles="Linda.Core\bin\Debug\Linda.Core.dll"
-		  DestinationFolder="Artifacts\Core" />
-  </Target>
+	<Target Name="CopyToArtifacts">
+		<Copy
+		SourceFiles="Linda.Core\bin\Debug\Linda.Core.dll"
+		DestinationFolder="Artifacts\Core" />
+	</Target>
 </Project>
