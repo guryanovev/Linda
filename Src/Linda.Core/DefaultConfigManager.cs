@@ -1,5 +1,6 @@
 ﻿namespace Linda.Core
 {
+    using System;
     using System.Collections.Generic;
 
     using Linda.Core.Detecting;
@@ -58,6 +59,11 @@
             var resultConfig = _deserializer.Deserialize<TConfig>(content);
 
             return resultConfig;
+        }
+
+        public void WatchForConfig<TConfig>(Action<TConfig> callback)
+        {
+            throw new NotImplementedException();
         }
     }
 }
