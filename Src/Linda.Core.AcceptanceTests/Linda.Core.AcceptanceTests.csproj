@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\Linda.Core.Tests\bin\Debug\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -65,6 +68,7 @@
     <Compile Include="Support\StructConfig.cs" />
     <Compile Include="TestsBase.cs" />
     <Compile Include="AllTypeTests.cs" />
+    <Compile Include="WatchingTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

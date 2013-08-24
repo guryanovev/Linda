@@ -35,8 +35,21 @@
         /// <returns>configuration object</returns>
         protected TConfig LoadConfig<TConfig>(string relativePath = null) where TConfig : new()
         {
-            var manager = new DefaultConfigManager(new DirectoryBasedConfigLookup(), new CustomDeserializer(), new ManualRootDetector(GetFullPath(relativePath)));
+            var manager = CreateConfigManager(relativePath);
             return manager.GetConfig<TConfig>();
+        }
+
+        /// <summary>
+        /// Creates default instance of <see cref="IConfigManager"/>.
+        /// </summary>
+        /// <param name="relativePath">path to configuration</param>
+        /// <returns>configuration manager instance</returns>
+        protected DefaultConfigManager CreateConfigManager(string relativePath = null)
+        {
+            return new DefaultConfigManager(
+                new DirectoryBasedConfigLookup(), 
+                new CustomDeserializer(),
+                new ManualRootDetector(GetFullPath(relativePath)));
         }
 
         /// <summary>
@@ -69,6 +82,17 @@
             {
                 writer.Write(content);
             }
+        }
+
+        /// <summary>
+        /// Updates existing file content.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="content"></param>
+        protected void UpdateFile(string path, string content)
+        {
+            
+            CreateFile(path, content);
         }
     }
 }

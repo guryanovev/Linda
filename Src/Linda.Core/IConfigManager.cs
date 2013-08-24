@@ -6,6 +6,11 @@
     {
         TConfig GetConfig<TConfig>() where TConfig : new();
 
+        /// <summary>
+        /// Watch file system and invokes the callback on every change.
+        /// </summary>
+        /// <typeparam name="TConfig">config type</typeparam>
+        /// <param name="callback">config callback</param>
         void WatchForConfig<TConfig>(Action<TConfig> callback);
     }
 }
