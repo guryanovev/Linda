@@ -2,20 +2,28 @@
 {
     using System.IO;
     using Linda.Core;
+    using Linda.Core.Watch;
 
     public class DirectoryBasedConfigLookup : BasedConfigLookupAbstract
     {
         private readonly IFilesSystem _filesSystem;
+        private readonly IWatchBuilder _watchBuilder;
         private string _searchPatternRegEx = "[a-zA-Z0-9\\._-]*.yml";
         private string _directoryName = "config";
 
-        public DirectoryBasedConfigLookup() : this(new DefaultFilesSystem())
+        public DirectoryBasedConfigLookup() : this(new DefaultFilesSystem(), new DefaultWatchBuilder())
         {
         }
 
         public DirectoryBasedConfigLookup(IFilesSystem filesSystem)
         {
             _filesSystem = filesSystem;
+        }
+
+        public DirectoryBasedConfigLookup(IFilesSystem filesSystem, IWatchBuilder watchBuilder)
+        {
+            _filesSystem = filesSystem;
+            _watchBuilder = watchBuilder;
         }
 
         public string DirectoryName
@@ -51,10 +59,7 @@
             var configDirectoryPath = Path.Combine(directory, DirectoryName);
             if (_filesSystem.Exists(configDirectoryPath))
             {
-                var watcher = new CustomWatcher(configDirectoryPath, this.OnConfigChange);
-                watcher.RunWatch();
-
-                Watchers.Add(watcher);
+                Watchers.Add(_watchBuilder.GetWatcher(configDirectoryPath, this.OnConfigChange));
 
                 foreach (var file in _filesSystem.GetFiles(configDirectoryPath, SearchPatternRegEx))
                 {

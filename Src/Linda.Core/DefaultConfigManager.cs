@@ -17,14 +17,6 @@
         private readonly IYamlDeserializer _deserializer;
         private readonly IRootDetector _rootDetector;
 
-        public event EventHandler<EventArgs> myEvent;
-
-        protected virtual void OnMyEvent()
-        {
-                _configLookup.LoadConfigGroups(_rootDetector.GetConfigRoot());
-                myEvent(this, new EventArgs());
-        }
-
         public DefaultConfigManager() : this(new FileBasedConfigLookup(), new CustomDeserializer(), new DefaultRootDetector())
         {
         }
@@ -53,6 +45,14 @@
             _configLookup.ConfigChange += (sender, e) => this.OnMyEvent();
         }
 
+        public event EventHandler<EventArgs> MyEvent;
+
+        public void OnMyEvent()
+        {
+            _configLookup.LoadConfigGroups(_rootDetector.GetConfigRoot());
+            this.MyEvent(this, new EventArgs());
+        }
+
         public TConfig GetConfig<TConfig>() where TConfig : new()
         {
             var resultConfig = _deserializer.Deserialize<TConfig>(_configLookup.GetContent());
@@ -63,7 +63,7 @@
         public void WatchForConfig<TConfig>(Action<TConfig> callback) where TConfig : new()
         {
             callback(new TConfig());
-            myEvent += (sender, args) => callback(new TConfig());
+            this.MyEvent += (sender, args) => callback(new TConfig());
         }
 
         public void Dispose()

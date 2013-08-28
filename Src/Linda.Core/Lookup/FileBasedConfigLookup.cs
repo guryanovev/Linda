@@ -3,9 +3,12 @@
     using System;
     using System.Web;
 
+    using Linda.Core.Watch;
+
     public class FileBasedConfigLookup : BasedConfigLookupAbstract
     {
         private readonly IFilesSystem _filesSystem;
+        private readonly IWatchBuilder _watchBuilder;
 
         private string _searchPatternRegEx = "[a-zA-Z0-9\\._-]*.yml";
 
@@ -19,6 +22,14 @@
             _searchPatternRegEx = CheckIfWeb() ? "web.yml" : "app.yml";
 
             _filesSystem = filesSystem;
+        }
+
+        public FileBasedConfigLookup(IFilesSystem filesSystem, IWatchBuilder watchBuilder)
+        {
+            _searchPatternRegEx = CheckIfWeb() ? "web.yml" : "app.yml";
+
+            _filesSystem = filesSystem;
+            _watchBuilder = watchBuilder;
         }
 
         public string SearchPatternRegEx
@@ -40,9 +51,7 @@
 
             if (_filesSystem.Exists(directory))
             {
-                var watcher = new CustomWatcher(directory, this.OnConfigChange);
-                watcher.RunWatch();
-                Watchers.Add(watcher);
+                Watchers.Add(_watchBuilder.GetWatcher(directory, this.OnConfigChange));
 
                 foreach (var file in _filesSystem.GetFiles(directory, SearchPatternRegEx))
                 {

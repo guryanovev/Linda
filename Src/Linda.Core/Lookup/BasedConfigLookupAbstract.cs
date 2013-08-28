@@ -4,11 +4,13 @@
     using System.Collections.Generic;
     using System.IO;
 
+    using Linda.Core.Watch;
+
     public abstract class BasedConfigLookupAbstract : IConfigLookup
     {
-        private IEnumerable<ConfigGroup> _configGroups;  
+        private IEnumerable<ConfigGroup> _configGroups;
 
-        private List<CustomWatcher> _watchers = new List<CustomWatcher>();
+        private Watchers _watchers = new Watchers();
 
         public event EventHandler<EventArgs> ConfigChange;
 
@@ -25,7 +27,7 @@
             }
         }
 
-        protected List<CustomWatcher> Watchers
+        public Watchers Watchers
         {
             get
             {
@@ -37,8 +39,8 @@
                 _watchers = value;
             }
         }
-
-        public void OnConfigChange(object sender, FileSystemEventArgs fileSystemEventArgs)
+        
+        public void OnConfigChange(object sender, EventArgs fileSystemEventArgs)
         {
             EventHandler<EventArgs> handler = this.ConfigChange;
             if (handler != null)
@@ -72,11 +74,13 @@
             result.Reverse();
 
             _configGroups = result;
+
+            Watchers.RunWatch();
         }
 
         public void Dispose()
         {
-            for (int i = 0; i < Watchers.Count; i++)
+            for (int i = 0; i < Watchers.Length; i++)
             {
                 Watchers[i].Dispose();
             }

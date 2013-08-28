@@ -54,12 +54,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomWatcher.cs" />
+    <Compile Include="Watch\DefaultWatchBuilder.cs" />
     <Compile Include="Detecting\DefaultRootDetector.cs" />
     <Compile Include="Detecting\IRootDetector.cs" />
     <Compile Include="Detecting\ManualRootDetector.cs" />
     <Compile Include="Lookup\BasedConfigLookupAbstract.cs" />
     <Compile Include="Lookup\FileBasedConfigLookup.cs" />
+    <Compile Include="Watch\IWatchBuilder.cs" />
+    <Compile Include="Watch\Watchers.cs" />
     <Compile Include="Yaml\CustomDeserializer.cs" />
     <Compile Include="Yaml\CustomObjectNodeDeserializer.cs" />
     <Compile Include="Lookup\DirectoryBasedConfigLookup.cs" />
