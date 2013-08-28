@@ -2,18 +2,28 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Reflection;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     using Linda.Core.Detecting;
     using Linda.Core.Lookup;
     using Linda.Core.Yaml;
 
-    public class DefaultConfigManager : IConfigManager
+    public class DefaultConfigManager : IConfigManager, IDisposable
     {
         private readonly IConfigLookup _configLookup;
         private readonly IYamlDeserializer _deserializer;
         private readonly IRootDetector _rootDetector;
 
-        private IEnumerable<ConfigGroup> _configGroups;
+        public event EventHandler<EventArgs> myEvent;
+
+        protected virtual void OnMyEvent()
+        {
+                _configLookup.LoadConfigGroups(_rootDetector.GetConfigRoot());
+                myEvent(this, new EventArgs());
+        }
 
         public DefaultConfigManager() : this(new FileBasedConfigLookup(), new CustomDeserializer(), new DefaultRootDetector())
         {
@@ -39,32 +49,26 @@
             _configLookup = configLookup;
             _deserializer = deserializer;
             _rootDetector = rootDetector;
+            _configLookup.LoadConfigGroups(_rootDetector.GetConfigRoot());
+            _configLookup.ConfigChange += (sender, e) => this.OnMyEvent();
         }
 
         public TConfig GetConfig<TConfig>() where TConfig : new()
         {
-            if (_configGroups == null)
-            {
-                var configRoot = _rootDetector.GetConfigRoot();
-                _configGroups = _configLookup.GetConfigGroups(configRoot);
-            }
-
-            var content = string.Empty;
-
-            foreach (var configGroup in _configGroups)
-            {
-                content += configGroup.RetrieveContent();
-            }
-
-            var resultConfig = _deserializer.Deserialize<TConfig>(content);
+            var resultConfig = _deserializer.Deserialize<TConfig>(_configLookup.GetContent());
 
             return resultConfig;
         }
 
-        public void WatchForConfig<TConfig>(Action<TConfig> callback)
+        public void WatchForConfig<TConfig>(Action<TConfig> callback) where TConfig : new()
         {
-            // todo implement watching logic here
-            throw new NotImplementedException();
+            callback(new TConfig());
+            myEvent += (sender, args) => callback(new TConfig());
+        }
+
+        public void Dispose()
+        {
+            _configLookup.Dispose();
         }
     }
 }

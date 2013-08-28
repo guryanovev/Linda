@@ -1,6 +1,7 @@
 ﻿namespace Linda.Core.Lookup
 {
     using System.IO;
+    using Linda.Core;
 
     public class DirectoryBasedConfigLookup : BasedConfigLookupAbstract
     {
@@ -43,13 +44,18 @@
             }
         }
 
-        public override ConfigGroup GetConfigGroup(ref string directory)
+        protected override ConfigGroup GetConfigGroup(ref string directory)
         {
             var result = new ConfigGroup();
 
             var configDirectoryPath = Path.Combine(directory, DirectoryName);
             if (_filesSystem.Exists(configDirectoryPath))
             {
+                var watcher = new CustomWatcher(configDirectoryPath, this.OnConfigChange);
+                watcher.RunWatch();
+
+                Watchers.Add(watcher);
+
                 foreach (var file in _filesSystem.GetFiles(configDirectoryPath, SearchPatternRegEx))
                 {
                     var currentFile = file;

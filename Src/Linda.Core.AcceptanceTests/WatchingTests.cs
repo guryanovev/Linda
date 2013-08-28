@@ -1,6 +1,8 @@
 ﻿namespace Linda.Core.AcceptanceTests
 {
     using System;
+    using System.Threading;
+
     using Linda.Core.AcceptanceTests.Support;
     using NUnit.Framework;
 
@@ -14,11 +16,13 @@
 @"Foo: fooValue
 Bar: barValue");
 
-            var configManager = CreateConfigManager();
-            var callback = new TestableAction<SimpleConfig>();
-            configManager.WatchForConfig<SimpleConfig>(callback);
-
-            callback.AssertCalled(1);
+            using (var configManager = CreateConfigManager())
+            {
+                var callback = new TestableAction<SimpleConfig>();
+                configManager.WatchForConfig<SimpleConfig>(callback);
+                Thread.Sleep(500);
+                callback.AssertCalled(1);
+            }
         }
 
         [Test]
@@ -29,16 +33,17 @@ Bar: barValue");
 @"Foo: fooValue
 Bar: barValue");
 
-            var configManager = CreateConfigManager();
-            var callback = new TestableAction<SimpleConfig>();
-            configManager.WatchForConfig<SimpleConfig>(callback);
+            using (var configManager = CreateConfigManager())
+            {
+                var callback = new TestableAction<SimpleConfig>();
+                configManager.WatchForConfig<SimpleConfig>(callback);
 
-            UpdateFile(
-                "config/config1.yml",
-@"Foo: fooValue
+                UpdateFile("config/config1.yml", @"Foo: fooValue
 Bar: barValue");
+                Thread.Sleep(500);
+                callback.AssertCalled(3);
+            }
 
-            callback.AssertCalled(2);
         }
 
         internal class TestableAction<TConfig>

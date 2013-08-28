@@ -45,6 +45,7 @@ FloatProp: 2.666");
             Assert.That(config, Is.Not.Null);
             Assert.That(config.ItIsStruct.Bar, Is.EqualTo(666));
             Assert.That(config.ItIsStruct.Baz, Is.EqualTo("BarValue"));
+            
         }
     }
 }

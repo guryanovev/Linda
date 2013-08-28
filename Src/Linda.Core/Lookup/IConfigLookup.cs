@@ -1,9 +1,13 @@
 ﻿namespace Linda.Core.Lookup
 {
-    using System.Collections.Generic;
+    using System;
 
-    public interface IConfigLookup
+    public interface IConfigLookup : IDisposable
     {
-        IEnumerable<ConfigGroup> GetConfigGroups(string path);
+        event EventHandler<EventArgs> ConfigChange;
+
+        void LoadConfigGroups(string path);
+
+        string GetContent();
     }
 }

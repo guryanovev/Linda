@@ -54,6 +54,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomWatcher.cs" />
     <Compile Include="Detecting\DefaultRootDetector.cs" />
     <Compile Include="Detecting\IRootDetector.cs" />
     <Compile Include="Detecting\ManualRootDetector.cs" />

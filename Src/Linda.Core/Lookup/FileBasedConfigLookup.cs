@@ -34,12 +34,16 @@
             }
         }
 
-        public override ConfigGroup GetConfigGroup(ref string directory)
+        protected override ConfigGroup GetConfigGroup(ref string directory)
         {
             var result = new ConfigGroup();
 
             if (_filesSystem.Exists(directory))
             {
+                var watcher = new CustomWatcher(directory, this.OnConfigChange);
+                watcher.RunWatch();
+                Watchers.Add(watcher);
+
                 foreach (var file in _filesSystem.GetFiles(directory, SearchPatternRegEx))
                 {
                     var currentFile = file;

@@ -11,6 +11,6 @@
         /// </summary>
         /// <typeparam name="TConfig">config type</typeparam>
         /// <param name="callback">config callback</param>
-        void WatchForConfig<TConfig>(Action<TConfig> callback);
+        void WatchForConfig<TConfig>(Action<TConfig> callback) where TConfig : new();
     }
 }

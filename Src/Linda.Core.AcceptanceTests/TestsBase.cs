@@ -23,7 +23,7 @@
         [TearDown]
         public void TearDown()
         {
-            Thread.Sleep(100);
+            Thread.Sleep(200);
             Directory.Delete(_tempDirectory, true);
         }
 
@@ -35,8 +35,10 @@
         /// <returns>configuration object</returns>
         protected TConfig LoadConfig<TConfig>(string relativePath = null) where TConfig : new()
         {
-            var manager = CreateConfigManager(relativePath);
-            return manager.GetConfig<TConfig>();
+            using (var manager = CreateConfigManager(relativePath))
+            {
+                return manager.GetConfig<TConfig>();
+            }
         }
 
         /// <summary>
@@ -91,7 +93,6 @@
         /// <param name="content"></param>
         protected void UpdateFile(string path, string content)
         {
-            
             CreateFile(path, content);
         }
     }
