@@ -59,7 +59,7 @@
             var configDirectoryPath = Path.Combine(directory, DirectoryName);
             if (_filesSystem.Exists(configDirectoryPath))
             {
-                Watchers.Add(_watchBuilder.GetWatcher(configDirectoryPath, this.OnConfigChange));
+                Watchers.Add(_watchBuilder.GetWatcher(configDirectoryPath, this.OnConfigChange, "*.yml"));
 
                 foreach (var file in _filesSystem.GetFiles(configDirectoryPath, SearchPatternRegEx))
                 {

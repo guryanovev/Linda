@@ -43,7 +43,7 @@
 
             if (_filesSystem.Exists(directory))
             {
-                Watchers.Add(_watchBuilder.GetWatcher(directory, this.OnConfigChange));
+                Watchers.Add(_watchBuilder.GetWatcher(directory, this.OnConfigChange, "*.yml"));
 
                 foreach (var file in _filesSystem.GetFiles(directory, SearchPatternRegEx))
                 {
