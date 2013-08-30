@@ -4,6 +4,7 @@
     using System.Threading;
 
     using Linda.Core.AcceptanceTests.Support;
+    using Linda.Core.Lookup;
     using NUnit.Framework;
 
     public class WatchingTests : TestsBase
@@ -26,7 +27,7 @@ Bar: barValue");
         }
 
         [Test]
-        public void Test_FileChanged_ShouldCallActionTwice()
+        public void Test_AddNonConfigToDirectoryBased_ShouldCallActionOnce()
         {
             CreateFile(
                 "config/config1.yml",
@@ -34,6 +35,48 @@ Bar: barValue");
 Bar: barValue");
 
             using (var configManager = CreateConfigManager())
+            {
+                var callback = new TestableAction<SimpleConfig>();
+                configManager.WatchForConfig<SimpleConfig>(callback);
+
+                CreateFile("config/not-config.txt", @"it is not a config file");
+                UpdateFile("config/not-config.txt", @"it is not a config file 2");
+
+                Thread.Sleep(500);
+                callback.AssertCalled(1);
+            }
+        }
+
+        [Test]
+        public void Test_AddNonConfigToFileBased_ShouldCallActionOnce()
+        {
+            CreateFile(
+                "fileConfig.yml",
+@"Foo: fooValue
+Bar: barValue");
+
+            using (var configManager = CreateConfigManager(new FileBasedConfigLookup()))
+            {
+                var callback = new TestableAction<SimpleConfig>();
+                configManager.WatchForConfig<SimpleConfig>(callback);
+
+                CreateFile("not-config.txt", @"it is not a config file");
+                UpdateFile("not-config.txt", @"it is not a config file 2");
+
+                Thread.Sleep(500);
+                callback.AssertCalled(1);
+            }
+        }
+
+        [Test]
+        public void Test_FileChanged_ShouldCallActionTwice()
+        {
+            CreateFile(
+                "config/config1.yml",
+@"Foo: fooValue
+Bar: barValue");
+
+            using (var configManager = CreateConfigManager(new DirectoryBasedConfigLookup()))
             {
                 var callback = new TestableAction<SimpleConfig>();
                 configManager.WatchForConfig<SimpleConfig>(callback);

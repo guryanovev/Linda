@@ -12,16 +12,8 @@
 
         private string _searchPatternRegEx = "[a-zA-Z0-9\\._-]*.yml";
 
-        public FileBasedConfigLookup()
-            : this(new DefaultFilesSystem())
+        public FileBasedConfigLookup() : this(new DefaultFilesSystem(), new DefaultWatchBuilder())
         {
-        }
-
-        public FileBasedConfigLookup(IFilesSystem filesSystem)
-        {
-            _searchPatternRegEx = CheckIfWeb() ? "web.yml" : "app.yml";
-
-            _filesSystem = filesSystem;
         }
 
         public FileBasedConfigLookup(IFilesSystem filesSystem, IWatchBuilder watchBuilder)

@@ -35,7 +35,7 @@
         /// <returns>configuration object</returns>
         protected TConfig LoadConfig<TConfig>(string relativePath = null) where TConfig : new()
         {
-            using (var manager = CreateConfigManager(relativePath))
+            using (var manager = CreateConfigManager(new DirectoryBasedConfigLookup(), relativePath))
             {
                 return manager.GetConfig<TConfig>();
             }
@@ -48,8 +48,19 @@
         /// <returns>configuration manager instance</returns>
         protected DefaultConfigManager CreateConfigManager(string relativePath = null)
         {
+            return CreateConfigManager(new DirectoryBasedConfigLookup(), relativePath);
+        }
+
+        /// <summary>
+        /// Creates default instance of <see cref="IConfigManager"/>.
+        /// </summary>
+        /// <param name="lookup">config lookup</param>
+        /// <param name="relativePath">path to configuration</param>
+        /// <returns>configuration manager instance</returns>
+        protected DefaultConfigManager CreateConfigManager(IConfigLookup lookup, string relativePath = null)
+        {
             return new DefaultConfigManager(
-                new DirectoryBasedConfigLookup(), 
+                lookup, 
                 new CustomDeserializer(),
                 new ManualRootDetector(GetFullPath(relativePath)));
         }
