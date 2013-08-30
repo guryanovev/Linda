@@ -1,9 +1,10 @@
 ﻿namespace Linda.Core.Watch
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
 
-    public class Watchers
+    public class Watchers : IDisposable
     {
         private readonly List<FileSystemWatcher> _watchers = new List<FileSystemWatcher>();
 
@@ -25,7 +26,7 @@
 
         public void Add(FileSystemWatcher watcher)
         {
-            if (watcher.Path != string.Empty)
+            if (watcher != null && watcher.Path != string.Empty)
             {
                 _watchers.Add(watcher);
             }
@@ -50,6 +51,14 @@
                 {
                     watcher.EnableRaisingEvents = false;
                 }
+            }
+        }
+
+        public void Dispose()
+        {
+            foreach (var fileSystemWatcher in _watchers)
+            {
+                fileSystemWatcher.Dispose();
             }
         }
     }

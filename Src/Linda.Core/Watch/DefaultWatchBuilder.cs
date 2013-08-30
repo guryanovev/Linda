@@ -5,7 +5,7 @@
 
     public class DefaultWatchBuilder : IWatchBuilder
     {
-        public FileSystemWatcher GetWatcher(string path, Action<object, EventArgs> eventMethod, string filter = "*")
+        public FileSystemWatcher GetWatcher(string path, Action<object, FileSystemEventArgs> eventMethod, string filter = "*")
         {
             var watcher = new FileSystemWatcher(path, filter);
             watcher.Created += new FileSystemEventHandler(eventMethod);

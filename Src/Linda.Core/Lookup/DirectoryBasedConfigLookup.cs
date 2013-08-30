@@ -1,6 +1,9 @@
 ﻿namespace Linda.Core.Lookup
 {
+    using System;
     using System.IO;
+    using System.Text.RegularExpressions;
+
     using Linda.Core;
     using Linda.Core.Watch;
 
@@ -52,6 +55,25 @@
             }
         }
 
+        protected override bool CheckChangedFileName(string name)
+        {
+            var regex = new Regex(_searchPatternRegEx, RegexOptions.IgnoreCase);
+
+            if (!regex.IsMatch(name))
+            {
+                return false;
+            }
+
+            var match = regex.Match(name);
+
+            if (match.Length == name.Length)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         protected override ConfigGroup GetConfigGroup(ref string directory)
         {
             var result = new ConfigGroup();
@@ -59,7 +81,7 @@
             var configDirectoryPath = Path.Combine(directory, DirectoryName);
             if (_filesSystem.Exists(configDirectoryPath))
             {
-                Watchers.Add(_watchBuilder.GetWatcher(configDirectoryPath, this.OnConfigChange, "*.yml"));
+                Watchers.Add(_watchBuilder.GetWatcher(configDirectoryPath, OnConfigChange));
 
                 foreach (var file in _filesSystem.GetFiles(configDirectoryPath, SearchPatternRegEx))
                 {
@@ -71,6 +93,6 @@
             directory = _filesSystem.GetParentDirectory(directory);
 
             return result;
-        }
+        } 
     }
 }

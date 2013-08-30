@@ -5,6 +5,6 @@
 
     public interface IWatchBuilder
     {
-        FileSystemWatcher GetWatcher(string path, Action<object, EventArgs> eventMethod, string filter = "*");
+        FileSystemWatcher GetWatcher(string path, Action<object, FileSystemEventArgs> eventMethod, string filter = "*");
     }
 }

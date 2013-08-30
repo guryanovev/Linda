@@ -1,6 +1,7 @@
 ﻿namespace Linda.Core.Lookup
 {
     using System;
+    using System.Text.RegularExpressions;
     using System.Web;
 
     using Linda.Core.Watch;
@@ -37,13 +38,32 @@
             }
         }
 
+        protected override bool CheckChangedFileName(string name)
+        {
+            var regex = new Regex(_searchPatternRegEx, RegexOptions.IgnoreCase);
+
+            if (!regex.IsMatch(name))
+            {
+                return false;
+            }
+
+            var match = regex.Match(name);
+
+            if (match.Length == name.Length)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         protected override ConfigGroup GetConfigGroup(ref string directory)
         {
             var result = new ConfigGroup();
 
             if (_filesSystem.Exists(directory))
             {
-                Watchers.Add(_watchBuilder.GetWatcher(directory, this.OnConfigChange, "*.yml"));
+                Watchers.Add(_watchBuilder.GetWatcher(directory, this.OnConfigChange));
 
                 foreach (var file in _filesSystem.GetFiles(directory, SearchPatternRegEx))
                 {

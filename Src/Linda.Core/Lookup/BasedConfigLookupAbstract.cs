@@ -12,7 +12,7 @@
 
         private Watchers _watchers = new Watchers();
 
-        public event EventHandler<EventArgs> ConfigChange;
+        public event EventHandler<FileSystemEventArgs> ConfigChange;
 
         public IEnumerable<ConfigGroup> ConfigGroups
         {
@@ -39,13 +39,18 @@
                 _watchers = value;
             }
         }
-        
-        public void OnConfigChange(object sender, EventArgs fileSystemEventArgs)
+
+        public void OnConfigChange(object sender, FileSystemEventArgs fileSystemEventArgs)
         {
-            EventHandler<EventArgs> handler = this.ConfigChange;
+            if (fileSystemEventArgs != null && !CheckChangedFileName(fileSystemEventArgs.Name))
+            {
+                return;
+            }
+
+            EventHandler<FileSystemEventArgs> handler = ConfigChange;
             if (handler != null)
             {
-                handler(this, EventArgs.Empty);
+                handler(this, EventArgs.Empty as FileSystemEventArgs);
             }
         }
 
@@ -80,11 +85,10 @@
 
         public void Dispose()
         {
-            for (int i = 0; i < Watchers.Length; i++)
-            {
-                Watchers[i].Dispose();
-            }
+            Watchers.Dispose();
         }
+
+        protected abstract bool CheckChangedFileName(string name);
 
         protected abstract ConfigGroup GetConfigGroup(ref string directory);
     }

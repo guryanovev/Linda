@@ -2,10 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
 
     public interface IConfigLookup : IDisposable
     {
-        event EventHandler<EventArgs> ConfigChange;
+        event EventHandler<FileSystemEventArgs> ConfigChange;
 
         IEnumerable<ConfigGroup> ConfigGroups { get; set; }
 

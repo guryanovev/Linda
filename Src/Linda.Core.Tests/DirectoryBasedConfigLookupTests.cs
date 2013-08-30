@@ -22,7 +22,7 @@
                     && fs.GetFiles(Path.Combine("this", "config"), "[a-zA-Z0-9\\._-]*.yml") == new string[1] { "foo.yml" }
                     && fs.GetParentDirectory("this") == (string)null);
 
-            var watchBuilder = Mock.Of<IWatchBuilder>(builder => builder.GetWatcher(It.IsAny<string>(), It.IsAny<Action<object, EventArgs>>(), It.IsAny<string>()) == new FileSystemWatcher());
+            var watchBuilder = Mock.Of<IWatchBuilder>(builder => builder.GetWatcher(It.IsAny<string>(), It.IsAny<Action<object, FileSystemEventArgs>>(), It.IsAny<string>()) == new FileSystemWatcher());
             
             var lookup = new DirectoryBasedConfigLookup(fileSystem, watchBuilder);
             
@@ -46,7 +46,7 @@
                     && fs.GetFiles(Path.Combine("this", "config"), "[a-zA-Z0-9\\._-]*.yml") == new string[3] { "foo.yml", "bar.yml", "baz.yml" }
                     && fs.GetParentDirectory("this") == (string)null);
 
-            var watchBuilder = Mock.Of<IWatchBuilder>(builder => builder.GetWatcher(It.IsAny<string>(), It.IsAny<Action<object, EventArgs>>(), It.IsAny<string>()) == new FileSystemWatcher());
+            var watchBuilder = Mock.Of<IWatchBuilder>(builder => builder.GetWatcher(It.IsAny<string>(), It.IsAny<Action<object, FileSystemEventArgs>>(), It.IsAny<string>()) == new FileSystemWatcher());
 
             var lookup = new DirectoryBasedConfigLookup(fileSystem, watchBuilder);
 
@@ -77,7 +77,7 @@
                     && fs.GetParentDirectory("underground") == "core of the earth"
                     && fs.GetParentDirectory("core of the earth") == (string)null);
 
-            var watchBuilder = Mock.Of<IWatchBuilder>(builder => builder.GetWatcher(It.IsAny<string>(), It.IsAny<Action<object, EventArgs>>(), It.IsAny<string>()) == new FileSystemWatcher());
+            var watchBuilder = Mock.Of<IWatchBuilder>(builder => builder.GetWatcher(It.IsAny<string>(), It.IsAny<Action<object, FileSystemEventArgs>>(), It.IsAny<string>()) == new FileSystemWatcher());
 
             var lookup = new DirectoryBasedConfigLookup(fileSystem, watchBuilder);
 
@@ -112,7 +112,7 @@
                     && fs.GetParentDirectory("this") == "underground"
                     && fs.GetParentDirectory("underground") == "core of the earth"
                     && fs.GetParentDirectory("core of the earth") == (string)null);
-            var watchBuilder = Mock.Of<IWatchBuilder>(builder => builder.GetWatcher(It.IsAny<string>(), It.IsAny<Action<object, EventArgs>>(), It.IsAny<string>()) == new FileSystemWatcher());
+            var watchBuilder = Mock.Of<IWatchBuilder>(builder => builder.GetWatcher(It.IsAny<string>(), It.IsAny<Action<object, FileSystemEventArgs>>(), It.IsAny<string>()) == new FileSystemWatcher());
 
             var lookup = new DirectoryBasedConfigLookup(fileSystem, watchBuilder);
 
