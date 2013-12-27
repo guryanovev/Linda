@@ -101,7 +101,7 @@
         /// Removes temporary file.
         /// </summary>
         /// <param name="path"></param>
-        protected void DeleteFile(string path)
+        protected void DeleteFileOrDirectory(string path)
         {
             var fullFilePath = GetFullPath(path);
             

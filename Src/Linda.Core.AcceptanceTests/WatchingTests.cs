@@ -88,6 +88,10 @@ Bar: barValue");
             }
         }
 
+        /// <summary>
+        /// A regression test for #1
+        /// see https://github.com/guryanovev/Linda/issues/1
+        /// </summary>
         [Test]
         public void Test_DeleteFileWhileNoWatching_ShouldNotFail()
         {
@@ -100,14 +104,14 @@ Bar: barValue");
             {
                 configManager.GetConfig<SimpleConfig>();
 
-                DeleteFile("config");
+                DeleteFileOrDirectory("config");
                 CreateFile(
                     "config/config1.yml",
 @"Foo: fooValue
 Bar: barValue");
             }
 
-            // if we get here without an error then test is complete!
+            // if we get here without an error then the test is complete!
         }
 
         internal class TestableAction<TConfig>
