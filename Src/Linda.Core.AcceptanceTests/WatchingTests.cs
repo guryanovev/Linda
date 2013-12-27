@@ -86,7 +86,28 @@ Bar: barValue");
                 Thread.Sleep(500);
                 callback.AssertCalled(3);
             }
+        }
 
+        [Test]
+        public void Test_DeleteFileWhileNoWatching_ShouldNotFail()
+        {
+            CreateFile(
+                "config/config1.yml",
+@"Foo: fooValue
+Bar: barValue");
+
+            using (var configManager = CreateConfigManager(new DirectoryBasedConfigLookup()))
+            {
+                configManager.GetConfig<SimpleConfig>();
+
+                DeleteFile("config");
+                CreateFile(
+                    "config/config1.yml",
+@"Foo: fooValue
+Bar: barValue");
+            }
+
+            // if we get here without an error then test is complete!
         }
 
         internal class TestableAction<TConfig>

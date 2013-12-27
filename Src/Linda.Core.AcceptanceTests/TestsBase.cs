@@ -98,6 +98,23 @@
         }
 
         /// <summary>
+        /// Removes temporary file.
+        /// </summary>
+        /// <param name="path"></param>
+        protected void DeleteFile(string path)
+        {
+            var fullFilePath = GetFullPath(path);
+            
+            if (File.Exists(fullFilePath))
+            {
+                File.Delete(fullFilePath);
+            } else if (Directory.Exists(fullFilePath))
+            {
+                Directory.Delete(fullFilePath, true);
+            }
+        }
+
+        /// <summary>
         /// Updates existing file content.
         /// </summary>
         /// <param name="path"></param>
