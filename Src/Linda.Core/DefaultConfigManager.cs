@@ -16,6 +16,7 @@
         private readonly IConfigLookup _configLookup;
         private readonly IYamlDeserializer _deserializer;
         private readonly IRootDetector _rootDetector;
+        private readonly object _obj = new object();
 
         public DefaultConfigManager() : this(new FileBasedConfigLookup(), new CustomDeserializer(), new DefaultRootDetector())
         {
@@ -42,15 +43,17 @@
             _deserializer = deserializer;
             _rootDetector = rootDetector;
             _configLookup.LoadConfigGroups(_rootDetector.GetConfigRoot());
-            _configLookup.ConfigChange += (sender, e) => this.OnMyEvent();
         }
 
         public event EventHandler<EventArgs> MyEvent;
 
         public void OnMyEvent()
         {
-            _configLookup.LoadConfigGroups(_rootDetector.GetConfigRoot());
-            this.MyEvent(this, new EventArgs());
+            lock (_obj)
+            {
+                _configLookup.LoadConfigGroups(_rootDetector.GetConfigRoot());
+                this.MyEvent(this, new EventArgs());
+            }
         }
 
         public TConfig GetConfig<TConfig>() where TConfig : new()
@@ -62,6 +65,7 @@
 
         public void WatchForConfig<TConfig>(Action<TConfig> callback) where TConfig : new()
         {
+            _configLookup.ConfigChange += (sender, e) => this.OnMyEvent();
             callback(new TConfig());
             this.MyEvent += (sender, args) => callback(new TConfig());
         }
