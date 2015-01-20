@@ -1,11 +1,6 @@
 ﻿namespace Linda.Core
 {
     using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Reflection;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     using Linda.Core.Detecting;
     using Linda.Core.Lookup;
@@ -45,14 +40,14 @@
             _configLookup.LoadConfigGroups(_rootDetector.GetConfigRoot());
         }
 
-        public event EventHandler<EventArgs> MyEvent;
+        public event EventHandler<EventArgs> ConfigChangeEvent;
 
-        public void OnMyEvent()
+        public void OnConfigChangeEvent()
         {
             lock (_obj)
             {
                 _configLookup.LoadConfigGroups(_rootDetector.GetConfigRoot());
-                this.MyEvent(this, new EventArgs());
+                this.ConfigChangeEvent(this, new EventArgs());
             }
         }
 
@@ -65,9 +60,9 @@
 
         public void WatchForConfig<TConfig>(Action<TConfig> callback) where TConfig : new()
         {
-            _configLookup.ConfigChange += (sender, e) => this.OnMyEvent();
+            _configLookup.ConfigChange += (sender, e) => this.OnConfigChangeEvent();
             callback(new TConfig());
-            this.MyEvent += (sender, args) => callback(new TConfig());
+            this.ConfigChangeEvent += (sender, args) => callback(new TConfig());
         }
 
         public void Dispose()
