@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="/home/travis/build/guryanovev/Linda/Src/Linda.Core.AcceptanceTests/bin/Debug/Linda.Core.AcceptanceTests.dll" total="37" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2015-01-28" time="15:57:07">
+  <environment nunit-version="2.5.10.0" clr-version="4.0.30319.1" os-version="Unix 2.6.32.42" platform="Unix" cwd="/home/travis/build/guryanovev/Linda" machine-name="testing-worker-linux-7a054b10-2-7959-linux-9-48638328" user="travis" user-domain="testing-worker-linux-7a054b10-2-7959-linux-9-48638328" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="Test Project" name="" executed="True" result="Success" success="True" time="35.396" asserts="0">
+    <results>
+      <test-suite type="Assembly" name="/home/travis/build/guryanovev/Linda/Src/Linda.Core.AcceptanceTests/bin/Debug/Linda.Core.AcceptanceTests.dll" executed="True" result="Success" success="True" time="25.332" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Linda" executed="True" result="Success" success="True" time="25.328" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Core" executed="True" result="Success" success="True" time="25.328" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="AcceptanceTests" executed="True" result="Success" success="True" time="25.327" asserts="0">
+                    <results>
+                      <test-suite type="TestFixture" name="AllTypeTests" executed="True" result="Success" success="True" time="0.712" asserts="0">
+                        <results>
+                          <test-case name="Linda.Core.AcceptanceTests.AllTypeTests.Test_ShouldRerunStructConfig" executed="True" result="Success" success="True" time="0.467" asserts="3" />
+                          <test-case name="Linda.Core.AcceptanceTests.AllTypeTests.Test_ShouldReturnAllTypeConfig" executed="True" result="Success" success="True" time="0.229" asserts="7" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="ComplexTests" executed="True" result="Success" success="True" time="1.204" asserts="0">
+                        <results>
+                          <test-case name="Linda.Core.AcceptanceTests.ComplexTests.Test_MultipleFiles_ShouldEqualComplexConfig" executed="True" result="Success" success="True" time="0.216" asserts="5" />
+                          <test-case name="Linda.Core.AcceptanceTests.ComplexTests.Test_MultipleFiles_ShouldEqualDifferentConfigs" executed="True" result="Success" success="True" time="0.345" asserts="3" />
+                          <test-case name="Linda.Core.AcceptanceTests.ComplexTests.Test_SingleFile_ShouldEqualComplexConfig" executed="True" result="Success" success="True" time="0.209" asserts="1" />
+                          <test-case name="Linda.Core.AcceptanceTests.ComplexTests.Test_SingleFile_ShouldEqualComplexConfig1" executed="True" result="Success" success="True" time="0.217" asserts="1" />
+                          <test-case name="Linda.Core.AcceptanceTests.ComplexTests.Test_SingleFile_ShouldEqualEmptyComplexComfig" executed="True" result="Success" success="True" time="0.211" asserts="1" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="FormatTests" executed="True" result="Success" success="True" time="0.841" asserts="0">
+                        <results>
+                          <test-case name="Linda.Core.AcceptanceTests.FormatTests.Test_ExpectedExceptionTestWithWronfYamlFiles" executed="True" result="Success" success="True" time="0.210" asserts="0" />
+                          <test-case name="Linda.Core.AcceptanceTests.FormatTests.Test_GrapthConfig_ShouldLoadConfiguration" executed="True" result="Success" success="True" time="0.209" asserts="4" />
+                          <test-case name="Linda.Core.AcceptanceTests.FormatTests.Test_ShouldLoadSimpleConfig" executed="True" result="Success" success="True" time="0.209" asserts="3" />
+                          <test-case name="Linda.Core.AcceptanceTests.FormatTests.Test_SimpleConfig_ShouldLoadConfiguration" executed="True" result="Success" success="True" time="0.208" asserts="3" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="HierarchyTests" executed="True" result="Success" success="True" time="0.729" asserts="0">
+                        <results>
+                          <test-case name="Linda.Core.AcceptanceTests.HierarchyTests.HierarchyTestWithAnotherFiles" executed="True" result="Success" success="True" time="0.210" asserts="3" />
+                          <test-case name="Linda.Core.AcceptanceTests.HierarchyTests.Test_DifferentValuesOnDifferentLevels_ShouldMergeValues" executed="True" result="Success" success="True" time="0.301" asserts="3" />
+                          <test-case name="Linda.Core.AcceptanceTests.HierarchyTests.Test_SameValueOnMultipleValues_ShouldUseBottomLevelValue" executed="True" result="Success" success="True" time="0.214" asserts="2" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="StructureTests" executed="True" result="Success" success="True" time="0.421" asserts="0">
+                        <results>
+                          <test-case name="Linda.Core.AcceptanceTests.StructureTests.Test_MultipleFilesWithIdenticalProperties" executed="True" result="Success" success="True" time="0.210" asserts="2" />
+                          <test-case name="Linda.Core.AcceptanceTests.StructureTests.Tests_MultipleFiles_ShouldMergeValues" executed="True" result="Success" success="True" time="0.210" asserts="3" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="WatchingTests" executed="True" result="Success" success="True" time="21.408" asserts="0">
+                        <results>
+                          <test-case name="Linda.Core.AcceptanceTests.WatchingTests.Test_AddNonConfigToDirectoryBased_ShouldCallActionOnce" executed="True" result="Success" success="True" time="0.710" asserts="1" />
+                          <test-case name="Linda.Core.AcceptanceTests.WatchingTests.Test_AddNonConfigToFileBased_ShouldCallActionOnce" executed="True" result="Success" success="True" time="8.698" asserts="1" />
+                          <test-case name="Linda.Core.AcceptanceTests.WatchingTests.Test_DeleteFileWhileNoWatching_ShouldNotFail" executed="True" result="Success" success="True" time="4.999" asserts="0" />
+                          <test-case name="Linda.Core.AcceptanceTests.WatchingTests.Test_FileChanged_ShouldCallActionTwice" executed="True" result="Success" success="True" time="0.708" asserts="1" />
+                          <test-case name="Linda.Core.AcceptanceTests.WatchingTests.Test_NoChanges_ShouldCallActionOnce" executed="True" result="Success" success="True" time="6.288" asserts="1" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="Assembly" name="/home/travis/build/guryanovev/Linda/Src/Linda.Core.Tests/bin/Debug/Linda.Core.Tests.dll" executed="True" result="Success" success="True" time="9.878" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Linda" executed="True" result="Success" success="True" time="9.875" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Core" executed="True" result="Success" success="True" time="9.875" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="Tests" executed="True" result="Success" success="True" time="9.874" asserts="0">
+                    <results>
+                      <test-suite type="TestFixture" name="DefaultConfigManagerTests" executed="True" result="Success" success="True" time="0.529" asserts="0">
+                        <results>
+                          <test-case name="Linda.Core.Tests.DefaultConfigManagerTests.Test_MultipleConfigGroup_ShouldPassMergeContentToDeserializer" executed="True" result="Success" success="True" time="0.276" asserts="2" />
+                          <test-case name="Linda.Core.Tests.DefaultConfigManagerTests.Test_SingleConfigSource_ShouldPassContentToDeserializer" executed="True" result="Success" success="True" time="0.008" asserts="2" />
+                          <test-case name="Linda.Core.Tests.DefaultConfigManagerTests.Test_SomeoneCallsGetConfig_ShouldOnceCallGetConfigGroups" executed="True" result="Success" success="True" time="0.225" asserts="0" />
+                          <test-case name="Linda.Core.Tests.DefaultConfigManagerTests.Test_TwoConfigSource_ShouldPassMergeContentToDeserializer" executed="True" result="Success" success="True" time="0.003" asserts="2" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="DeserializerTests" executed="True" result="Success" success="True" time="0.014" asserts="0">
+                        <results>
+                          <test-case name="Linda.Core.Tests.DeserializerTests.Test_EmptyYamlString_ShouldReturnObjectWithTwoNullsProperties" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                          <test-case name="Linda.Core.Tests.DeserializerTests.Test_OneArgumentInYamlString_ShouldReturnObjectWithTwoNullsProperties" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="Linda.Core.Tests.DeserializerTests.Test_SingleArgumentInYamlString_ShouldReturnObjectWithSingleNullProperty" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                          <test-case name="Linda.Core.Tests.DeserializerTests.Test_ThreeArgumentsInYamlString_ShouldReturnObjectWithTwoArguments" executed="True" result="Success" success="True" time="0.006" asserts="1" />
+                          <test-case name="Linda.Core.Tests.DeserializerTests.Test_TwoArgumentsInYamlString_ShouldReturnObjectWithTwoArguments" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="DirectoryBasedConfigLookupTests" executed="True" result="Success" success="True" time="9.277" asserts="0">
+                        <results>
+                          <test-case name="Linda.Core.Tests.DirectoryBasedConfigLookupTests.Test_HierarchyFiles_ShouldReturnGroupWithSixSources" executed="True" result="Success" success="True" time="9.231" asserts="5" />
+                          <test-case name="Linda.Core.Tests.DirectoryBasedConfigLookupTests.Test_HierarchyFiles_ShouldReturnGroupWithThreeSources" executed="True" result="Success" success="True" time="0.023" asserts="5" />
+                          <test-case name="Linda.Core.Tests.DirectoryBasedConfigLookupTests.Test_MultipleFiles_ShouldReturnGroupWithThreeSources" executed="True" result="Success" success="True" time="0.010" asserts="3" />
+                          <test-case name="Linda.Core.Tests.DirectoryBasedConfigLookupTests.Test_SingleFile_ShouldReturnGroupWithSingleSource" executed="True" result="Success" success="True" time="0.009" asserts="2" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="FileBasedConfigLookupTests" executed="True" result="Success" success="True" time="0.048" asserts="0">
+                        <results>
+                          <test-case name="Linda.Core.Tests.FileBasedConfigLookupTests.Test_HierarchyFiles_ShouldReturnGroupWithFourSource" executed="True" result="Success" success="True" time="0.030" asserts="5" />
+                          <test-case name="Linda.Core.Tests.FileBasedConfigLookupTests.Test_MultipleFiles_ShouldReturnGroupWithSingleSource" executed="True" result="Success" success="True" time="0.008" asserts="3" />
+                          <test-case name="Linda.Core.Tests.FileBasedConfigLookupTests.Test_SingleFile_ShouldReturnGroupWithSingleSource" executed="True" result="Success" success="True" time="0.007" asserts="3" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
