@@ -58,6 +58,12 @@
             return resultConfig;
         }
 
+        public object GetConfig(Type type)
+        {
+            var resultConfig = _deserializer.Deserialize(type, _configLookup.GetContent());
+            return Convert.ChangeType(resultConfig, type);
+        }
+
         public void WatchForConfig<TConfig>(Action<TConfig> callback) where TConfig : new()
         {
             _configLookup.ConfigChange += (sender, e) => this.OnConfigChangeEvent();

@@ -101,6 +101,12 @@
             return Equals(result, null) ? new T() : result;
         }
 
+        public object Deserialize(Type type, string content)
+        {
+            var result = Deserialize(new EventReader(new Parser(new StringReader(content))), type);
+            return Equals(result, null) ? new object() : result;
+        }
+
         /// <summary>
         /// Deserializes an object of the specified type.
         /// </summary>

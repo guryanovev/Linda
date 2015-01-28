@@ -6,6 +6,8 @@
     {
         TConfig GetConfig<TConfig>() where TConfig : new();
 
+        object GetConfig(Type type);
+
         /// <summary>
         /// Watch file system and invokes the callback on every change.
         /// </summary>
